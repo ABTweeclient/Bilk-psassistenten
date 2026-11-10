@@ -1,0 +1,203 @@
+/* Kända problem i Bilköpsrapporten – kort på alla bredder.
+
+   Varje kort är stängt som standard: rubrik, allvarlighet, en rad om symptomen
+   och en textaffordans längst ned. Hela headern är en knapp. Panelen visar
+   "Så kontrollerar du" först och störst, sedan hela symptomtexten, "Typiskt
+   när" som en liten notis och kostnad när den finns.
+
+   Transform, opacity och statefärger animeras, 200–500 ms, ease-out. Ingen
+   animation använder fill-mode "both", och allt stängs av vid reduced motion. */
+
+.ip-wrap { display: grid; }
+.ip-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+
+.ip-card {
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  background: #fff;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color var(--motion-fast) var(--ease-out-soft), box-shadow var(--motion-fast) var(--ease-out-soft);
+}
+.ip-card[data-open="true"] { border-color: #c6ccd4; box-shadow: 0 12px 30px rgb(46 35 22 / 7%); }
+.ip-card:hover,
+.ip-card:focus-within { border-color: var(--brand); box-shadow: 0 10px 28px rgb(46 35 22 / 8%); }
+
+.ip-card__heading { margin: 0; font: inherit; letter-spacing: normal; }
+.ip-card__trigger {
+  display: grid;
+  width: 100%;
+  min-height: 44px;
+  gap: 9px;
+  border: 0;
+  background: transparent;
+  padding: 17px 18px;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--motion-fast) var(--ease-out-soft);
+}
+.ip-card__trigger:hover { background: #FCFAF5; }
+.ip-card__trigger:focus-visible {
+  outline: 3px solid var(--brand-ink);
+  outline-offset: -4px;
+  border-radius: 13px;
+}
+
+.ip-card__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 36px;
+  gap: 8px 12px;
+  align-items: center;
+}
+.ip-card__title { grid-column: 1; font-size: 17px; font-weight: 600; letter-spacing: -.02em; line-height: 1.3; }
+.it-severity { grid-column: 2; }
+.ip-card__chevron {
+  display: grid;
+  grid-column: 3;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--brand-ink);
+  border-radius: 50%;
+  background: var(--brand-ink);
+  color: #fff;
+  transition: transform var(--motion-base) var(--ease-out-soft), background-color var(--motion-fast) var(--ease-out-soft), border-color var(--motion-fast) var(--ease-out-soft);
+}
+.ip-card:hover .ip-card__chevron,
+.ip-card:focus-within .ip-card__chevron { border-color: var(--brand); background: var(--brand); }
+.ip-card[data-open="true"] .ip-card__chevron { transform: rotate(180deg); }
+
+/* En rad om symptomen. Hela texten finns i panelen när kortet är öppet. */
+.ip-card__preview {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  color: var(--ink-muted);
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+/* Textaffordans längst ned i det alltid synliga kortet. */
+.ip-card__action {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: 6px;
+  margin-top: 1px;
+  color: var(--brand-ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.ip-card__action-label {
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.ip-card__action-icon { transition: transform var(--motion-base) var(--ease-out-soft); }
+.ip-card[data-open="true"] .ip-card__action-icon { transform: rotate(-90deg); }
+
+.ip-card__panel {
+  display: grid;
+  gap: 16px;
+  border-top: 1px solid var(--hairline);
+  padding: 18px;
+}
+.ip-card__panel[hidden] { display: none; }
+.ip-card__panel.is-open { animation: ip-card-in var(--motion-fast) var(--ease-out-soft) backwards; }
+@keyframes ip-card-in { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+
+.ip-card__check {
+  display: grid;
+  gap: 6px;
+  border-left: 3px solid var(--brand);
+  padding: 2px 0 2px 14px;
+}
+.ip-card__label {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.ip-card__check-text { margin: 0; font-size: 17px; font-weight: 550; line-height: 1.5; }
+
+.ip-card__symptom { display: grid; gap: 5px; }
+.ip-card__symptom p:last-child { margin: 0; font-size: 16px; line-height: 1.55; }
+
+.ip-card__fact { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 0; }
+.ip-card__fact-label {
+  color: var(--ink-muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.ip-card__cost { font-size: 15px; font-weight: 600; }
+.ip-card__cost-note { color: var(--ink-muted); font-size: 13px; }
+
+.ip-card__onset {
+  margin: 0;
+  border-top: 1px solid var(--hairline);
+  padding-top: 12px;
+  color: var(--ink-muted);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+.ip-card__onset-label {
+  margin-right: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+/* --- Formmarkörer ---------------------------------------------------- */
+
+.it-shape {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  flex: 0 0 9px;
+  border: 1.5px solid currentColor;
+  border-radius: 2px;
+}
+.it-shape[data-shape="circle"] { border-radius: 50%; }
+.it-shape[data-fill="full"] { background: currentColor; }
+.it-shape[data-fill="half"] { background: linear-gradient(90deg, currentColor 50%, transparent 50%); }
+.it-shape[data-fill="none"] { background: transparent; }
+
+/* --- Mobil ------------------------------------------------------------ */
+
+@media (max-width: 560px) {
+  .ip-card__trigger { padding: 16px; }
+  .ip-card__panel { padding: 16px; }
+  .ip-card__row { grid-template-columns: minmax(0, 1fr) 36px; }
+  .it-severity { grid-column: 1 / -1; grid-row: 2; justify-self: start; }
+  .ip-card__chevron { grid-column: 2; grid-row: 1; }
+  .ip-card__action { font-size: 15px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ip-card, .ip-card__trigger, .ip-card__chevron, .ip-card__action-icon { transition: none; }
+  .ip-card__panel.is-open { animation: none; }
+}
+
+@media print {
+  .ip-card { border-radius: 0; break-inside: avoid; box-shadow: none !important; }
+  .ip-card__trigger { padding: 9px 0 7px; }
+  .ip-card__title { font-size: 12.5px; }
+  .ip-card__panel { padding: 8px 0 0; gap: 8px; }
+  .ip-card__check-text { font-size: 12px; }
+  .ip-card__symptom p:last-child, .ip-card__onset { font-size: 11px; }
+  .ip-card__cost { font-size: 11px; }
+  .ip-card__panel[hidden] { display: grid !important; }
+  .ip-card__preview, .ip-card__chevron, .ip-card__action { display: none !important; }
+  .ip-card__meter, .it-shape { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}

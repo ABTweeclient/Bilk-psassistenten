@@ -1,0 +1,80 @@
+/* Säljarfrågor och dokumentlista i Bilköpsrapporten.
+   Prefix qd-. Endast design-tokens används och inga ds- eller ev-klasser
+   omdefinieras; hover- och tryckåterkoppling sker via färg, ram eller skugga
+   (aldrig transform, eftersom transform på hover gör att texten ritas i ett
+   eget lager och ser mjuk ut). Inga animationer använder fill-mode "both". */
+
+.qd-questions { display: grid; }
+.qd-questions__intro { max-width: 68ch; margin: 0 0 8px; color: var(--ink-muted); font-size: 16px; line-height: 1.55; }
+
+.qd-question__title { margin: 0; font-size: inherit; font-weight: inherit; letter-spacing: normal; }
+.qd-question__trigger { min-height: 56px; padding: 17px 0; }
+.qd-question__body { display: grid; min-width: 0; justify-items: start; gap: 8px; font-size: 16px; line-height: 1.45; }
+
+.qd-answer { display: grid; gap: 5px; padding: 0 22px 20px 40px; font-size: 16px; line-height: 1.55; }
+.qd-answer__label {
+  margin: 12px 0 0;
+  color: var(--analytic);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .05em;
+}
+.qd-answer__label:first-child { margin-top: 0; }
+.qd-answer__text { margin: 0; max-width: 66ch; }
+.qd-answer__flag {
+  border-left: 3px solid rgb(130 84 11 / 45%);
+  padding-left: 12px;
+  color: var(--risk-medium);
+}
+
+.qd-documents { display: grid; gap: 10px; }
+.qd-documents__count { margin: 0; font-size: 14px; }
+.qd-documents__count strong { color: var(--ink); font-size: 18px; font-variant-numeric: tabular-nums; }
+.qd-documents__list { display: grid; }
+.qd-documents .ds-check {
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  min-height: 52px;
+  padding: 14px 4px;
+  font-size: 16px;
+  line-height: 1.45;
+}
+.qd-documents .ds-check__control { width: 24px; height: 24px; margin-top: 0; }
+.qd-documents .ds-check__control input { border-radius: 7px; border-color: #a9b0ba; }
+.qd-documents .ds-check__tick { transform: scale(0.5); }
+.qd-documents .ds-check__control input:checked + .ds-check__tick { transform: scale(1); }
+.qd-document__text { display: grid; justify-items: start; gap: 6px; }
+.qd-documents__note { max-width: 66ch; margin: 6px 0 0; color: var(--ink-muted); font-size: 14px; line-height: 1.55; }
+
+@media (max-width: 560px) {
+  /* Mindre indrag på smala skärmar så att frågetexten får plats. */
+  .qd-answer { padding-right: 8px; padding-left: 30px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qd-answer, .qd-documents__count { transition: none; }
+  .qd-questions .ds-accordion__panel.is-open { animation: none; }
+}
+
+@media print {
+  /* På papper ska alla svar synas, och inget får klippas mitt i. */
+  .qd-answer[hidden] { display: block !important; }
+  .qd-questions__intro, .qd-documents__note { max-width: none; }
+  .ds-accordion, .qd-documents .ds-check { break-inside: avoid; }
+  .qd-question__trigger { min-height: 0; padding: 8px 0 4px; }
+  .qd-question__body { font-size: 11.5px; gap: 3px; }
+  .qd-answer { font-size: 11px; padding: 0 0 8px 30px; }
+  .qd-documents .ds-check { min-height: 0; padding: 6px 0; font-size: 11.5px; }
+  .qd-document__text .ds-check__number { color: var(--ink-muted); }
+  .qd-documents .ds-check__control input {
+    border-color: var(--ink);
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .qd-answer__flag {
+    border-left-color: var(--risk-medium);
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}

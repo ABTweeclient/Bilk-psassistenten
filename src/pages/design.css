@@ -1,0 +1,83 @@
+/* Layout only — tokens and component primitives live in src/styles/system.css. */
+
+.ds-page {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-display);
+  min-height: 100vh;
+}
+.ds-page__inner {
+  width: min(100% - 40px, 1100px);
+  margin: 0 auto;
+  padding: 42px 0 84px;
+}
+.ds-page__head { border-bottom: 1px solid var(--hairline); padding-bottom: 26px; }
+.ds-page__eyebrow {
+  margin: 0;
+  color: var(--brand-ink);
+  font-family: var(--font-mono-stack);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+.ds-page__head h1 {
+  margin: 12px 0 10px;
+  font-size: clamp(30px, 4vw, 42px);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 1.08;
+}
+.ds-page__intro { max-width: 640px; margin: 0; color: var(--ink-muted); font-size: 14px; line-height: 1.7; }
+.ds-page__internal {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 18px 0 0;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: #fff;
+  padding: 6px 13px;
+  color: var(--ink-muted);
+  font-size: 11px;
+}
+.ds-swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+.ds-swatch { overflow: hidden; border: 1px solid var(--hairline); border-radius: 12px; background: #fff; }
+.ds-swatch__color { display: block; height: 52px; }
+.ds-swatch__meta { display: grid; gap: 2px; padding: 10px 12px; }
+.ds-swatch__name { font-size: 11.5px; font-weight: 600; }
+.ds-swatch__value { color: var(--ink-muted); font-family: var(--font-mono-stack); font-size: 10px; }
+
+.ds-section { margin-top: 48px; }
+.ds-section__grid { display: grid; gap: 18px; margin-top: 18px; }
+.ds-section__grid--two { grid-template-columns: 1fr; }
+.ds-panel { border: 1px solid var(--hairline); border-radius: 16px; background: #fff; padding: 22px; }
+.ds-panel__label {
+  margin: 0 0 13px;
+  color: var(--ink-muted);
+  font-family: var(--font-mono-stack);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+.ds-panel__label:not(:first-child) { margin-top: 22px; }
+.ds-stack { display: grid; gap: 18px; }
+.ds-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+/* Etikett till vänster, förklaring till höger. */
+.ds-label-row { display: grid; grid-template-columns: minmax(0, 170px) minmax(0, 1fr); align-items: center; gap: 12px; }
+.ds-checklist { display: grid; grid-template-columns: 1fr; gap: 0; }
+
+@media (min-width: 900px) {
+  .ds-section__grid--two { grid-template-columns: 1fr 1fr; }
+  .ds-checklist { grid-template-columns: 1fr 1fr; column-gap: 28px; }
+}
+@media (max-width: 680px) {
+  .ds-page__inner { width: calc(100% - 32px); padding: 28px 0 60px; }
+  .ds-section { margin-top: 34px; }
+  .ds-panel { padding: 16px; }
+  .ds-label-row { grid-template-columns: 1fr; gap: 6px; }
+}

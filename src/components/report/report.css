@@ -1,0 +1,258 @@
+/* Delade stilar för Bilköpsrapporten.
+   Här ligger bara rapportskal, innehållsförteckning, laddningssekvens och
+   utskrift. Varje rapportkomponent har sin egen CSS-fil med sin egen
+   klassprefix.
+
+   Läsbarhetsregler för kundvyn:
+   - Innehållet är högst 760 px brett och brödtexten är minst 16 px.
+   - Sektionerna skiljs med luft i stället för ramar, så att sidan får färre
+     linjer och mindre brus.
+   - Alla animationer rör bara transform och opacity, 200–500 ms, ease-out. */
+
+.rpt-page {
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 16px;
+  line-height: 1.6;
+}
+.rpt-wrap { width: min(100% - 32px, 760px); margin: 0 auto; }
+.rpt-topbar {
+  display: flex;
+  min-height: 64px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 18px;
+  border-bottom: 1px solid var(--hairline);
+}
+.rpt-topbar__brand { display: inline-flex; align-items: center; gap: 9px; color: var(--ink); font-size: 14px; font-weight: 600; letter-spacing: -.04em; text-decoration: none; }
+.rpt-topbar__brand span:last-child { font-weight: 400; }
+.rpt-topbar__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.rpt-topbar__link { display: inline-flex; min-height: 40px; align-items: center; color: var(--ink-muted); font-size: 13px; text-decoration: none; transition: color var(--motion-fast) var(--ease-out-soft); }
+.rpt-topbar__link:hover { color: var(--brand-ink); text-decoration: underline; text-underline-offset: 3px; }
+
+.rpt-main { display: grid; gap: 0; padding: 0 0 88px; }
+/* Väntan, fel och saknade rapporter har ingen hero som ger luft överst. */
+.rpt-main > .ds-panel { margin-top: 24px; }
+.rpt-section { padding-top: 56px; scroll-margin-top: 20px; }
+.rpt-section__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin-bottom: 18px; }
+.rpt-section__intro { max-width: 66ch; margin: 0 0 20px; color: var(--ink-muted); font-size: 16px; line-height: 1.55; }
+.rpt-section__hint { display: flex; align-items: flex-start; gap: 8px; max-width: 66ch; margin: -8px 0 20px; color: var(--ink-muted); font-size: 14px; line-height: 1.5; }
+.rpt-section__hint::before { width: 6px; height: 6px; flex: 0 0 6px; margin-top: .55em; border-radius: 50%; background: var(--brand); content: ""; }
+.rpt-statebar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 18px 0 0; }
+
+/* --- Innehållsförteckning --------------------------------------------- */
+
+.rpt-toc { margin-top: 20px; border-bottom: 1px solid var(--hairline); padding: 0 0 18px; }
+.rpt-toc__label { display: block; margin-bottom: 8px; color: var(--ink-muted); font-size: 10px; font-weight: 600; letter-spacing: .08em; }
+.rpt-toc__list {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 3px 3px 7px;
+  list-style: none;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.rpt-toc__list::-webkit-scrollbar { display: none; }
+.rpt-toc__list a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  background: #fff;
+  padding: 0 14px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color var(--motion-fast) var(--ease-out-soft), background-color var(--motion-fast) var(--ease-out-soft);
+}
+.rpt-toc__list a:hover { border-color: #b9c0c9; background: var(--surface-brand); }
+
+/* Felmeddelande under "Försök igen" när en ny körning inte kunde startas. */
+.rpt-retry__error { display: block; margin-top: 10px; color: var(--risk-high); font-size: 12px; font-weight: 550; }
+.rpt-statebar a { display: inline-flex; min-height: 40px; align-items: center; border: 1px solid var(--hairline); border-radius: 999px; background: #fff; padding: 0 14px; color: var(--ink); font-family: var(--font-mono-stack); font-size: 11px; font-weight: 600; letter-spacing: .04em; text-decoration: none; transition: border-color var(--motion-fast) var(--ease-out-soft), background-color var(--motion-fast) var(--ease-out-soft); }
+.rpt-statebar a:hover { border-color: var(--analytic); background: var(--surface-brand); }
+.rpt-statebar a[aria-current="true"] { border-color: var(--brand); background: #fff3ea; color: var(--brand-ink); }
+
+/* --- Laddningssekvens ------------------------------------------------- */
+
+.rp-loading { border: 1px solid var(--hairline); border-radius: 16px; background: #fff; padding: 26px clamp(18px, 4vw, 34px) 28px; }
+.rp-loading__top { display: flex; align-items: center; gap: 9px; color: var(--ink-muted); }
+.rp-loading__top h2 { margin: 0; font-size: 10px; font-weight: 600; letter-spacing: .07em; }
+.rp-loading__clock { margin-left: auto; color: var(--ink); font-size: 11px; font-weight: 600; letter-spacing: .04em; }
+.rp-loading__grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(22px, 4vw, 46px); margin-top: 24px; }
+.rp-loading__doc { display: grid; gap: 11px; align-content: start; border-right: 1px solid var(--hairline); padding-right: clamp(18px, 3vw, 36px); }
+.rp-loading__label { margin: 0 0 4px; color: var(--ink-muted); font-size: 10px; font-weight: 600; letter-spacing: .06em; }
+.rp-loading__stage { margin: 0 0 4px; font-size: 17px; font-weight: 550; letter-spacing: -.03em; }
+.rp-loading__note { margin-top: 12px; border-top: 1px solid var(--hairline); padding-top: 11px; }
+
+/* --- Utskrift --------------------------------------------------------- */
+
+@media print {
+  @page { size: A4; margin: 14mm; }
+
+  html, body { background: #fff; }
+  .rpt-page { font-size: 12px; }
+  .rpt-wrap { width: 100%; margin: 0; }
+  .rpt-main { display: block; padding: 0; }
+  .rpt-topbar__actions, .rpt-toc, .rpt-statebar, .rpt-print, .rpt-feedback, .rp-loading, .rpt-section__hint { display: none !important; }
+
+  /* Sektionerna får flöda över sidbrytningar så att tomma sidrester försvinner.
+     Enskilda kort och rader får däremot aldrig delas. */
+  .rpt-section { padding-top: 16px; break-inside: auto; }
+  .ip-card, .qd-answer, .ds-accordion { break-inside: avoid; }
+
+  /* Allt underlag ska med på papper: utfällt, ofiltrerat och utan animationer. */
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .ip-card__panel[hidden] { display: grid !important; }
+  .cl-section__panel[hidden] { display: block !important; }
+  .cl-section[hidden] { display: grid !important; }
+  .qd-answer[hidden] { display: block !important; }
+  .cl-checklist .ds-check[hidden] { display: grid !important; }
+  .ip-card__chevron, .cl-section__chevron, .ds-accordion__chevron { display: none !important; }
+  .cl-filter, .cl-progress { display: none !important; }
+  .ip-card__preview { display: none !important; }
+  .ds-check__control input, .ds-stamp, .ds-badge, .ev-notice, .ev-variant { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .ds-meter__fill, .ds-progress-bar__fill { transition: none !important; }
+  .ds-stamp { opacity: 1 !important; transform: rotate(-2deg) !important; animation: none !important; }
+  a[href]::after { content: ""; }
+}
+
+@media (max-width: 860px) {
+  .rp-loading__grid { grid-template-columns: 1fr; gap: 22px; }
+  .rp-loading__doc { border-right: 0; border-bottom: 1px solid var(--hairline); padding: 0 0 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rpt-topbar__link, .rpt-statebar a, .rpt-toc__list a { transition: none; }
+}
+
+/* --- Mobil (max 640 px) ------------------------------------------------
+   Allt i det här blocket gäller bara små skärmar. Datorvyn är oförändrad:
+   inga regler ovanför ändras, bara skrivs över här. Fixarna tar bort orsakerna
+   till horisontell skrollning i stället för att bara dölja dem. */
+@media screen and (max-width: 640px) {
+  /* Sista säkerhetsnät. `clip` på body i stället för `hidden`, eftersom
+     `overflow-x: hidden` på body gör body till en egen skrollcontainer och då
+     slutar den sticky räknaren i checklistan att följa med i vissa webbläsare. */
+  html { overflow-x: hidden; max-width: 100%; }
+  body { overflow-x: clip; max-width: 100%; }
+
+  .rpt-page,
+  .rpt-page *,
+  .rpt-page *::before,
+  .rpt-page *::after { box-sizing: border-box; }
+  .rpt-page { max-width: 100%; overflow-wrap: anywhere; }
+
+  /* Containern: 16 px luft på var sida, utan att ändra bredden på innehållet. */
+  .rpt-wrap { width: 100%; max-width: 100%; padding-left: 16px; padding-right: 16px; }
+
+  /* Inget barn får kräva mer bredd än sin förälder. */
+  .rpt-main,
+  .rpt-section,
+  .hs-hero,
+  .hs-hero__identity,
+  .hs-hero__foot,
+  .hs-hero__badges,
+  .hs-hero__refs,
+  .rs-summary,
+  .rs-checks,
+  .ip-wrap,
+  .ip-list,
+  .ip-card,
+  .ip-card__panel,
+  .cl-checklist,
+  .cl-section,
+  .cl-section__panel,
+  .qd-questions,
+  .qd-documents,
+  .dk-good,
+  .dk-disclaimer,
+  .fw-feedback { max-width: 100%; min-width: 0; }
+
+  .ip-card__row,
+  .cl-section__trigger,
+  .qd-question__trigger,
+  .ds-check,
+  .rs-checks__list li,
+  .dk-good__list li { min-width: 0; }
+
+  /* Problemkortet: allvarlighetsmärket får en egen rad så att rubrik, märke
+     och text aldrig tränger ut varandra. */
+  .ip-card__row { grid-template-columns: minmax(0, 1fr) 36px; }
+  .it-severity { grid-column: 1 / -1; grid-row: 2; justify-self: start; max-width: 100%; }
+  .ip-card__chevron { grid-column: 2; grid-row: 1; }
+
+  /* Innehållsförteckningen radbryts i stället för att kräva sidledsskroll. */
+  .rpt-toc__list { flex-wrap: wrap; overflow-x: visible; }
+  .rpt-toc__list a { max-width: 100%; white-space: normal; }
+
+  /* Förklaringen till underlagsbetyget får aldrig klippas eller sticka ut.
+     På mobil visas den som ett litet ark längst ned i vyn, oberoende av var
+     betyget råkar ligga i raden. */
+  .ev-coverage__panel {
+    position: fixed;
+    top: auto;
+    right: 16px;
+    bottom: 16px;
+    left: 16px;
+    width: auto;
+    max-width: none;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    font-size: 14px;
+  }
+
+  /* Långa märken och etiketter bryts i stället för att tvinga fram skroll. */
+  .rpt-page .ds-badge,
+  .rpt-page .ev-variant { max-width: 100%; white-space: normal; }
+
+  /* Tryckytor: minst 44 px höga. */
+  .rpt-topbar__brand,
+  .rpt-topbar__link,
+  .rpt-statebar a,
+  .ev-coverage__trigger { min-height: 44px; }
+  .ev-coverage__trigger { padding-left: 12px; padding-right: 12px; }
+  .ip-card__trigger { min-height: 56px; }
+  .cl-section__trigger { min-height: 52px; }
+  .cl-filter { min-height: 44px; }
+
+  /* Läsbar text: minst 16 px. Monoetiketter, betyg och märken behåller sin
+     lilla storlek eftersom de är etiketter och inte brödtext. */
+  .hs-hero__spec,
+  .hs-hero__basis,
+  .hs-assumptions__list,
+  .ip-card__onset,
+  .qd-documents__note,
+  .dk-good__note,
+  .dk-disclaimer__footer > .ds-note,
+  .cl-progress .ds-progress,
+  .cl-filter label,
+  .ev-notice__text,
+  .fw-feedback__intro,
+  .fw-feedback__hint,
+  .fw-textarea { font-size: 16px; }
+
+  .ip-card__cost-note,
+  .cl-filter__count,
+  .fw-rating__number,
+  .fw-feedback__confirmation { font-size: 14px; }
+
+  /* Bilder och medier får aldrig bli bredare än skärmen. */
+  .rpt-page img,
+  .rpt-page svg,
+  .rpt-page video,
+  .rpt-page iframe,
+  .rpt-page table { max-width: 100%; }
+
+  .rpt-page pre { max-width: 100%; white-space: pre-wrap; overflow-wrap: anywhere; }
+}
