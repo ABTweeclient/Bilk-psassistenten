@@ -96,6 +96,22 @@ export default defineConfig({
     // Bind to all interfaces so the browser runtime's server-ready event fires.
     host: true,
     port: 5173,
+    // Gör den lokala Convex-backenden nåbar via samma origin som appen. Används
+    // när VITE_CONVEX_URL pekar på <app-origin>/convex i stället för localhost.
+    proxy: {
+      "/convex": {
+        target: "http://127.0.0.1:3210",
+        changeOrigin: true,
+        ws: true,
+        rewrite: (path) => path.replace(/^\/convex/, ""),
+      },
+      "/convex-site": {
+        target: "http://127.0.0.1:3211",
+        changeOrigin: true,
+        ws: true,
+        rewrite: (path) => path.replace(/^\/convex-site/, ""),
+      },
+    },
     // Keep HMR on, but disable full-screen error overlay
     hmr: {
       overlay: false,
