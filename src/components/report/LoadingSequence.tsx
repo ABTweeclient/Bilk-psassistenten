@@ -64,7 +64,7 @@ export function LoadingSequence({ status, note }: { status: ResearchStatus; note
             </ol>
           )}
           <p className="ds-note">
-            Sökningen och sammanställningen kan ta upp till några minuter, och rapporten visas först när hela underlaget är klart.
+            Sökningen och sammanställningen tar oftast under en minut, och rapporten visas först när hela underlaget är klart.
             {atLastReportedStage ? " Sista steget pågår just nu." : ""}
           </p>
           {note ? <p className="ds-note rp-loading__note">{note}</p> : null}

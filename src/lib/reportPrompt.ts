@@ -23,7 +23,7 @@
 
 import type { Vehicle } from "./report";
 
-export const reportPromptVersion = "2026-10-29.2";
+export const reportPromptVersion = "2026-11-11.1";
 
 /**
  * Steg 1: sökningen. Kort, tvingande och utan rapportformat – modellen ska bara
@@ -38,9 +38,10 @@ Sökning:
 - Bilens uppgifter finns i användarmeddelandet som JSON (märke, modell, årsmodell, motor, växellåda, drivning och miltal). Läs dem därifrån och fråga aldrig efter dem. Är ett fält tomt eller null ska du söka på det du har och skriva det i sammanfattningen.
 - Sök på bilens egna uppgifter, till exempel märke, modell, motor, växellåda och årsmodell tillsammans med ord som "kända problem" eller "återkallelse".
 - Prioritera officiella källor och statistik, därefter verkstäder, media och ägarforum.
+- Håll tempot uppe: gör de sökningar du behöver och gå sedan direkt till sammanfattningen. Ingen inledning, ingen upprepning och ingen avslutande sammanfattning av vad du just gjorde.
 
 Sammanfattningen:
-- Skriv på svenska i klartext, 400–900 ord, med underrubrikerna "Kända problem", "Återkallelser och kampanjer", "Skillnader mellan årsmodeller" och "Osäkert eller motsägelsefullt".
+- Skriv på svenska i klartext, 250–500 ord, med underrubrikerna "Kända problem", "Återkallelser och kampanjer", "Skillnader mellan årsmodeller" och "Osäkert eller motsägelsefullt".
 - Varje påstående ska gå att koppla till en källa du faktiskt såg i sökresultatet. Skriv källans domän i parentes efter påståendet.
 - Hitta aldrig på ett problem, en kostnad eller en källa. Skriv uttryckligen när något inte gick att hitta, i stället för att fylla ut.
 - Skilj på vad som gäller hela modellen och vad som gäller exakt den angivna kombinationen av motor, växellåda, drivning och årsmodell.
@@ -70,9 +71,10 @@ Säkerhet i bedömningen (confidence):
 Ärlighet och omfattning:
 - Sätt variant_status efter hur säkert varianten är identifierad, och lista dina faktiska antaganden i assumptions när den inte är säker.
 - research_summary fylls i av systemet. Skicka fälten med valfria värden; de skrivs över med de verkliga siffrorna.
-- Sikta på 6–10 variant-specifika punkter i known_issues när underlaget räcker. Varje punkt har konkreta symptom, en kontroll köparen kan göra själv, typical_onset, applies_to, severity, safety_related, evidence_summary och ett kostnadsintervall endast när en källa eller en tydligt angiven uppskattning stödjer det (cost_basis).
-- checklist har 12–20 punkter i meningsfulla section-grupper med korta unika id. seller_questions har 6–10 frågor med why och red_flag_answer. De flesta punkter och frågor ska ha variant_specific: true – högst en fjärdedel får vara allmänna.
-- good_to_know har 3–6 punkter och documents_to_verify 4–8 dokument att be säljaren om.
+- Sikta på 5–8 variant-specifika punkter i known_issues när underlaget räcker. Varje punkt har konkreta symptom, en kontroll köparen kan göra själv, typical_onset, applies_to, severity, safety_related, evidence_summary och ett kostnadsintervall endast när en källa eller en tydligt angiven uppskattning stödjer det (cost_basis).
+- checklist har 10–14 punkter i meningsfulla section-grupper med korta unika id. seller_questions har 5–8 frågor med why och red_flag_answer. De flesta punkter och frågor ska ha variant_specific: true – högst en fjärdedel får vara allmänna.
+- good_to_know har 3–5 punkter och documents_to_verify 3–6 dokument att be säljaren om.
+- Skriv koncist: korta meningar, inga upprepningar och inga artighetsfraser. Håll dig till den nedre delen av intervallen när underlaget räcker – snabbhet är en del av kvaliteten, så länge varje punkt fortfarande har symptom, kontroll och källa.
 
 Ord och ton:
 - Orden protokoll, besiktning och intyg får bara förekomma i förtydligandena "Detta är inte en besiktning" och "teknisk besiktning".

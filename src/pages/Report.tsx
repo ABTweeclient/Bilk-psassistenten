@@ -199,8 +199,9 @@ function GeneratedReport({ reportId }: { reportId: string }) {
   const parsed = view?.success ? view.data : null;
   const isPending = parsed !== null && parsed.status !== "done" && parsed.status !== "failed";
   /* Tiden räknas från postens senaste statusändring, inte från när sidan
-     öppnades: en körning i två steg får ta upp till 200 sekunder, och då är det
-     först när statusen står still som något verkligen är fel. */
+     öppnades: en körning i två steg kan i värsta fall ta upp till 200 sekunder
+     innan tidsgränsen slår till, och då är det först när statusen står still
+     som något verkligen är fel. */
   const lastChangeAt = parsed && parsed.statusLog.length > 0 ? parsed.statusLog[parsed.statusLog.length - 1].at : null;
   const stuck = isPending && lastChangeAt !== null && now - lastChangeAt >= stuckAfterMs;
 

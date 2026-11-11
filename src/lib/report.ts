@@ -658,11 +658,12 @@ export const researchStageLines = [
 ] as const;
 
 /**
- * Den tvåstegskörningen tar realistiskt 40–200 sekunder: söksteget och
- * skrivsteget har var sitt tak på 90 sekunder, och hela körningen på 200.
- * Det visas ärligt för användaren i stället för en påhittad procentandel.
+ * Målet är att en körning ska vara klar under en minut, och den typiska
+ * körningen ligger på 30–60 sekunder. Taken på 90 sekunder per steg och
+ * RESEARCH_TIMEOUT_MS för hela körningen är skyddsnät för långsamma svar –
+ * de är inte en förväntad körtid.
  */
-export const researchTiming = { minSeconds: 40, maxSeconds: 200 } as const;
+export const researchTiming = { minSeconds: 20, maxSeconds: 120 } as const;
 
 export type ResearchStage = { index: number; total: number; label: string };
 export type ResearchProgress = { onStage?: (stage: ResearchStage) => void };

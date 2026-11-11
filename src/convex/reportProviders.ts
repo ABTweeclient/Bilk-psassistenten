@@ -605,7 +605,7 @@ export const googleThinkingBudgetTokens = 4096;
 export const googleReportMaxOutputTokens = 32_768;
 
 /**
- * Svarsutrymme för söksteget. Steget svarar med en sammanfattning på 400–900
+ * Svarsutrymme för söksteget. Steget svarar med en sammanfattning på 250–500
  * ord, inte med JSON, så taket kan vara mindre än rapportens – men det måste
  * ändå rymma tänkandet.
  */

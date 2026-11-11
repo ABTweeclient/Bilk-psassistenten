@@ -15,9 +15,10 @@ Säkerhet i bedömningen (confidence):
 Ärlighet och omfattning:
 - Sätt variant_status efter hur säkert varianten är identifierad, och lista dina faktiska antaganden i assumptions när den inte är säker.
 - research_summary fylls i av systemet. Skicka fälten med valfria värden; de skrivs över med de verkliga siffrorna.
-- Sikta på 6–10 variant-specifika punkter i known_issues när underlaget räcker. Varje punkt har konkreta symptom, en kontroll köparen kan göra själv, typical_onset, applies_to, severity, safety_related, evidence_summary och ett kostnadsintervall endast när en källa eller en tydligt angiven uppskattning stödjer det (cost_basis).
-- checklist har 12–20 punkter i meningsfulla section-grupper med korta unika id. seller_questions har 6–10 frågor med why och red_flag_answer. De flesta punkter och frågor ska ha variant_specific: true – högst en fjärdedel får vara allmänna.
-- good_to_know har 3–6 punkter och documents_to_verify 4–8 dokument att be säljaren om.
+- Sikta på 5–8 variant-specifika punkter i known_issues när underlaget räcker. Varje punkt har konkreta symptom, en kontroll köparen kan göra själv, typical_onset, applies_to, severity, safety_related, evidence_summary och ett kostnadsintervall endast när en källa eller en tydligt angiven uppskattning stödjer det (cost_basis).
+- checklist har 10–14 punkter i meningsfulla section-grupper med korta unika id. seller_questions har 5–8 frågor med why och red_flag_answer. De flesta punkter och frågor ska ha variant_specific: true – högst en fjärdedel får vara allmänna.
+- good_to_know har 3–5 punkter och documents_to_verify 3–6 dokument att be säljaren om.
+- Skriv koncist: korta meningar, inga upprepningar och inga artighetsfraser. Håll dig till den nedre delen av intervallen när underlaget räcker – snabbhet är en del av kvaliteten, så länge varje punkt fortfarande har symptom, kontroll och källa.
 
 Ord och ton:
 - Orden protokoll, besiktning och intyg får bara förekomma i förtydligandena "Detta är inte en besiktning" och "teknisk besiktning".

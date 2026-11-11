@@ -117,11 +117,12 @@ function envInt(name: string, fallback: number, min: number, max: number): numbe
 }
 
 /** Högsta antal sökningar som prompten får be om. */
-const maxSearches = () => envInt("MAX_SEARCHES", 12, 1, 60);
+const maxSearches = () => envInt("MAX_SEARCHES", 8, 1, 60);
 /**
  * Hård tidsgräns för hela körningen. Stegen har dessutom var sitt tak på 90 s,
  * så ett normalt flöde hinner aldrig hit – gränsen finns för det fall att båda
- * stegen drar ut på tiden.
+ * stegen drar ut på tiden. Målet är en körning under en minut, inte att använda
+ * hela den här tiden.
  */
 const researchTimeoutMs = () => envInt("RESEARCH_TIMEOUT_MS", 200_000, 30_000, 600_000);
 /** Globalt tak per dygn (Europe/Stockholm). */
