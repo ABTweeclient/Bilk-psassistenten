@@ -129,6 +129,17 @@ export default function Landing() {
           )}
         </section>
 
+        <section className="faq-section" id="fragor" aria-labelledby="faq-title">
+          <div className="faq-heading"><p className="eyebrow"><span className="eyebrow-dot" /> VANLIGA FRÅGOR</p><span className="sr-only">Vanliga frågor</span><h2 id="faq-title">Bra att veta<br /><span>innan du börjar.</span></h2></div>
+          <div className="faq-list">
+            <details><summary>Är rapporten baserad på bilen jag anger?</summary><p>Ja, på varianten. Uppgifterna du anger – märke, modell, årsmodell, motor, växellåda och drivning – styr vilken variant som undersöks. Rapporten beskriver modellvarianten och säger aldrig något om skicket på det enskilda exemplaret du tittar på.</p></details>
+            <details><summary>Varifrån kommer uppgifterna?</summary><p>Rapporten sammanställs från publicerade källor som hittas vid sökningen, och varje punkt bygger på minst en källa. Källhänvisningarna är interna och visas inte i rapporten.</p></details>
+            <details><summary>Hur lång tid tar det?</summary><p>Det tar oftast under en minut. Du följer arbetet i realtid och rapporten öppnas så snart underlaget är sammanställt.</p></details>
+            <details><summary>Vad betyder underlagets täckning?</summary><p>Etiketten visar hur väl de publicerade källorna beskriver just den angivna varianten – bra, delvis eller tunt. Vid tunt underlag blir punkterna färre och mer försiktigt formulerade.</p></details>
+            <details><summary>Ersätter rapporten en egen kontroll?</summary><p>Nej. Använd den som vägledning inför frågor och kontroller, och verifiera alltid bilens skick och dokumentation själv.</p></details>
+          </div>
+        </section>
+
         <section className="trust-section" id="om-rapporten" aria-labelledby="trust-title">
           <div className="trust-heading">
             <p className="eyebrow"><span className="eyebrow-dot" /> TYDLIGT UNDERLAG, ÄRLIGA GRÄNSER</p>
@@ -146,17 +157,6 @@ export default function Landing() {
               <h3>Ingen garanti om ett enskilt exemplar.</h3>
               <ul><li>Ingen kontroll av bilen du tittar på och ingen garanti om dess skick.</li><li>Ingen säker prognos om framtida fel eller reparationskostnader.</li><li>Ingen teknisk besiktning – rapporten bygger på publicerade källor.</li></ul>
             </article>
-          </div>
-        </section>
-
-        <section className="faq-section" id="fragor" aria-labelledby="faq-title">
-          <div className="faq-heading"><p className="eyebrow"><span className="eyebrow-dot" /> VANLIGA FRÅGOR</p><span className="sr-only">Vanliga frågor</span><h2 id="faq-title">Bra att veta<br /><span>innan du börjar.</span></h2></div>
-          <div className="faq-list">
-            <details><summary>Är rapporten baserad på bilen jag anger?</summary><p>Ja, på varianten. Uppgifterna du anger – märke, modell, årsmodell, motor, växellåda och drivning – styr vilken variant som undersöks. Rapporten beskriver modellvarianten och säger aldrig något om skicket på det enskilda exemplaret du tittar på.</p></details>
-            <details><summary>Varifrån kommer uppgifterna?</summary><p>Rapporten sammanställs från publicerade källor som hittas vid sökningen, och varje punkt bygger på minst en källa. Källhänvisningarna är interna och visas inte i rapporten.</p></details>
-            <details><summary>Hur lång tid tar det?</summary><p>Det tar oftast under en minut. Du följer arbetet i realtid och rapporten öppnas så snart underlaget är sammanställt.</p></details>
-            <details><summary>Vad betyder underlagets täckning?</summary><p>Etiketten visar hur väl de publicerade källorna beskriver just den angivna varianten – bra, delvis eller tunt. Vid tunt underlag blir punkterna färre och mer försiktigt formulerade.</p></details>
-            <details><summary>Ersätter rapporten en egen kontroll?</summary><p>Nej. Använd den som vägledning inför frågor och kontroller, och verifiera alltid bilens skick och dokumentation själv.</p></details>
           </div>
         </section>
 

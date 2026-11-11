@@ -153,7 +153,8 @@
 .bilinsyn-root .report-showcase { display: grid; grid-template-columns: .75fr 1.25fr; gap: clamp(40px, 7vw, 96px); align-items: center; padding: 72px 0 86px; border-top: 1px solid var(--line); scroll-margin-top: 20px; }
 .bilinsyn-root .showcase-copy h2 { margin-top: 20px; }
 .bilinsyn-root .showcase-copy > p:not(.eyebrow) { max-width: 380px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
-.bilinsyn-root .text-link { display: inline-flex; align-items: center; gap: 9px; margin-top: 21px; color: #9a420d !important; font-size: 12px; font-weight: 600; text-decoration: none; }
+.bilinsyn-root .text-link { display: inline-flex; align-items: center; gap: 11px; margin-top: 21px; color: #9a420d !important; font-size: 14.4px; font-weight: 700; text-decoration: none; }
+.bilinsyn-root .text-link svg { width: 19px; height: 19px; }
 .bilinsyn-root .text-link:hover { text-decoration: underline; text-underline-offset: 4px; }
 .bilinsyn-root .report-stage { position: relative; min-height: 435px; display: grid; place-items: center; isolation: isolate; border-radius: 23px; background: radial-gradient(ellipse at 51% 48%, #e9e3de 0%, #f3efe9 48%, #f7f4ee 100%); }
 .bilinsyn-root .report-stage::before { position: absolute; inset: 13% 18%; border: 1px solid rgb(83 97 122 / 9%); border-radius: 50%; content: ""; box-shadow: 0 0 0 34px rgb(83 97 122 / 3%), 0 0 0 72px rgb(83 97 122 / 2%); }
