@@ -32,6 +32,7 @@
 .bilinsyn-root .landing-nav { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid var(--line); }
 .bilinsyn-root .landing-brand { display: inline-flex; align-items: center; gap: 11px; color: var(--ink); text-decoration: none; font-size: 15px; font-weight: 600; letter-spacing: -.045em; white-space: nowrap; }
 .bilinsyn-root .landing-brand > span:last-child > span { font-weight: 400; }
+.bilinsyn-root .brand-logo { display: block; height: 46px; width: auto; position: relative; top: 5px; }
 .bilinsyn-root .brand-symbol { position: relative; display: grid; width: 33px; height: 33px; place-items: center; border-radius: 11px; background: var(--orange); transform: rotate(-4deg); }
 .bilinsyn-root .brand-symbol span { position: absolute; width: 12px; height: 2px; border-radius: 4px; background: white; transform: rotate(45deg); }
 .bilinsyn-root .brand-symbol span + span { transform: rotate(-45deg); }
@@ -74,6 +75,8 @@
 .bilinsyn-root .search-card { grid-column: 1 / -1; grid-row: 3; padding: 25px 29px 19px; background: white; box-shadow: 0 14px 38px rgb(46 35 22 / 5%); scroll-margin-top: 18px; }
 .bilinsyn-root .search-card .vf-lede { max-width: 640px; }
 .bilinsyn-root .search-card:focus-within { border-color: rgb(154 66 13 / 32%); }
+/* Formuläret står som eget segment längst ner i flödet, efter rapportvisningen. */
+.bilinsyn-root .search-card--standalone { margin: 0 0 clamp(56px, 7vw, 92px); }
 .bilinsyn-root .search-title-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .bilinsyn-root .search-title-row .eyebrow { font-size: 10px; }
 .bilinsyn-root .step-index { margin-left: 8px; color: #6b7079; font-size: 10px; }
@@ -229,6 +232,7 @@
   .bilinsyn-root .page-wrap { width: calc(100% - 36px); }
   .bilinsyn-root .landing-nav { min-height: 68px; gap: 10px; }
   .bilinsyn-root .landing-brand { gap: 8px; font-size: 13px; }
+  .bilinsyn-root .brand-logo { height: 34px; top: 4px; }
   .bilinsyn-root .brand-symbol { width: 29px; height: 29px; border-radius: 10px; }
   .bilinsyn-root .landing-nav nav { gap: 14px; margin-left: auto; }
   .bilinsyn-root .landing-nav nav a { font-size: 10px; }

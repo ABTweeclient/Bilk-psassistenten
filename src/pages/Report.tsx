@@ -1,4 +1,5 @@
 import { useAction, useQuery } from "convex/react";
+import qlarLogo from "@/assets/qlar-logo.png";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router";
 import { ChecklistSection } from "@/components/report/ChecklistSection";
@@ -92,9 +93,8 @@ function SectionHeader({ number, title }: { number: string; title: string }) {
 function Topbar() {
   return (
     <div className="rpt-topbar">
-      <Link className="rpt-topbar__brand" to="/">
-        <span aria-hidden="true">◆</span>
-        <span>bilköps<span>assistenten</span></span>
+      <Link className="rpt-topbar__brand" to="/" aria-label="Qlar, startsida">
+        <img className="rpt-topbar__logo" src={qlarLogo} alt="Qlar" />
       </Link>
       <div className="rpt-topbar__actions">
         <Link className="rpt-topbar__link" to="/">Ny sökning</Link>

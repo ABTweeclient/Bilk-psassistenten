@@ -1,4 +1,5 @@
 import { useAction } from "convex/react";
+import qlarLogo from "@/assets/qlar-logo.png";
 import { useState } from "react";
 import { ArrowDown, ArrowRight, ArrowUpRight, Check, ChevronRight, FileCheck2, Gauge, ShieldCheck } from "lucide-react";
 import { useNavigate } from "react-router";
@@ -83,7 +84,7 @@ export default function Landing() {
     <main className="bilinsyn-root" id="top">
       <div className="page-wrap">
         <header className="landing-nav">
-          <a className="landing-brand" href="#top" aria-label="Bilköpsassistenten, startsida"><span className="brand-symbol" aria-hidden="true"><span /><span /></span><span>bilköps<span>assistenten</span></span></a>
+          <a className="landing-brand" href="#top" aria-label="Qlar, startsida"><img className="brand-logo" src={qlarLogo} alt="Qlar" /></a>
           <nav aria-label="Huvudmeny"><a href="#sa-fungerar-det">Så fungerar det</a><a href="#exempelrapport">Rapporten</a><a href="#priser">Priser</a></nav>
           <a className="nav-action" href="#fordonsokning">Kom igång <ArrowUpRight size={16} aria-hidden="true" /></a>
         </header>
@@ -93,6 +94,7 @@ export default function Landing() {
             <p className="eyebrow"><span className="eyebrow-dot" /> ETT TYDLIGARE BILKÖP</p>
             <h1 id="hero-heading">Vet vad du köper.<br /><span>Innan du köper det.</span></h1>
             <p className="hero-lede">Få koll på kända problem, viktiga kontrollpunkter och rätt frågor att ställa – anpassat efter bilen du funderar på.</p>
+            <a className="text-link" href="#fordonsokning">Prova med din bil <ArrowDown size={16} aria-hidden="true" /></a>
             <div className="hero-footnote"><span className="footnote-rule" /> Mer information inför beslutet. Färre överraskningar efter köpet.</div>
           </div>
 
@@ -103,13 +105,6 @@ export default function Landing() {
             <div className="known-rows"><div><span className="area-icon">01</span><span>Motor</span><span className="row-line" /></div><div><span className="area-icon">02</span><span>Växellåda</span><span className="row-line" /></div><div><span className="area-icon">03</span><span>Drivlina</span><span className="row-line" /></div></div>
             <span className="illustration-note mono">RAPPORTENS STRUKTUR · EXEMPEL</span>
           </aside>
-
-          <section className="search-card bento-reveal" id="fordonsokning" aria-label="Uppgifter om bilen">
-            <VehicleForm onSubmit={handleSubmit} isSubmitting={isSubmitting} />
-            {errorMessage && (
-              <p className="vf-form-error" role="alert">{errorMessage}</p>
-            )}
-          </section>
 
           <aside className="analysis-card bento-reveal bento-hover" aria-label="Exempel på analysstruktur">
             <div className="card-heading"><span className="mono">ANALYSENS DELAR</span><span className="analysis-pulse" /></div>
@@ -124,6 +119,15 @@ export default function Landing() {
         </section>
 
         <ReportPreview />
+
+        {/* Formuläret är sidans sista steg: först hur det fungerar, sedan hur
+            rapporten ser ut, och först därefter fyller man i bilen. */}
+        <section className="search-card search-card--standalone bento-reveal" id="fordonsokning" aria-label="Uppgifter om bilen">
+          <VehicleForm onSubmit={handleSubmit} isSubmitting={isSubmitting} />
+          {errorMessage && (
+            <p className="vf-form-error" role="alert">{errorMessage}</p>
+          )}
+        </section>
 
         <section className="trust-section" id="om-rapporten" aria-labelledby="trust-title">
           <div className="trust-heading">

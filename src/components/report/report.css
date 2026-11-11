@@ -29,6 +29,7 @@
 }
 .rpt-topbar__brand { display: inline-flex; align-items: center; gap: 9px; color: var(--ink); font-size: 14px; font-weight: 600; letter-spacing: -.04em; text-decoration: none; }
 .rpt-topbar__brand span:last-child { font-weight: 400; }
+.rpt-topbar__logo { display: block; height: 22px; width: auto; }
 .rpt-topbar__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .rpt-topbar__link { display: inline-flex; min-height: 40px; align-items: center; color: var(--ink-muted); font-size: 13px; text-decoration: none; transition: color var(--motion-fast) var(--ease-out-soft); }
 .rpt-topbar__link:hover { color: var(--brand-ink); text-decoration: underline; text-underline-offset: 3px; }
