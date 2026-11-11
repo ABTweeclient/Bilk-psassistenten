@@ -1,7 +1,7 @@
 import { useAction } from "convex/react";
 import qlarLogo from "@/assets/qlar-logo.png";
 import { useState } from "react";
-import { ArrowDown, ArrowRight, ArrowUpRight, Check, ChevronRight, FileCheck2, Gauge, ShieldCheck } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, Check, ChevronRight, Gauge, ShieldCheck } from "lucide-react";
 import { useNavigate } from "react-router";
 import { VehicleForm } from "@/components/VehicleForm";
 import { api } from "@/convex/_generated/api";
@@ -85,7 +85,7 @@ export default function Landing() {
       <div className="page-wrap">
         <header className="landing-nav">
           <a className="landing-brand" href="#top" aria-label="Qlar, startsida"><img className="brand-logo" src={qlarLogo} alt="Qlar" /></a>
-          <nav aria-label="Huvudmeny"><a href="#sa-fungerar-det">Så fungerar det</a><a href="#exempelrapport">Rapporten</a><a href="#priser">Priser</a></nav>
+          <nav aria-label="Huvudmeny"><a href="#sa-fungerar-det">Så fungerar det</a><a href="#exempelrapport">Rapporten</a></nav>
           <a className="nav-action" href="#fordonsokning">Kom igång <ArrowUpRight size={16} aria-hidden="true" /></a>
         </header>
 
@@ -160,12 +160,10 @@ export default function Landing() {
           </div>
         </section>
 
-        <section className="price-note" id="priser"><div className="price-mark"><FileCheck2 size={21} aria-hidden="true" /></div><div><p className="eyebrow">TRANSPARENT FRÅN START</p><h2>Kostnadsfritt i den här versionen.</h2><p>Du kan ta fram rapporter utan kostnad medan tjänsten byggs ut. Innan något börjar kosta säger vi till i god tid.</p></div><span className="price-status mono">EARLY ACCESS</span></section>
-
         <footer className="landing-footer">
-          <a className="landing-brand" href="#top" aria-label="Bilköpsassistenten, startsida"><span className="brand-symbol" aria-hidden="true"><span /><span /></span><span>bilköps<span>assistenten</span></span></a>
+          <a className="landing-brand" href="#top" aria-label="Qlar, startsida"><img className="brand-logo" src={qlarLogo} alt="Qlar" /></a>
           <p>Mer information inför beslutet. Färre överraskningar efter köpet.</p>
-          <div className="footer-contact"><strong>Kontakt</strong><a href="mailto:kontakt@example.com">kontakt@example.com</a><span>Kontaktadress för tjänsten</span></div>
+          <div className="footer-contact"><strong>Kontakt</strong><a href="mailto:qlar.uf@gmail.com">qlar.uf@gmail.com</a><span>Kontaktadress för tjänsten</span></div>
           <span className="footer-disclaimer"><ShieldCheck size={15} aria-hidden="true" /> Rapporten är vägledning från publicerade källor – inte en garanti eller kontroll av bilen.</span>
         </footer>
       </div>

@@ -27,21 +27,18 @@
 .bilinsyn-root button, .bilinsyn-root input { font: inherit; }
 .bilinsyn-root button { color: inherit; }
 .bilinsyn-root button:focus-visible, .bilinsyn-root a:focus-visible, .bilinsyn-root input:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
-.bilinsyn-root .mono, .bilinsyn-root .eyebrow, .bilinsyn-root .card-heading, .bilinsyn-root .illustration-note, .bilinsyn-root .report-card-top, .bilinsyn-root .report-mini-label, .bilinsyn-root .area-selection, .bilinsyn-root .step-row > div > p, .bilinsyn-root .step-number, .bilinsyn-root .price-status { font-family: "JetBrains Mono", var(--font-mono-stack); font-variant-numeric: tabular-nums; }
+.bilinsyn-root .mono, .bilinsyn-root .eyebrow, .bilinsyn-root .card-heading, .bilinsyn-root .illustration-note, .bilinsyn-root .report-card-top, .bilinsyn-root .report-mini-label, .bilinsyn-root .area-selection, .bilinsyn-root .step-row > div > p, .bilinsyn-root .step-number { font-family: "JetBrains Mono", var(--font-mono-stack); font-variant-numeric: tabular-nums; }
 .bilinsyn-root .page-wrap { width: min(100% - 64px, 1240px); margin: 0 auto; }
 .bilinsyn-root .landing-nav { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid var(--line); }
 .bilinsyn-root .landing-brand { display: inline-flex; align-items: center; gap: 11px; color: var(--ink); text-decoration: none; font-size: 15px; font-weight: 600; letter-spacing: -.045em; white-space: nowrap; }
 .bilinsyn-root .landing-brand > span:last-child > span { font-weight: 400; }
-.bilinsyn-root .brand-logo { display: block; height: 46px; width: auto; position: relative; top: 5px; }
-.bilinsyn-root .brand-symbol { position: relative; display: grid; width: 33px; height: 33px; place-items: center; border-radius: 11px; background: var(--orange); transform: rotate(-4deg); }
-.bilinsyn-root .brand-symbol span { position: absolute; width: 12px; height: 2px; border-radius: 4px; background: white; transform: rotate(45deg); }
-.bilinsyn-root .brand-symbol span + span { transform: rotate(-45deg); }
+.bilinsyn-root .brand-logo { display: block; height: 40px; width: auto; }
 .bilinsyn-root .landing-nav nav { display: flex; align-items: center; gap: clamp(20px, 3.3vw, 46px); }
 .bilinsyn-root .landing-nav nav a { color: var(--muted); font-size: 13px; text-decoration: none; transition: color 200ms var(--ease-out-soft); }
 .bilinsyn-root .landing-nav nav a:hover { color: var(--orange); }
 .bilinsyn-root .nav-action { display: inline-flex; min-height: 41px; align-items: center; gap: 12px; border: 1px solid var(--line); border-radius: 999px; background: white; padding: 0 16px; font-size: 12px; font-weight: 600; text-decoration: none; transition: border-color 200ms var(--ease-out-soft), box-shadow 200ms var(--ease-out-soft); }
 .bilinsyn-root .nav-action:hover { border-color: #c9d0d8; box-shadow: 0 6px 16px rgb(46 35 22 / 8%); }
-.bilinsyn-root .hero-bento { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: minmax(220px, auto) minmax(220px, auto) minmax(220px, auto); gap: 14px; padding: 22px 0 92px; }
+.bilinsyn-root .hero-bento { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: minmax(220px, auto) minmax(220px, auto); gap: 14px; padding: 22px 0 52px; }
 /* backwards (not both): when the animation ends the card returns to its normal
    styles, so no card is left holding a transform on its own compositor layer —
    that is what made the text look soft and the input blurry while typing. */
@@ -117,7 +114,7 @@
 .bilinsyn-root .report-actions > div { display: grid; gap: 6px; }
 .bilinsyn-root .report-actions p { max-width: 620px; }
 
-.bilinsyn-root .how-section { display: grid; grid-template-columns: .78fr 1.22fr; gap: clamp(40px, 8vw, 115px); padding: 75px 0 96px; border-top: 1px solid var(--line); }
+.bilinsyn-root .how-section { display: grid; grid-template-columns: .78fr 1.22fr; gap: clamp(40px, 8vw, 115px); padding: 52px 0 96px; border-top: 1px solid var(--line); }
 .bilinsyn-root .trust-section { display: grid; grid-template-columns: .72fr 1.28fr; gap: clamp(32px, 7vw, 90px); border-top: 1px solid var(--line); padding: 76px 0 84px; }
 .bilinsyn-root .trust-heading h2, .bilinsyn-root .faq-heading h2 { margin: 17px 0 12px; font-size: clamp(38px, 4.6vw, 54px); font-weight: 500; letter-spacing: -.06em; line-height: 1.06; }
 .bilinsyn-root .trust-heading h2 span, .bilinsyn-root .faq-heading h2 span { color: var(--blue-grey); }
@@ -193,12 +190,6 @@
 .bilinsyn-root .area-selection > span:last-child { color: #6b7482; font-family: Inter, var(--font-display); }
 .bilinsyn-root .area-indicator { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); }
 .bilinsyn-root .stage-note { position: absolute; right: 17px; bottom: 14px; display: flex; align-items: center; gap: 6px; color: #46536a; font-size: 10px; }
-.bilinsyn-root .price-note { display: grid; grid-template-columns: 46px 1fr auto; gap: 18px; align-items: center; border: 1px solid var(--line); border-radius: 17px; background: #fff; padding: 23px 26px; }
-.bilinsyn-root .price-mark { display: grid; width: 44px; height: 44px; place-items: center; border-radius: 14px; background: #fff1e7; color: var(--orange); }
-.bilinsyn-root .price-note .eyebrow { font-size: 10px; }
-.bilinsyn-root .price-note h2 { margin: 3px 0 2px; font-size: 17px; font-weight: 550; letter-spacing: -.035em; }
-.bilinsyn-root .price-note > div > p:last-child { max-width: 680px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
-.bilinsyn-root .price-status { color: #6a7280; font-size: 10px; letter-spacing: .04em; }
 .bilinsyn-root .landing-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 13px 24px; align-items: center; margin-top: 52px; border-top: 1px solid var(--line); padding: 24px 0 30px; }
 .bilinsyn-root .landing-footer > p { margin: 0; color: var(--muted); font-size: 11px; text-align: right; }
 .bilinsyn-root .footer-disclaimer { grid-column: 1 / -1; display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 10px; line-height: 1.55; }
@@ -207,7 +198,7 @@
 @media (min-width: 1280px) { .bilinsyn-root .hero-panel h1 { font-size: 64px; } }
 @media (max-width: 960px) {
   .bilinsyn-root .page-wrap { width: min(100% - 44px, 800px); }
-  .bilinsyn-root .hero-bento { grid-template-rows: minmax(230px, auto) minmax(225px, auto) minmax(220px, auto); }
+  .bilinsyn-root .hero-bento { grid-template-rows: minmax(230px, auto) minmax(225px, auto); }
   .bilinsyn-root .hero-panel { padding: 32px; }
   .bilinsyn-root .hero-panel h1 { font-size: clamp(40px, 6.1vw, 57px); }
   .bilinsyn-root .known-card { padding: 19px; }
@@ -232,14 +223,13 @@
   .bilinsyn-root .page-wrap { width: calc(100% - 36px); }
   .bilinsyn-root .landing-nav { min-height: 68px; gap: 10px; }
   .bilinsyn-root .landing-brand { gap: 8px; font-size: 13px; }
-  .bilinsyn-root .brand-logo { height: 34px; top: 4px; }
-  .bilinsyn-root .brand-symbol { width: 29px; height: 29px; border-radius: 10px; }
+  .bilinsyn-root .brand-logo { height: 29px; }
   .bilinsyn-root .landing-nav nav { gap: 14px; margin-left: auto; }
   .bilinsyn-root .landing-nav nav a { font-size: 10px; }
   .bilinsyn-root .landing-nav nav a:first-child { display: none; }
   .bilinsyn-root .nav-action { min-height: 35px; gap: 5px; padding: 0 10px; font-size: 10px; }
   .bilinsyn-root .nav-action svg { width: 13px; }
-  .bilinsyn-root .hero-bento { grid-template-columns: 1fr 1fr; grid-template-rows: auto; gap: 10px; padding: 15px 0 66px; }
+  .bilinsyn-root .hero-bento { grid-template-columns: 1fr 1fr; grid-template-rows: auto; gap: 10px; padding: 15px 0 40px; }
   .bilinsyn-root .hero-panel { grid-column: 1 / -1; grid-row: auto; min-height: 316px; padding: 28px 23px; order: 0; }
   .bilinsyn-root .hero-panel h1 { margin: 21px 0 13px; font-size: clamp(39px, 10vw, 54px); }
   .bilinsyn-root .hero-lede { max-width: 430px; font-size: 14px; }
@@ -267,7 +257,7 @@
   .bilinsyn-root .demo-result-note > a { margin-left: 0; }
   .bilinsyn-root .report-actions { flex-direction: column; }
   .bilinsyn-root .report-actions .ds-btn { width: 100%; }
-  .bilinsyn-root .how-section { grid-template-columns: 1fr; gap: 28px; padding: 57px 0 67px; }
+  .bilinsyn-root .how-section { grid-template-columns: 1fr; gap: 28px; padding: 44px 0 67px; }
   .bilinsyn-root .trust-section, .bilinsyn-root .faq-section { grid-template-columns: 1fr; gap: 26px; padding: 58px 0 64px; }
   .bilinsyn-root .trust-columns { grid-template-columns: 1fr; }
   .bilinsyn-root .trust-card { padding: 19px; }
@@ -287,12 +277,6 @@
   .bilinsyn-root .report-main-card { width: min(77%, 360px); min-height: 330px; padding: 17px; }
   .bilinsyn-root .report-main-card h3 { margin-top: 12px; font-size: 23px; }
   .bilinsyn-root .stage-note { right: 10px; bottom: 10px; font-size: 9px; }
-  .bilinsyn-root .price-note { grid-template-columns: 39px 1fr; gap: 13px; padding: 17px; }
-  .bilinsyn-root .price-mark { width: 38px; height: 38px; }
-  .bilinsyn-root .price-mark svg { width: 18px; }
-  .bilinsyn-root .price-note h2 { font-size: 15px; }
-  .bilinsyn-root .price-note > div > p:last-child { font-size: 10px; }
-  .bilinsyn-root .price-status { grid-column: 2; font-size: 8px; }
   .bilinsyn-root .landing-footer { grid-template-columns: 1fr; gap: 13px; margin-top: 36px; padding: 20px 0 25px; }
   .bilinsyn-root .landing-footer > p { text-align: left; font-size: 10px; }
   .bilinsyn-root .footer-contact { gap: 3px; }
