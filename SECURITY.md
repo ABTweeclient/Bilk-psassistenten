@@ -47,6 +47,27 @@ Only email one-time codes are offered. "Continue as Guest" has been removed, and
 the leftover `/dashboard` page and route are gone. The default destination after
 sign-in is `/admin`.
 
+### How the code is delivered
+
+Codes are sent by one of two senders, chosen automatically:
+
+1. **`RESEND_API_KEY` set** – the code is sent with Resend from
+   `RESEND_FROM` (default `Bilköpsassistenten <onboarding@resend.dev>`). Use this
+   when the Freebuff integration key is not available. Until a domain is verified
+   in Resend, the test domain only delivers to the address that owns the Resend
+   account, which is exactly the administrator's own address.
+2. **Otherwise** – the code is sent through the Freebuff integrations gateway,
+   which needs `VLY_INTEGRATION_KEY`. Without either key, sign-in cannot send
+   codes and `/admin` stays locked.
+
+```bash
+npx convex env set RESEND_API_KEY re_...        # from resend.com → API Keys
+npx convex env set RESEND_FROM 'Bilköpsassistenten <login@your-domain>'
+```
+
+No other part of sign-in changes: the code is still six digits, valid for 15
+minutes, and the address still has to be verified before it counts as admin.
+
 ## 3. Test data
 
 `/admin` has a **Testdata** section with a "Ta bort testdata" button. It runs the
@@ -134,6 +155,9 @@ copy development data to production, and auth/users are separate too.
    - `npx convex env set --prod APP_ENV production`
    - `npx convex env set --prod REPORT_PROVIDER google` (or `openai` / `anthropic`)
    - the search-capable AI key, e.g. `npx convex env set --prod GOOGLE_API_KEY ...`
+   - one of the two sign-in senders (see §2):
+     `npx convex env set --prod RESEND_API_KEY re_...` (plus optional
+     `RESEND_FROM`), or `VLY_INTEGRATION_KEY` if you have it.
    - optional: `LLM_MODEL`, `DAILY_REPORT_CAP`, `RATE_LIMIT_PER_HOUR`,
      `RATE_LIMIT_SECRET`, `USD_SEK_RATE`.
    - optional, for slow research calls: `RESEARCH_TIMEOUT_MS` (the hard limit
