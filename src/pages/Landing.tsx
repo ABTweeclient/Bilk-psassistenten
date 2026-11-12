@@ -59,6 +59,7 @@ function ReportPreview() {
 
 export default function Landing() {
   const generateReport = useAction(api.reportPipeline.generateReport);
+  const suggestVehicle = useAction(api.vehicleLookup.suggestByRegistration);
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -77,6 +78,18 @@ export default function Landing() {
     } catch (error) {
       setIsSubmitting(false);
       setErrorMessage(reportErrorMessage(error));
+    }
+  }
+
+  /**
+   * Hämtar bilens uppgifter från vägtrafikregistret. Uppslaget är en genväg:
+   * svarar det inte fyller användaren i formuläret själv.
+   */
+  async function handleLookup(registrationNumber: string) {
+    try {
+      return await suggestVehicle({ registrationNumber });
+    } catch {
+      return null;
     }
   }
 
@@ -123,7 +136,7 @@ export default function Landing() {
         {/* Formuläret är sidans sista steg: först hur det fungerar, sedan hur
             rapporten ser ut, och först därefter fyller man i bilen. */}
         <section className="search-card search-card--standalone bento-reveal" id="fordonsokning" aria-label="Uppgifter om bilen">
-          <VehicleForm onSubmit={handleSubmit} isSubmitting={isSubmitting} />
+          <VehicleForm onSubmit={handleSubmit} isSubmitting={isSubmitting} onLookup={handleLookup} />
           {errorMessage && (
             <p className="vf-form-error" role="alert">{errorMessage}</p>
           )}

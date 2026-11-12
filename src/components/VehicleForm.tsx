@@ -11,15 +11,22 @@ import {
   type VehicleFormValues,
   type VehicleSubmission,
 } from "@/lib/vehicleForm";
+import {
+  isValidRegistrationNumber,
+  normalizeRegistrationNumber,
+  type VehicleLookupResponse,
+} from "@/lib/vehicleLookup";
 import "./vehicle-form.css";
 
 type VehicleFormProps = {
   onSubmit: (submission: VehicleSubmission) => Promise<void> | void;
   isSubmitting?: boolean;
   onExample?: () => void;
+  /** Hämtar bilens uppgifter från registret. Utan den visas inte fältet. */
+  onLookup?: (registrationNumber: string) => Promise<VehicleLookupResponse | null>;
 };
 
-export function VehicleForm({ onSubmit, isSubmitting = false, onExample }: VehicleFormProps) {
+export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLookup }: VehicleFormProps) {
   const [values, setValues] = useState<VehicleFormValues>(emptyVehicleForm);
   const [errors, setErrors] = useState<Partial<Record<keyof VehicleFormValues, string>>>({});
   const [submitError, setSubmitError] = useState("");
@@ -27,6 +34,53 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample }: Vehic
   const idFor = (field: keyof VehicleFormValues) => `${id}-${field}`;
   const errorFor = (field: keyof VehicleFormValues) => errors[field] ? `${idFor(field)}-error` : undefined;
   const timingErrorId = `${id}-purchase-timing-error`;
+  const [plate, setPlate] = useState("");
+  const [lookup, setLookup] = useState<{ state: "idle" | "loading" | "found" | "none" | "error"; message: string }>({ state: "idle", message: "" });
+
+  /**
+   * Hämtar ett förslag på bilen från en webbsökning på registreringsnumret.
+   * Uppgifterna är förslag: bara fält som går att fylla i sätts, och allt
+   * valideras som vanligt när formuläret skickas.
+   */
+  async function handleLookup() {
+    if (!onLookup) return;
+    const registrationNumber = normalizeRegistrationNumber(plate);
+    if (!isValidRegistrationNumber(registrationNumber)) {
+      setLookup({ state: "error", message: "Skriv ett svenskt registreringsnummer, till exempel ABC123." });
+      return;
+    }
+    setLookup({ state: "loading", message: "Söker efter bilen…" });
+    try {
+      const result = await onLookup(registrationNumber);
+      const suggestion = result?.suggestion ?? null;
+      if (!suggestion?.found) {
+        setLookup({
+          state: "none",
+          message: result?.notice ?? "Hittade ingen säker träff. Fyll i uppgifterna själv.",
+        });
+        return;
+      }
+      /* Registret är källan, så uppgifterna fylls i direkt. Drivning och miltal
+         finns inte i Vägtrafikregistret och lämnas därför som de är. */
+      setValues((current) => ({
+        ...current,
+        make: suggestion.make || current.make,
+        model: suggestion.model || current.model,
+        year: suggestion.year ? String(suggestion.year) : current.year,
+        engine: suggestion.engine || current.engine,
+        gearbox: suggestion.gearbox || current.gearbox,
+      }));
+      setErrors({});
+      setLookup({
+        state: "found",
+        message: suggestion.source
+          ? `Uppgifterna är hämtade från ${suggestion.source}. Drivning och miltal finns inte där – fyll i dem om du vet, annars går det bra som det är.`
+          : "Uppgifterna är hämtade från registret. Drivning och miltal finns inte där – fyll i dem om du vet, annars går det bra som det är.",
+      });
+    } catch {
+      setLookup({ state: "error", message: "Kunde inte hämta förslag just nu. Fyll i uppgifterna själv." });
+    }
+  }
 
   function update<K extends keyof VehicleFormValues>(field: K, value: VehicleFormValues[K]) {
     setValues((current) => ({ ...current, [field]: value }));
@@ -82,6 +136,44 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample }: Vehic
         <span className="vf-intro-icon" aria-hidden="true"><CircleHelp size={21} /></span>
       </div>
 
+      {onLookup && (
+        <div className="vf-lookup">
+          <label htmlFor={`${id}-plate`}>Registreringsnummer</label>
+          <div className="vf-lookup__row">
+            <input
+              id={`${id}-plate`}
+              className="vf-input"
+              name="registration"
+              autoComplete="off"
+              maxLength={8}
+              placeholder="Till exempel ABC123"
+              value={plate}
+              onChange={(event) => {
+                setPlate(event.target.value);
+                if (lookup.state !== "loading") setLookup({ state: "idle", message: "" });
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  event.preventDefault();
+                  void handleLookup();
+                }
+              }}
+            />
+            <button
+              type="button"
+              className="vf-lookup__button"
+              onClick={() => void handleLookup()}
+              disabled={lookup.state === "loading"}
+            >
+              {lookup.state === "loading" ? "Söker…" : "Hämta förslag"}
+            </button>
+          </div>
+          <p className="vf-hint" aria-live="polite">
+            {lookup.message || "Fyll i skylten och hämta – vi fyller i märke, modell, år, motor, bränsle och växellåda. Drivning och miltal fyller du i själv om du vet."}
+          </p>
+        </div>
+      )}
+
       <div className="vf-grid" aria-labelledby={`${id}-title`}>
         <div className="vf-field">
           <label htmlFor={idFor("make")}>Märke <span aria-hidden="true">*</span></label>
@@ -118,7 +210,7 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample }: Vehic
         </div>
 
         <div className="vf-field">
-          <label htmlFor={idFor("drivetrain")}>Drivning <span aria-hidden="true">*</span></label>
+          <label htmlFor={idFor("drivetrain")}>Drivning <span>(valfritt)</span></label>
           <select {...fieldProps("drivetrain")} className={fieldClass("drivetrain")} name="drivetrain" required value={values.drivetrain} onChange={(event) => update("drivetrain", event.target.value as VehicleFormValues["drivetrain"])}>
             <option value="">Välj drivning</option><option value="Framhjul">Framhjul</option><option value="Bakhjul">Bakhjul</option><option value="Fyrhjul">Fyrhjul</option><option>Vet ej</option>
           </select>

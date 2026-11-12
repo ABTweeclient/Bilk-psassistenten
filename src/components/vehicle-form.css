@@ -56,3 +56,21 @@
 @media (prefers-reduced-motion: reduce) {
   .vehicle-form *, .vehicle-form *::before, .vehicle-form *::after { transition: none !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
+
+/* Regnummerfältet: ett frivilligt steg före de övriga fälten. */
+.vf-lookup { display: grid; gap: 7px; margin-top: 18px; }
+.vf-lookup > label { color: var(--muted, #6b7079); font-size: 11px; font-weight: 600; }
+.vf-lookup > label span { font-weight: 400; }
+.vf-lookup__row { display: flex; gap: 8px; }
+.vf-lookup__row .vf-input { flex: 1 1 auto; text-transform: uppercase; }
+.vf-lookup__button { flex: 0 0 auto; min-height: 40px; border: 1px solid var(--line, rgb(17 24 39 / 10%)); border-radius: 10px; background: white; padding: 0 14px; font-size: 12px; font-weight: 600; color: inherit; cursor: pointer; transition: border-color 160ms ease, box-shadow 160ms ease; }
+.vf-lookup__button:hover:not(:disabled) { border-color: #c9d0d8; box-shadow: 0 6px 16px rgb(46 35 22 / 8%); }
+.vf-lookup__button:disabled { color: #8b939d; cursor: default; }
+@media (max-width: 520px) { .vf-lookup__row { flex-direction: column; } }
+
+/* Sökresultatet visas som ett förslag med källa, aldrig ifyllt automatiskt. */
+.vf-lookup__result { display: grid; gap: 8px; border: 1px solid var(--line, rgb(17 24 39 / 10%)); border-radius: 10px; padding: 10px 12px; background: #fbfaf8; }
+.vf-lookup__result p { margin: 0; font-size: 12px; line-height: 1.45; color: var(--muted, #6b7079); }
+.vf-lookup__result strong { color: inherit; font-weight: 700; }
+.vf-lookup__actions { display: flex; gap: 8px; }
+.vf-lookup__button--quiet { background: transparent; border-color: transparent; color: var(--muted, #6b7079); }

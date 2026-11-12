@@ -81,6 +81,24 @@ const schema = defineSchema(
     })
       .index("by_report_id", ["reportId"])
       .index("by_created_at", ["createdAt"]),
+
+    // Cachade registreringsnummeruppslag: ett betalt uppslag per bil, oavsett
+    // hur många rapporter som senare använder samma skylt.
+    vehicleLookups: defineTable({
+      registrationNumber: v.string(),
+      make: v.string(),
+      model: v.string(),
+      year: v.optional(v.number()),
+      engine: v.string(),
+      gearbox: v.string(),
+      source: v.string(),
+      bodyStyle: v.optional(v.string()),
+      fetchedAt: v.number(),
+    }).index("by_registration_number", ["registrationNumber"]),
+
+    // Betalda uppslag per dygn, så att den publika knappen inte kan tömma
+    // uppslagskrediterna.
+    lookupUsage: defineTable({ day: v.string(), count: v.number() }).index("by_day", ["day"]),
   },
   {
     schemaValidation: false,

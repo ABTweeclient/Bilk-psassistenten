@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useAction, useMutation, useQuery } from "convex/react";
 import { Lock, ShieldCheck } from "lucide-react";
 import { api } from "@/convex/_generated/api";
@@ -91,6 +91,81 @@ function ProviderPanel() {
           </div>
         ))}
       </div>
+    </section>
+  );
+}
+
+/**
+ * Registersaldot för registreringsnummeruppslaget. Visar hur många betalda
+ * uppslag som är kvar, och varnar när det börjar ta slut – ett uppslag drar en
+ * kredit. Endast administratören kan läsa saldot.
+ */
+function LookupPanel() {
+  const creditStatus = useAction(api.vehicleLookup.creditStatus);
+  type LookupState =
+    | { kind: "busy" }
+    | { kind: "error"; message: string }
+    | { kind: "ready"; configured: false }
+    | { kind: "ready"; configured: true; credits: number | null; threshold: number };
+  const [state, setState] = useState<LookupState>({ kind: "busy" });
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      try {
+        const result = await creditStatus({});
+        if (cancelled) return;
+        setState(
+          result.configured
+            ? { kind: "ready", configured: true, credits: result.credits, threshold: result.threshold }
+            : { kind: "ready", configured: false },
+        );
+      } catch (error) {
+        if (!cancelled) {
+          setState({ kind: "error", message: error instanceof Error ? error.message : "Kunde inte läsa saldot." });
+        }
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [creditStatus]);
+
+  return (
+    <section className="adm-section" aria-labelledby="adm-lookup-title">
+      <h2 id="adm-lookup-title" className="adm-section-title">Registreringsnummeruppslag</h2>
+      <p className="adm-note">
+        Uppslag mot Vägtrafikregistret via RegCheck. Ett lyckat uppslag drar en kredit (2 kr), och varje skylt cachas –
+        samma bil kostar alltså bara en gång. Saknas kontot eller tar krediterna slut fungerar formuläret ändå, med
+        manuell ifyllning.
+      </p>
+      {state.kind === "busy" && <p className="adm-note">Läser kreditsaldo…</p>}
+      {state.kind === "error" && <p className="adm-note">Kunde inte läsa saldot: {state.message}</p>}
+      {state.kind === "ready" && !state.configured && (
+        <p className="adm-note">Uppslaget är inte aktiverat i backend. Formuläret fungerar med manuell ifyllning.</p>
+      )}
+      {state.kind === "ready" && state.configured && (
+        <div className="adm-detail">
+          <div className="adm-panel">
+            <p className="adm-eyebrow ds-mono">
+              {state.credits === null
+                ? "SALDO OKÄNT"
+                : state.credits <= 0
+                  ? "SLUT"
+                  : state.credits <= (state.threshold ?? 10)
+                    ? "LÅGT SALDO"
+                    : "SALDO"}
+            </p>
+            <h3 className="adm-detail__title">
+              {state.credits === null ? "Kunde inte läsas" : `${state.credits} uppslag kvar`}
+            </h3>
+            <p className="adm-note">
+              Varningen visas när saldot är {state.threshold} uppslag eller lägre. Taket per dygn hindrar att krediterna
+              töms av misstag.
+            </p>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -825,6 +900,8 @@ export default function Admin() {
         </section>
 
         <ProviderPanel />
+
+        <LookupPanel />
 
         <ModelCheckPanel />
 
