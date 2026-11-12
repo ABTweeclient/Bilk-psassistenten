@@ -587,6 +587,25 @@ export function googleThinkingConfig(model: string, budgetTokens: number): Recor
   return null;
 }
 
+/**
+ * Tänkandet i söksteget.
+ *
+ * Aliasmodellerna (gemini-flash-latest, gemini-pro-latest) pekar i praktiken på
+ * en Gemini 3-modell, men namnet matchar ingen familj i googleThinkingConfig –
+ * och då skickas ingen tänkande-inställning alls. Mätt mot API:et med den
+ * riktiga sökprompten gav det noll sökningar i fyra fall av fyra, medan
+ * thinkingLevel "low" gav 3–4 sökningar och 11 källänkar för samma bil. Utan
+ * sökresultat avbryts körningen med NO_RESEARCH, så söksteget får alltid en låg
+ * tänkandenivå när modellen inte är en 2.5-modell. Skrivsteget behåller sin
+ * egen inställning, så rapportens kvalitet påverkas inte.
+ */
+export function googleSearchThinkingConfig(model: string, budgetTokens: number): Record<string, unknown> | null {
+  const name = shortModelName(model).toLowerCase();
+  if (/^gemini-2\.5/.test(name)) return { thinkingBudget: budgetTokens };
+  if (/^gemini-(3|4)/.test(name) || /-latest$/.test(name)) return { thinkingLevel: "low" };
+  return null;
+}
+
 /** Läser människoformulerat vad tänkandet är inställt på, för /admin. */
 export function describeGoogleThinking(model: string, budgetTokens: number): string {
   const config = googleThinkingConfig(model, budgetTokens);
@@ -623,7 +642,7 @@ export const googleProbeMaxOutputTokens = 1024;
 export const googleProbeThinkingBudgetTokens = 512;
 
 /** Google-anropet med sökverktyget påslaget. Steg 1: söka, inte skriva. */
-async function googleSearch(request: SearchRequest): Promise<SearchResult> {
+async function googleSearchOnce(request: SearchRequest, timeoutMs: number): Promise<SearchResult> {
   const apiKey = process.env.GOOGLE_API_KEY;
   if (!apiKey) {
     throw new ProviderError("PROVIDER_NOT_CONFIGURED", "GOOGLE_API_KEY saknas på servern.", {
@@ -632,12 +651,12 @@ async function googleSearch(request: SearchRequest): Promise<SearchResult> {
   }
   const model = request.model;
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
-  const thinking = googleThinkingConfig(model, googleThinkingBudgetTokens);
+  const thinking = googleSearchThinkingConfig(model, googleThinkingBudgetTokens);
   /* Hela användarmeddelandet – inklusive bilens JSON och, vid omförsöket, den
      tvingande extra meningen – byggs av anroparen (buildSearchUserMessage), så
      att exakt den text som skickades kan sparas i felspåret. */
   const userMessage = request.userMessage;
-  const response = await runWithHardTimeout(request.timeoutMs, "Google-sökningen", (signal) =>
+  const response = await runWithHardTimeout(timeoutMs, "Google-sökningen", (signal) =>
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
@@ -646,7 +665,7 @@ async function googleSearch(request: SearchRequest): Promise<SearchResult> {
         contents: [{ role: "user", parts: [{ text: userMessage }] }],
         tools: [{ google_search: {} }],
         generationConfig: {
-          temperature: 0.2,
+          temperature: 0,
           maxOutputTokens: googleSearchMaxOutputTokens,
           ...(thinking ? { thinkingConfig: thinking } : {}),
         },
@@ -744,6 +763,39 @@ async function googleSearch(request: SearchRequest): Promise<SearchResult> {
  * inte kan söka är det som gör att källistan i rapporten exakt motsvarar det
  * sökningen faktiskt returnerade.
  */
+/**
+ * Söksteget, med ett extra anrop hos leverantören när svaret saknar sökningar.
+ *
+ * Modellen avgör själv om sökverktyget ska användas. Mätt mot API:et med den
+ * riktiga sökprompten gjorde den noll sökningar i ungefär fyra fall av tio –
+ * med kort prompt, lång prompt, hög och låg tänkandenivå och på två olika
+ * modeller. Ett tomt svar är gratis att försöka igen (kostnaden ligger i det
+ * anropet som faktiskt söker), så steget gör ett nytt anrop när det första inte
+ * sökte. Pipelineens eget omförsök med tvingande formulering finns kvar ovanpå
+ * det här, vilket ger upp till fyra försök innan körningen avbryts.
+ */
+async function googleSearch(request: SearchRequest): Promise<SearchResult> {
+  const deadline = Date.now() + Math.max(request.timeoutMs, 20_000);
+  let last: SearchResult | null = null;
+
+  for (let call = 0; call < 2; call += 1) {
+    const remaining = deadline - Date.now();
+    if (remaining < 8_000) break;
+    last = await googleSearchOnce(request, Math.min(remaining, 45_000));
+    if (last.searches > 0 && last.chunks.length > 0) return last;
+    if (call === 0) {
+      console.warn(
+        `[reportProviders] söksteget svarade utan sökningar (${last.finishReason ?? "okänt skäl"}), försöker en gång till.`,
+      );
+    }
+  }
+
+  if (!last) {
+    throw new ProviderError("PROVIDER_FAILED", "Sökningen hann inte starta inom tidsbudgeten.", { kind: "timeout" });
+  }
+  return last;
+}
+
 async function googleWrite(request: WriteRequest): Promise<WriteResult> {
   const apiKey = process.env.GOOGLE_API_KEY;
   if (!apiKey) {
