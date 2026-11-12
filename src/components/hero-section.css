@@ -359,28 +359,6 @@
   font-style: normal;
   font-weight: 800;
 }
-.bq-hero .bq-float {
-  position: absolute;
-  bottom: -150px;
-  left: -48px;
-  width: 300px;
-  border-radius: 18px;
-  background: var(--ink);
-  padding: 18px 20px;
-  color: #fff;
-  box-shadow: 0 30px 50px -20px rgba(20, 27, 43, .5);
-}
-.bq-hero .bq-float .bq-lbl { color: var(--peach); }
-.bq-hero .bq-float p { margin-top: 8px; font-size: 14.5px; font-weight: 500; line-height: 1.45; }
-.bq-hero .bq-float .bq-meta {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 12px;
-  color: #9da6b6;
-  font-size: 12px;
-}
-.bq-hero .bq-float .bq-meta b { color: #fff; font-weight: 500; }
-
 .bq-hero .bq-strip {
   position: absolute;
   right: 56px;
@@ -397,11 +375,9 @@
 .bq-hero .bq-strip b { display: block; font-size: 15px; font-weight: 600; }
 .bq-hero .bq-strip small { color: var(--muted); font-size: 13px; }
 
-/* Animation vid sidladdning: staplarna fylls, bockarna dyker upp och det
-   mörka kortet tonar in sist. */
+/* Animation vid sidladdning: staplarna fylls och bockarna dyker upp. */
 @keyframes bq-bar-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes bq-check-in { from { opacity: 0; transform: scale(.8); } to { opacity: 1; transform: scale(1); } }
-@keyframes bq-float-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
 .bq-hero .bq-seg i.bq-a,
 .bq-hero .bq-seg i.bq-b {
@@ -423,10 +399,8 @@
 .bq-hero .bq-track div:nth-child(3) i { animation-delay: 920ms; }
 .bq-hero .bq-track div:nth-child(4) i { animation-delay: 1000ms; }
 
-.bq-hero .bq-float { animation: bq-float-in 420ms cubic-bezier(.2, .7, .3, 1) 1060ms both; }
-
-/* Under 1024 px: panelen under texten, kortet statiskt, mindre rubrik och
-   den nedre raden som ett 2x2-rutnät. Desktoputseendet är oförändrat. */
+/* Under 1024 px: panelen under texten, mindre rubrik och den nedre raden som
+   ett 2x2-rutnät. Desktoputseendet är oförändrat. */
 @media (max-width: 1023px) {
   .bq-hero .bq-wrap { padding: 0 24px; }
   .bq-hero .bq-nav { height: auto; min-height: 88px; flex-wrap: wrap; gap: 12px; padding: 16px 0; }
@@ -435,7 +409,6 @@
   .bq-hero .bq-hero-grid { grid-template-columns: minmax(0, 1fr); }
   .bq-hero h1 { font-size: 52px; }
   .bq-hero .bq-search { width: 100%; max-width: 560px; }
-  .bq-hero .bq-float { position: relative; bottom: 0; left: 0; max-width: 100%; margin-top: 16px; }
   .bq-hero .bq-strip {
     position: relative;
     right: auto;

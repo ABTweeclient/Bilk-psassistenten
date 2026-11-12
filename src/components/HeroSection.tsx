@@ -95,11 +95,6 @@ export function HeroSection({ onAnalyse }: HeroSectionProps) {
                 <div className="bq-track"><div>Modell<i>✓</i></div><div>Motor<i>✓</i></div><div>Växellåda<i>✓</i></div><div>Drivlina<i>✓</i></div></div>
               </div>
             </div>
-            <div className="bq-float">
-              <div className="bq-lbl">FRÅGA ATT STÄLLA · 1 AV 5</div>
-              <p>”Finns det kvitton på senaste servicen av växellådan?”</p>
-              <div className="bq-meta"><span>Kopplad till <b>Växellåda</b></span><span>→</span></div>
-            </div>
           </div>
         </div>
       </div>
