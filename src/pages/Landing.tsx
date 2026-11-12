@@ -1,8 +1,9 @@
 import { useAction } from "convex/react";
 import qlarLogo from "@/assets/qlar-logo.png";
 import { useState } from "react";
-import { ArrowDown, ArrowRight, ArrowUpRight, Check, ChevronRight, Gauge, ShieldCheck } from "lucide-react";
+import { ArrowDown, ArrowRight, Check, ChevronRight, Gauge, ShieldCheck } from "lucide-react";
 import { useNavigate } from "react-router";
+import { HeroSection } from "@/components/HeroSection";
 import { VehicleForm } from "@/components/VehicleForm";
 import { api } from "@/convex/_generated/api";
 import { reportErrorMessage } from "@/lib/reportErrors";
@@ -95,37 +96,8 @@ export default function Landing() {
 
   return (
     <main className="bilinsyn-root" id="top">
+      <HeroSection />
       <div className="page-wrap">
-        <header className="landing-nav">
-          <a className="landing-brand" href="#top" aria-label="Qlar, startsida"><img className="brand-logo" src={qlarLogo} alt="Qlar" /></a>
-          <nav aria-label="Huvudmeny"><a href="#sa-fungerar-det">Så fungerar det</a><a href="#exempelrapport">Rapporten</a></nav>
-          <a className="nav-action" href="#fordonsokning">Kom igång <ArrowUpRight size={16} aria-hidden="true" /></a>
-        </header>
-
-        <section className="hero-bento" aria-labelledby="hero-heading">
-          <div className="hero-panel bento-reveal">
-            <p className="eyebrow"><span className="eyebrow-dot" /> ETT TYDLIGARE BILKÖP</p>
-            <h1 id="hero-heading">Vet vad du köper.<br /><span>Innan du köper det.</span></h1>
-            <p className="hero-lede">Få koll på kända problem, viktiga kontrollpunkter och rätt frågor att ställa – anpassat efter bilen du funderar på.</p>
-            <a className="text-link" href="#fordonsokning">Prova med din bil <ArrowDown size={16} aria-hidden="true" /></a>
-            <div className="hero-footnote"><span className="footnote-rule" /> Mer information inför beslutet. Färre överraskningar efter köpet.</div>
-          </div>
-
-          <aside className="known-card bento-reveal bento-hover" aria-label="Exempel på områden i en rapport">
-            <div className="card-heading"><span className="mono">OMRÅDEN ATT FÖRSTÅ</span><span className="round-arrow"><ArrowUpRight size={15} aria-hidden="true" /></span></div>
-            <h2>Kända problem</h2>
-            <p className="muted-copy">Rapporten hjälper dig se var det kan vara klokt att ställa fler frågor.</p>
-            <div className="known-rows"><div><span className="area-icon">01</span><span>Motor</span><span className="row-line" /></div><div><span className="area-icon">02</span><span>Växellåda</span><span className="row-line" /></div><div><span className="area-icon">03</span><span>Drivlina</span><span className="row-line" /></div></div>
-            <span className="illustration-note mono">RAPPORTENS STRUKTUR · EXEMPEL</span>
-          </aside>
-
-          <aside className="analysis-card bento-reveal bento-hover" aria-label="Exempel på analysstruktur">
-            <div className="card-heading"><span className="mono">ANALYSENS DELAR</span><span className="analysis-pulse" /></div>
-            <div className="analysis-rows"><div><span>Modell</span><span className="analysis-check"><Check size={13} /></span></div><div><span>Motor</span><span className="analysis-check"><Check size={13} /></span></div><div><span>Växellåda</span><span className="analysis-check"><Check size={13} /></span></div><div><span>Drivlina</span><span className="analysis-check"><Check size={13} /></span></div></div>
-            <p className="illustration-note mono">SÅ KAN UNDERLAGET STRUKTURERAS</p>
-          </aside>
-        </section>
-
         <section className="how-section" id="sa-fungerar-det" aria-labelledby="how-title">
           <div className="how-heading"><p className="eyebrow"><span className="eyebrow-dot" /> EN ENKLARE VÄG TILL BÄTTRE FRÅGOR</p><h2 id="how-title">Från fundering<br />till <span>förberedelse.</span></h2><p>Tre steg för att komma till visningen med bättre koll.</p></div>
           <div className="steps-list"><article className="step-row"><span className="step-number mono">01</span><div><p className="mono">BESKRIV BILEN</p><h3>Börja med det du vet.</h3></div><p>Ange modell, årsmodell, motor, växellåda och annan information du känner till.</p><ArrowRight className="step-arrow" size={18} aria-hidden="true" /></article><article className="step-row"><span className="step-number mono">02</span><div><p className="mono">VI SÖKER OCH SAMMANSTÄLLER</p><h3>Få relevanta områden.</h3></div><p>Uppgifterna används för att identifiera varianten och sammanställa publicerade källor om den.</p><ArrowRight className="step-arrow" size={18} aria-hidden="true" /></article><article className="step-row"><span className="step-number mono">03</span><div><p className="mono">FÅ BÄTTRE KOLL</p><h3>Ta med stödet till visningen.</h3></div><p>Få en tydlig rapport att använda inför visning, provkörning och samtalet med säljaren.</p><ArrowRight className="step-arrow" size={18} aria-hidden="true" /></article></div>
