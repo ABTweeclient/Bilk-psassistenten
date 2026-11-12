@@ -7,14 +7,20 @@ import "./hero-section.css";
  * Klasserna är prefixade med bq- så att reglerna inte krockar med resten av
  * startsidans CSS.
  */
-export function HeroSection() {
+type HeroSectionProps = {
+  /** Får skylten som skrivits i hero-fältet när man klickar på "Analysera". */
+  onAnalyse?: (registrationNumber: string) => void;
+};
+
+export function HeroSection({ onAnalyse }: HeroSectionProps) {
   const [plate, setPlate] = useState("");
 
   /**
-   * "Analysera" gör samma sak som länken "Prova med din bil": hoppar till
-   * formuläret längre ner på sidan.
+   * "Analysera" skickar med skylten till formuläret och hoppar dit, precis som
+   * länken "Prova med din bil" gör.
    */
   function goToForm() {
+    onAnalyse?.(plate.trim());
     document.getElementById("fordonsokning")?.scrollIntoView();
   }
 

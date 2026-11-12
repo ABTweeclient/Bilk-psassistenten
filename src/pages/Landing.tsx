@@ -64,6 +64,8 @@ export default function Landing() {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  /** Skylten från hero-fältet, så att formuläret kan fylla i den. */
+  const [heroPlate, setHeroPlate] = useState("");
 
   /**
    * Skickar uppgifterna till backend, som validerar dem, rate limitar och startar
@@ -96,7 +98,7 @@ export default function Landing() {
 
   return (
     <main className="bilinsyn-root" id="top">
-      <HeroSection />
+      <HeroSection onAnalyse={setHeroPlate} />
       <div className="page-wrap">
         <section className="how-section" id="sa-fungerar-det" aria-labelledby="how-title">
           <div className="how-heading"><p className="eyebrow"><span className="eyebrow-dot" /> EN ENKLARE VÄG TILL BÄTTRE FRÅGOR</p><h2 id="how-title">Från fundering<br />till <span>förberedelse.</span></h2><p>Tre steg för att komma till visningen med bättre koll.</p></div>
@@ -108,7 +110,7 @@ export default function Landing() {
         {/* Formuläret är sidans sista steg: först hur det fungerar, sedan hur
             rapporten ser ut, och först därefter fyller man i bilen. */}
         <section className="search-card search-card--standalone bento-reveal" id="fordonsokning" aria-label="Uppgifter om bilen">
-          <VehicleForm onSubmit={handleSubmit} isSubmitting={isSubmitting} onLookup={handleLookup} />
+          <VehicleForm onSubmit={handleSubmit} isSubmitting={isSubmitting} onLookup={handleLookup} registrationNumber={heroPlate} />
           {errorMessage && (
             <p className="vf-form-error" role="alert">{errorMessage}</p>
           )}

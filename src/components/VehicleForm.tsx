@@ -1,4 +1,4 @@
-import { useId, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { ArrowRight, Check, CircleHelp } from "lucide-react";
 import {
   emptyVehicleForm,
@@ -24,9 +24,11 @@ type VehicleFormProps = {
   onExample?: () => void;
   /** Hämtar bilens uppgifter från registret. Utan den visas inte fältet. */
   onLookup?: (registrationNumber: string) => Promise<VehicleLookupResponse | null>;
+  /** Skylt som redan skrivits på sidan, till exempel i hero-fältet. */
+  registrationNumber?: string;
 };
 
-export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLookup }: VehicleFormProps) {
+export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLookup, registrationNumber }: VehicleFormProps) {
   const [values, setValues] = useState<VehicleFormValues>(emptyVehicleForm);
   const [errors, setErrors] = useState<Partial<Record<keyof VehicleFormValues, string>>>({});
   const [submitError, setSubmitError] = useState("");
@@ -34,8 +36,21 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
   const idFor = (field: keyof VehicleFormValues) => `${id}-${field}`;
   const errorFor = (field: keyof VehicleFormValues) => errors[field] ? `${idFor(field)}-error` : undefined;
   const timingErrorId = `${id}-purchase-timing-error`;
-  const [plate, setPlate] = useState("");
+  const [plate, setPlate] = useState(registrationNumber ?? "");
   const [lookup, setLookup] = useState<{ state: "idle" | "loading" | "found" | "none" | "error"; message: string }>({ state: "idle", message: "" });
+
+  /* Skylten som skrevs i hero-fältet fylls i och slås upp direkt, så att man
+     slipper skriva och hämta den igen. Tom skylt lämnar formuläret som det är.
+     Ref-guarden hindrar att React StrictMode kör uppslaget två gånger. */
+  const autoLookupDone = useRef<string | null>(null);
+  useEffect(() => {
+    if (!registrationNumber) return;
+    setPlate(registrationNumber);
+    setLookup({ state: "idle", message: "" });
+    if (autoLookupDone.current === registrationNumber) return;
+    autoLookupDone.current = registrationNumber;
+    void lookupPlate(registrationNumber);
+  }, [registrationNumber]);
 
   /**
    * Hämtar ett förslag på bilen från en webbsökning på registreringsnumret.
@@ -43,15 +58,20 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
    * valideras som vanligt när formuläret skickas.
    */
   async function handleLookup() {
+    await lookupPlate(plate);
+  }
+
+  /** Slår upp en skylt som redan är känd, till exempel från hero-fältet. */
+  async function lookupPlate(value: string) {
     if (!onLookup) return;
-    const registrationNumber = normalizeRegistrationNumber(plate);
-    if (!isValidRegistrationNumber(registrationNumber)) {
+    const normalized = normalizeRegistrationNumber(value);
+    if (!isValidRegistrationNumber(normalized)) {
       setLookup({ state: "error", message: "Skriv ett svenskt registreringsnummer, till exempel ABC123." });
       return;
     }
     setLookup({ state: "loading", message: "Söker efter bilen…" });
     try {
-      const result = await onLookup(registrationNumber);
+      const result = await onLookup(normalized);
       const suggestion = result?.suggestion ?? null;
       if (!suggestion?.found) {
         setLookup({

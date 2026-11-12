@@ -430,10 +430,12 @@
 @media (max-width: 1023px) {
   .bq-hero .bq-wrap { padding: 0 24px; }
   .bq-hero .bq-nav { height: auto; min-height: 88px; flex-wrap: wrap; gap: 12px; padding: 16px 0; }
-  .bq-hero .bq-hero-grid { grid-template-columns: 1fr; }
+  /* minmax(0, 1fr) krävs: enbart 1fr storleksätts efter innehållets minsta
+     bredd och gjorde då hela sektionen bredare än skärmen. */
+  .bq-hero .bq-hero-grid { grid-template-columns: minmax(0, 1fr); }
   .bq-hero h1 { font-size: 52px; }
   .bq-hero .bq-search { width: 100%; max-width: 560px; }
-  .bq-hero .bq-float { position: relative; bottom: 0; left: 0; margin-top: 16px; }
+  .bq-hero .bq-float { position: relative; bottom: 0; left: 0; max-width: 100%; margin-top: 16px; }
   .bq-hero .bq-strip {
     position: relative;
     right: auto;
@@ -443,4 +445,46 @@
     height: auto;
     margin: 32px 24px 0;
   }
+}
+
+/* Telefonbredd: menyn får egna rader i stället för att klämmas ihop.
+   Logga och "Logga in" överst, menylänkarna på en rad som radbryts, och
+   "Kom igång" som en fullbreddsknapp under. */
+@media (max-width: 599px) {
+  .bq-hero .bq-nav {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "brand login"
+      "links links"
+      "cta cta";
+    gap: 12px;
+    height: auto;
+    min-height: 0;
+    padding: 16px 0 18px;
+  }
+  .bq-hero .bq-brand { grid-area: brand; }
+  .bq-hero .bq-links {
+    grid-area: links;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: 18px;
+  }
+  .bq-hero .bq-links a { padding: 10px 14px; font-size: 13px; }
+  /* .bq-navr är bara en grupp på desktop; här får barnen plats direkt i rutnätet. */
+  .bq-hero .bq-navr { display: contents; }
+  .bq-hero .bq-login {
+    display: inline-flex;
+    min-height: 34px;
+    align-items: center;
+    align-self: center;
+    justify-self: end;
+    font-size: 13px;
+  }
+  .bq-hero .bq-cta { grid-area: cta; justify-content: center; }
+  /* Skyltfältet får krympa i stället för att trycka ut knappen utanför skärmen. */
+  .bq-hero .bq-plate { min-width: 0; }
+  .bq-hero .bq-num { width: 100%; min-width: 0; padding: 0 10px; font-size: 18px; letter-spacing: 2px; }
+  .bq-hero .bq-cur { display: none; }
+  .bq-hero .bq-go { flex: 0 0 auto; gap: 6px; padding: 13px 14px; font-size: 14px; }
 }
