@@ -222,137 +222,53 @@
   content: "";
 }
 
+/* Produktpanelen: ett rapportdokument i stället för det tidigare kortet. */
 .bq-hero .bq-panelwrap { position: relative; padding-top: 6px; }
-.bq-hero .bq-panel {
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 22px;
+.bq-doc {
+  --ink: #141B2B;
+  --muted: #5B6474;
+  --line: #ECE7E0;
+  --rust: #B24A12;
+  --peach: #F2A36E;
+  --slate: #525F78;
+  /* Wrappern placerar dokumentet på samma plats som förra panelen; referensens
+     30 px skulle skjuta ned det. */
+  margin-top: 0;
   background: #fff;
-  box-shadow: 0 40px 80px -40px rgba(20, 27, 43, .35), 0 2px 0 rgba(20, 27, 43, .02);
-  transition: transform 200ms ease;
-}
-.bq-hero .bq-panel:hover { transform: translateY(-2px); }
-.bq-hero .bq-ph {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--line);
-  padding: 18px 22px;
-}
-.bq-hero .bq-car { display: flex; align-items: center; gap: 14px; }
-.bq-hero .bq-mini {
-  position: relative;
-  border: 1.3px solid var(--ink);
-  border-radius: 5px;
-  padding: 4px 8px 4px 22px;
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 2px;
-}
-.bq-hero .bq-mini::before {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 13px;
-  background: #2f4fa8;
-  content: "";
-}
-.bq-hero .bq-car b { font-size: 15px; font-weight: 600; }
-.bq-hero .bq-car small { display: block; margin-top: 1px; color: var(--muted); font-size: 12px; font-weight: 400; }
-.bq-hero .bq-ex {
-  border-radius: 6px;
-  background: var(--cream);
-  padding: 6px 10px;
-  color: var(--rust);
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 1.2px;
-}
-.bq-hero .bq-pb { padding: 20px 22px 22px; }
-.bq-hero .bq-lbl { color: var(--slate); font-family: var(--mono); font-size: 10.5px; letter-spacing: 1.6px; }
-.bq-hero .bq-pbh { display: flex; align-items: baseline; justify-content: space-between; }
-.bq-hero .bq-pbh h3 {
-  margin-top: 6px;
-  font-family: "Inter Display";
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -.5px;
-}
-.bq-hero .bq-legend { display: flex; gap: 12px; color: var(--muted); font-size: 11.5px; }
-.bq-hero .bq-legend i { display: inline-block; width: 8px; height: 8px; margin-right: 5px; border-radius: 2px; }
-.bq-hero .bq-rows { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; }
-.bq-hero .bq-row {
-  display: grid;
-  grid-template-columns: 28px 1fr 130px 104px;
-  align-items: center;
-  gap: 14px;
-  border-radius: 12px;
-  background: var(--chip);
-  padding: 12px 14px;
-}
-.bq-hero .bq-row .bq-n { color: var(--rust); font-family: var(--mono); font-size: 11px; }
-.bq-hero .bq-row .bq-t { font-size: 14.5px; font-weight: 600; }
-.bq-hero .bq-row .bq-t small { display: block; margin-top: 2px; color: var(--muted); font-size: 12px; font-weight: 400; }
-.bq-hero .bq-seg { display: flex; gap: 3px; }
-.bq-hero .bq-seg i { flex: 1; height: 7px; border-radius: 2px; background: #e4dcd0; }
-.bq-hero .bq-seg i.bq-a { background: var(--orange); }
-.bq-hero .bq-seg i.bq-b { background: var(--peach); }
-.bq-hero .bq-tag { border-radius: 8px; padding: 6px 0; font-size: 11.5px; font-weight: 600; text-align: center; }
-.bq-hero .bq-tag.bq-h { background: var(--rust); color: #fff; }
-.bq-hero .bq-tag.bq-m { background: var(--cream); color: var(--rust); box-shadow: inset 0 0 0 1px #f2d4ba; }
-.bq-hero .bq-tag.bq-l { background: #fff; color: var(--slate); box-shadow: inset 0 0 0 1px var(--line); }
-.bq-hero .bq-pf {
-  position: relative;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  gap: 22px;
-  background: var(--slate);
-  padding: 18px 22px;
-  color: #fff;
-}
-.bq-hero .bq-pf::before {
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, .09) 1px, transparent 1px);
-  background-size: 14px 14px;
-  content: "";
-}
-.bq-hero .bq-pf .bq-lbl { position: relative; color: #dce1ea; line-height: 1.6; }
-.bq-hero .bq-pf .bq-lbl b {
-  display: block;
-  color: #fff;
-  font-family: Inter;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0;
-}
-.bq-hero .bq-track { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-.bq-hero .bq-track div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: 1px solid rgba(255, 255, 255, .14);
+  border: 1px solid #E4DED5;
   border-radius: 10px;
-  background: rgba(255, 255, 255, .08);
-  padding: 9px 11px;
-  font-size: 13px;
-  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(20, 27, 43, .05), 0 14px 30px -22px rgba(20, 27, 43, .3);
+  color: var(--ink);
 }
-.bq-hero .bq-track div i {
-  display: grid;
-  width: 18px;
-  height: 18px;
-  place-items: center;
-  border-radius: 6px;
-  background: var(--peach);
-  color: var(--slate-2);
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 800;
-}
+.bq-doc * { box-sizing: border-box; margin: 0; padding: 0; }
+.bq-doc .head { padding: 20px 24px 18px; display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--line); }
+.bq-doc .head h3 { font-size: 19px; font-weight: 600; letter-spacing: -.3px; }
+.bq-doc .meta { margin-top: 5px; font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 10px; }
+.bq-doc .pl { display: inline-flex; font-family: ui-monospace, Menlo, monospace; font-weight: 700; font-size: 11.5px; letter-spacing: 1.4px; border: 1.2px solid var(--ink); border-radius: 3px; overflow: hidden; }
+.bq-doc .pl:before { content: ""; width: 8px; background: #2F4FA8; }
+.bq-doc .pl span { padding: 2px 6px; white-space: nowrap; }
+.bq-doc .ex { font-size: 12px; color: var(--muted); border: 1px solid var(--line); padding: 4px 9px; border-radius: 5px; background: #FFF1E4; }
+.bq-doc .sum { padding: 16px 24px; font-size: 14px; line-height: 1.55; color: var(--muted); border-bottom: 1px solid var(--line); }
+.bq-doc .sum b { color: var(--ink); font-weight: 600; }
+.bq-doc .item { display: grid; grid-template-columns: 1fr auto; gap: 6px 20px; padding: 15px 24px 15px 21px; border-bottom: 1px solid var(--line); border-left: 3px solid transparent; }
+.bq-doc .item.h { border-left-color: var(--rust); }
+.bq-doc .item.m { border-left-color: var(--peach); }
+.bq-doc .item.l { border-left-color: #D5D9E0; }
+.bq-doc .item .t { font-size: 15px; font-weight: 600; }
+.bq-doc .item .d { grid-column: 1; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+.bq-doc .item .q { grid-column: 1; font-size: 13px; margin-top: 2px; }
+.bq-doc .item .q span { color: var(--rust); font-weight: 600; }
+.bq-doc .st { grid-row: 1; grid-column: 2; font-size: 12.5px; font-weight: 600; margin-top: 1px; }
+.bq-doc .item.h .st { color: var(--rust); }
+.bq-doc .item.m .st { color: #B86708; }
+.bq-doc .item.l .st { color: var(--slate); }
+.bq-doc .bl { filter: blur(4.5px); opacity: .85; user-select: none; pointer-events: none; font-style: normal; }
+.bq-doc .foot { padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; background: #FAF8F5; border-radius: 0 0 10px 10px; }
+/* Knappen ersätter referensens span så att raden går att nå med tangentbordet;
+   utseendet är detsamma. */
+.bq-doc .lk { display: flex; align-items: center; gap: 8px; border: 0; background: none; padding: 0; color: var(--ink); font-family: inherit; font-size: inherit; font-weight: 500; text-align: left; cursor: pointer; }
+.bq-doc .lk svg { color: var(--rust); }
+
 .bq-hero .bq-strip {
   position: absolute;
   right: 56px;
@@ -368,30 +284,6 @@
 .bq-hero .bq-strip .bq-k { padding-top: 3px; color: var(--rust); font-family: var(--mono); font-size: 11px; }
 .bq-hero .bq-strip b { display: block; font-size: 15px; font-weight: 600; }
 .bq-hero .bq-strip small { color: var(--muted); font-size: 13px; }
-
-/* Animation vid sidladdning: staplarna fylls och bockarna dyker upp. */
-@keyframes bq-bar-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-@keyframes bq-check-in { from { opacity: 0; transform: scale(.8); } to { opacity: 1; transform: scale(1); } }
-
-.bq-hero .bq-seg i.bq-a,
-.bq-hero .bq-seg i.bq-b {
-  transform-origin: left center;
-  animation: bq-bar-fill 420ms cubic-bezier(.2, .7, .3, 1) both;
-}
-.bq-hero .bq-row:nth-child(1) .bq-seg i:nth-child(1) { animation-delay: 120ms; }
-.bq-hero .bq-row:nth-child(1) .bq-seg i:nth-child(2) { animation-delay: 200ms; }
-.bq-hero .bq-row:nth-child(1) .bq-seg i:nth-child(3) { animation-delay: 280ms; }
-.bq-hero .bq-row:nth-child(1) .bq-seg i:nth-child(4) { animation-delay: 360ms; }
-.bq-hero .bq-row:nth-child(2) .bq-seg i:nth-child(1) { animation-delay: 440ms; }
-.bq-hero .bq-row:nth-child(2) .bq-seg i:nth-child(2) { animation-delay: 520ms; }
-.bq-hero .bq-row:nth-child(2) .bq-seg i:nth-child(3) { animation-delay: 600ms; }
-.bq-hero .bq-row:nth-child(3) .bq-seg i:nth-child(1) { animation-delay: 680ms; }
-
-.bq-hero .bq-track div i { animation: bq-check-in 320ms cubic-bezier(.2, .7, .3, 1) both; }
-.bq-hero .bq-track div:nth-child(1) i { animation-delay: 760ms; }
-.bq-hero .bq-track div:nth-child(2) i { animation-delay: 840ms; }
-.bq-hero .bq-track div:nth-child(3) i { animation-delay: 920ms; }
-.bq-hero .bq-track div:nth-child(4) i { animation-delay: 1000ms; }
 
 /* Under 1024 px: panelen under texten, mindre rubrik och den nedre raden som
    ett 2x2-rutnät. Desktoputseendet är oförändrat. */
@@ -455,22 +347,4 @@
   .bq-hero .bq-cur { display: none; }
   .bq-hero .bq-go { flex: 0 0 auto; gap: 6px; padding: 13px 14px; font-size: 14px; }
 
-  /* Rapportpanelen: staplar, taggar och analysrad får plats utan att klippas. */
-  .bq-hero .bq-ph { flex-wrap: wrap; gap: 10px; }
-  .bq-hero .bq-mini,
-  .bq-hero .bq-ex { white-space: nowrap; }
-  .bq-hero .bq-pbh { flex-wrap: wrap; gap: 8px; }
-  .bq-hero .bq-row {
-    grid-template-columns: 28px minmax(0, 1fr) auto;
-    grid-template-areas:
-      "n t tag"
-      "n seg seg";
-    row-gap: 8px;
-  }
-  .bq-hero .bq-row .bq-n { grid-area: n; align-self: start; }
-  .bq-hero .bq-row .bq-t { grid-area: t; }
-  .bq-hero .bq-seg { grid-area: seg; }
-  .bq-hero .bq-tag { grid-area: tag; align-self: start; padding: 6px 10px; white-space: nowrap; }
-  .bq-hero .bq-pf { grid-template-columns: minmax(0, 1fr); }
-  .bq-hero .bq-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

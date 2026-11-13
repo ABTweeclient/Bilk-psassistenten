@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import bilqlarLogo from "@/assets/bilqlar-logo.png";
 import "./hero-section.css";
 
@@ -14,6 +14,7 @@ type HeroSectionProps = {
 
 export function HeroSection({ onAnalyse }: HeroSectionProps) {
   const [plate, setPlate] = useState("");
+  const plateInput = useRef<HTMLInputElement>(null);
 
   /**
    * "Analysera" skickar med skylten till formuläret och hoppar dit, precis som
@@ -52,6 +53,7 @@ export function HeroSection({ onAnalyse }: HeroSectionProps) {
               <label className="bq-plate">
                 <span className="bq-eu">S</span>
                 <input
+                  ref={plateInput}
                   className="bq-num"
                   value={plate}
                   onChange={(event) => setPlate(event.target.value.toUpperCase())}
@@ -69,29 +71,36 @@ export function HeroSection({ onAnalyse }: HeroSectionProps) {
           </div>
 
           <div className="bq-panelwrap">
-            <div className="bq-panel">
-              <div className="bq-ph">
-                <div className="bq-car"><span className="bq-mini">ABC 123</span><div><b>Din bil</b><small>Modell · Motor · Växellåda · Drivlina</small></div></div>
-                <span className="bq-ex">EXEMPELRAPPORT</span>
-              </div>
-              <div className="bq-pb">
-                <div className="bq-pbh">
-                  <div><div className="bq-lbl">OMRÅDEN ATT FÖRSTÅ</div><h3>Kända problem</h3></div>
-                  <div className="bq-legend">
-                    <span><i style={{ background: "#E8820C" }} />Hög</span>
-                    <span><i style={{ background: "#F2A36E" }} />Medel</span>
-                    <span><i style={{ background: "#E4DCD0" }} />Låg</span>
-                  </div>
+            <div className="bq-doc">
+              <div className="head">
+                <div>
+                  <h3>Rapport för din bil</h3>
+                  <div className="meta"><span className="pl"><span>JKL 482</span></span>Volvo · V70 2.4 · 2008</div>
                 </div>
-                <div className="bq-rows">
-                  <div className="bq-row"><span className="bq-n">01</span><span className="bq-t">Motor<small>Exempel på känd svaghet</small></span><div className="bq-seg"><i className="bq-a" /><i className="bq-a" /><i className="bq-a" /><i className="bq-a" /><i /></div><span className="bq-tag bq-h">Kontrollera</span></div>
-                  <div className="bq-row"><span className="bq-n">02</span><span className="bq-t">Växellåda<small>Exempel på känd svaghet</small></span><div className="bq-seg"><i className="bq-b" /><i className="bq-b" /><i className="bq-b" /><i /><i /></div><span className="bq-tag bq-m">Fråga säljaren</span></div>
-                  <div className="bq-row"><span className="bq-n">03</span><span className="bq-t">Drivlina<small>Inga tydliga mönster</small></span><div className="bq-seg"><i className="bq-b" /><i /><i /><i /><i /></div><span className="bq-tag bq-l">Låg risk</span></div>
-                </div>
+                <span className="ex">Förhandsvisning</span>
               </div>
-              <div className="bq-pf">
-                <div className="bq-lbl">ANALYSENS DELAR<b>4 av 4 klara</b></div>
-                <div className="bq-track"><div>Modell<i>✓</i></div><div>Motor<i>✓</i></div><div>Växellåda<i>✓</i></div><div>Drivlina<i>✓</i></div></div>
+              <div className="sum"><b>3 saker att ha koll på</b> <span className="bl" aria-hidden="true">innan du bestämmer dig, sammanställt för just den här bilmodellen.</span></div>
+              <div className="item h">
+                <div className="t">Motor</div>
+                <div className="st">Kontrollera</div>
+                <div className="d bl" aria-hidden="true">Kända svagheter för motorvarianten som brukar visa sig efter några år och vad man bör lyssna efter.</div>
+                <div className="q"><span>Fråga säljaren:</span> <i className="bl" aria-hidden="true">Finns det kvitton på servicen och vad har gjorts senast?</i></div>
+              </div>
+              <div className="item m">
+                <div className="t">Växellåda</div>
+                <div className="st">Fråga om</div>
+                <div className="d bl" aria-hidden="true">Vad som brukar märkas vid växling på låga varv och vad du bör testa under provkörningen.</div>
+              </div>
+              <div className="item l">
+                <div className="t">Drivlina</div>
+                <div className="st">Låg</div>
+                <div className="d bl" aria-hidden="true">Kontrollpunkter för drivlinan och om det finns några återkommande mönster.</div>
+              </div>
+              <div className="foot">
+                <button type="button" className="lk" onClick={() => plateInput.current?.focus()}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="11" width="16" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
+                  Ange regnummer för att se din rapport
+                </button>
               </div>
             </div>
           </div>
