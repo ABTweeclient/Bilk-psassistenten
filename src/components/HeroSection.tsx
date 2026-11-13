@@ -68,6 +68,10 @@ export function HeroSection({ onAnalyse }: HeroSectionProps) {
               <button type="button" className="bq-go" onClick={goToForm}>Analysera <b>→</b></button>
             </div>
             <div className="bq-hint"><span>Ange regnummer eller bilmodell</span><span>Mer information inför beslutet</span></div>
+            <div className="bq-note">
+              <h2>Trött på komplicerade bilrapporter?</h2>
+              <p>Vi hjälper dig att förstå det som faktiskt spelar roll.</p>
+            </div>
           </div>
 
           <div className="bq-panelwrap">
