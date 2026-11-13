@@ -18,7 +18,7 @@
 }
 
 .bq-hero {
-  --bg: #fbf8f4;
+  --bg: #fffdf9;
   --ink: #141b2b;
   --muted: #5b6474;
   --line: #ece5dc;
@@ -53,15 +53,6 @@
   background-size: 56px 56px;
   mask-image: radial-gradient(ellipse 70% 60% at 72% 45%, #000 10%, transparent 75%);
   -webkit-mask-image: radial-gradient(ellipse 70% 60% at 72% 45%, #000 10%, transparent 75%);
-}
-.bq-hero .bq-warm {
-  position: absolute;
-  right: 120px;
-  top: 120px;
-  width: 760px;
-  height: 620px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(242, 163, 110, .32), transparent 62%);
 }
 .bq-hero .bq-wrap { position: relative; padding: 0 56px; }
 
@@ -140,6 +131,9 @@
   border-radius: 3px;
   background: var(--orange);
 }
+/* Andra radens punkt står efter ett "t" som har mindre luft i sig än "r" i
+   "köper". Marginalen kompenserar så att glappet blir detsamma på båda raderna. */
+.bq-hero h1 .bq-l2 .bq-dot { margin-left: .19em; }
 .bq-hero .bq-sub { margin-top: 28px; max-width: 520px; color: var(--muted); font-size: 18px; line-height: 1.6; }
 
 .bq-hero .bq-search {
@@ -460,4 +454,23 @@
   .bq-hero .bq-num { width: 100%; min-width: 0; padding: 0 10px; font-size: 18px; letter-spacing: 2px; }
   .bq-hero .bq-cur { display: none; }
   .bq-hero .bq-go { flex: 0 0 auto; gap: 6px; padding: 13px 14px; font-size: 14px; }
+
+  /* Rapportpanelen: staplar, taggar och analysrad får plats utan att klippas. */
+  .bq-hero .bq-ph { flex-wrap: wrap; gap: 10px; }
+  .bq-hero .bq-mini,
+  .bq-hero .bq-ex { white-space: nowrap; }
+  .bq-hero .bq-pbh { flex-wrap: wrap; gap: 8px; }
+  .bq-hero .bq-row {
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "n t tag"
+      "n seg seg";
+    row-gap: 8px;
+  }
+  .bq-hero .bq-row .bq-n { grid-area: n; align-self: start; }
+  .bq-hero .bq-row .bq-t { grid-area: t; }
+  .bq-hero .bq-seg { grid-area: seg; }
+  .bq-hero .bq-tag { grid-area: tag; align-self: start; padding: 6px 10px; white-space: nowrap; }
+  .bq-hero .bq-pf { grid-template-columns: minmax(0, 1fr); }
+  .bq-hero .bq-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

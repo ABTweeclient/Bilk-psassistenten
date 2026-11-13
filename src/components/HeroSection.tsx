@@ -27,7 +27,6 @@ export function HeroSection({ onAnalyse }: HeroSectionProps) {
   return (
     <section className="bq-hero">
       <div className="bq-gridbg" aria-hidden="true" />
-      <div className="bq-warm" aria-hidden="true" />
       <div className="bq-wrap">
         <nav className="bq-nav" aria-label="Huvudmeny">
           <a className="bq-brand" href="#top" aria-label="Bilqlar, startsida">
