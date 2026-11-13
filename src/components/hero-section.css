@@ -44,16 +44,6 @@
 }
 .bq-hero * { box-sizing: border-box; margin: 0; padding: 0; }
 
-.bq-hero .bq-gridbg {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(82, 95, 120, .07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(82, 95, 120, .07) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 70% 60% at 72% 45%, #000 10%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 72% 45%, #000 10%, transparent 75%);
-}
 .bq-hero .bq-wrap { position: relative; padding: 0 56px; }
 
 .bq-hero .bq-nav { height: 88px; display: flex; align-items: center; justify-content: space-between; }
