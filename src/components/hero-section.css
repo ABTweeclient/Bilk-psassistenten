@@ -222,23 +222,6 @@
   content: "";
 }
 
-/* Textblocket under hjälptexterna i vänsterkolumnen. */
-.bq-hero .bq-note {
-  margin-top: 56px;
-  max-width: 520px;
-  border-left: 3px solid #53617A;
-  padding-left: 18px;
-}
-.bq-hero .bq-note h2 {
-  font-family: "Inter Display";
-  font-size: 24px;
-  font-weight: 600;
-  letter-spacing: -.4px;
-  line-height: 1.25;
-  color: #53617A;
-}
-.bq-hero .bq-note p { margin-top: 6px; font-size: 16px; line-height: 1.5; color: #5B6474; }
-
 /* Produktpanelen: ett rapportdokument i stället för det tidigare kortet. */
 .bq-hero .bq-panelwrap { position: relative; padding-top: 6px; }
 .bq-doc {
@@ -312,8 +295,6 @@
   .bq-hero .bq-hero-grid { grid-template-columns: minmax(0, 1fr); }
   .bq-hero h1 { font-size: 52px; }
   .bq-hero .bq-search { width: 100%; max-width: 560px; }
-  .bq-hero .bq-note { margin-top: 36px; }
-  .bq-hero .bq-note h2 { font-size: 20px; }
   .bq-hero .bq-strip {
     position: relative;
     right: auto;
