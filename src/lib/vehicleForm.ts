@@ -3,10 +3,16 @@ import { purchaseTimingSchema, reportRequestSchema } from "@/lib/report";
 
 export const currentModelYear = new Date().getFullYear();
 
-const purchaseTimingFormSchema = z.string().refine(
-  (value): value is z.infer<typeof purchaseTimingSchema> => purchaseTimingSchema.safeParse(value).success,
-  "Välj när du planerar att köpa.",
-);
+/**
+ * Köptidpunkten är valfri. Hoppar kunden över den skickas samma standard som
+ * när en rapport skapas om från en sparad bil ("curious"), så backendens
+ * schema slipper ändras.
+ */
+const purchaseTimingFormSchema = z
+  .string()
+  .optional()
+  .transform((value) => (value ? value : "curious"))
+  .pipe(purchaseTimingSchema);
 
 /** Raw browser values are parsed here, then normalized to the API's vehicle shape. */
 export const vehicleFormSchema = z.object({

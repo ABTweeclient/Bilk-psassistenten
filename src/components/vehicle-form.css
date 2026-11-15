@@ -66,6 +66,12 @@
 .vf-lookup__button { flex: 0 0 auto; min-height: 40px; border: 1px solid var(--line, rgb(17 24 39 / 10%)); border-radius: 10px; background: white; padding: 0 14px; font-size: 12px; font-weight: 600; color: inherit; cursor: pointer; transition: border-color 160ms ease, box-shadow 160ms ease; }
 .vf-lookup__button:hover:not(:disabled) { border-color: #c9d0d8; box-shadow: 0 6px 16px rgb(46 35 22 / 8%); }
 .vf-lookup__button:disabled { color: #8b939d; cursor: default; }
+/* Raden som visar vilken bil skylten gav, sedan de ifyllda fälten dolts. */
+.vf-match { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 0; border: 1px solid var(--line, rgb(17 24 39 / 10%)); border-radius: 10px; background: #fbfaf8; padding: 8px 11px; color: #283244; font-size: 12px; line-height: 1.4; }
+.vf-match svg { color: #2f6f4f; }
+.vf-match__name { font-weight: 600; }
+.vf-match__part { color: #4b5563; }
+.vf-match__change { margin-left: auto; border: 0; background: none; padding: 0; color: #9a420d; font: inherit; font-size: 11px; font-weight: 600; text-decoration: underline; cursor: pointer; }
 @media (max-width: 520px) { .vf-lookup__row { flex-direction: column; } }
 
 /* Sökresultatet visas som ett förslag med källa, aldrig ifyllt automatiskt. */

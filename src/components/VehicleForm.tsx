@@ -15,6 +15,7 @@ import {
   isValidRegistrationNumber,
   normalizeRegistrationNumber,
   type VehicleLookupResponse,
+  type VehicleSuggestion,
 } from "@/lib/vehicleLookup";
 import "./vehicle-form.css";
 
@@ -38,6 +39,10 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
   const timingErrorId = `${id}-purchase-timing-error`;
   const [plate, setPlate] = useState(registrationNumber ?? "");
   const [lookup, setLookup] = useState<{ state: "idle" | "loading" | "found" | "none" | "error"; message: string }>({ state: "idle", message: "" });
+  /* Bilen som registret svarade med. Så länge den finns döljs de fält som
+     redan är ifyllda, så bara drivning och miltal står kvar. */
+  const [matched, setMatched] = useState<VehicleSuggestion | null>(null);
+  const [showBasics, setShowBasics] = useState(true);
 
   /* Skylten som skrevs i hero-fältet fylls i och slås upp direkt, så att man
      slipper skriva och hämta den igen. Tom skylt lämnar formuläret som det är.
@@ -47,6 +52,8 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
     if (!registrationNumber) return;
     setPlate(registrationNumber);
     setLookup({ state: "idle", message: "" });
+    setMatched(null);
+    setShowBasics(true);
     if (autoLookupDone.current === registrationNumber) return;
     autoLookupDone.current = registrationNumber;
     void lookupPlate(registrationNumber);
@@ -66,6 +73,8 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
     if (!onLookup) return;
     const normalized = normalizeRegistrationNumber(value);
     if (!isValidRegistrationNumber(normalized)) {
+      setMatched(null);
+      setShowBasics(true);
       setLookup({ state: "error", message: "Skriv ett svenskt registreringsnummer, till exempel ABC123." });
       return;
     }
@@ -74,6 +83,8 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
       const result = await onLookup(normalized);
       const suggestion = result?.suggestion ?? null;
       if (!suggestion?.found) {
+        setMatched(null);
+        setShowBasics(true);
         setLookup({
           state: "none",
           message: result?.notice ?? "Hittade ingen säker träff. Fyll i uppgifterna själv.",
@@ -91,6 +102,10 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
         gearbox: suggestion.gearbox || current.gearbox,
       }));
       setErrors({});
+      /* Fälten som registret fyllde i behövs inte längre: de döljs och
+         ersätts av en kort rad med bilen. "Ändra" tar tillbaka dem. */
+      setMatched(suggestion);
+      setShowBasics(false);
       setLookup({
         state: "found",
         message: suggestion.source
@@ -101,6 +116,12 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
       setLookup({ state: "error", message: "Kunde inte hämta förslag just nu. Fyll i uppgifterna själv." });
     }
   }
+
+  /* Dölj bara de ifyllda fälten när registret faktiskt gav alla uppgifter som
+     formuläret kräver – annars går felet inte att rätta. */
+  const hideBasics = Boolean(
+    matched && !showBasics && matched.make && matched.model && matched.year && matched.engine,
+  );
 
   function update<K extends keyof VehicleFormValues>(field: K, value: VehicleFormValues[K]) {
     setValues((current) => ({ ...current, [field]: value }));
@@ -170,6 +191,9 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
               value={plate}
               onChange={(event) => {
                 setPlate(event.target.value);
+                /* Ny skylt = ny bil: visa fälten igen och glöm förra träffen. */
+                setMatched(null);
+                setShowBasics(true);
                 if (lookup.state !== "loading") setLookup({ state: "idle", message: "" });
               }}
               onKeyDown={(event) => {
@@ -188,6 +212,24 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
               {lookup.state === "loading" ? "Söker…" : "Hämta förslag"}
             </button>
           </div>
+          {matched && (
+            <p className="vf-match">
+              <Check size={13} strokeWidth={3} aria-hidden="true" />
+              <span className="vf-match__name">
+                {[matched.make, matched.model].filter(Boolean).join(" ")}
+              </span>
+              {[matched.year ? String(matched.year) : "", matched.engine, matched.gearbox === "Vet ej" ? "" : matched.gearbox]
+                .filter(Boolean)
+                .map((part) => (
+                  <span key={part} className="vf-match__part">· {part}</span>
+                ))}
+              {!showBasics && (
+                <button type="button" className="vf-match__change" onClick={() => setShowBasics(true)}>
+                  Ändra
+                </button>
+              )}
+            </p>
+          )}
           <p className="vf-hint" aria-live="polite">
             {lookup.message || "Fyll i skylten och hämta – vi fyller i märke, modell, år, motor, bränsle och växellåda. Drivning och miltal fyller du i själv om du vet."}
           </p>
@@ -195,6 +237,8 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
       )}
 
       <div className="vf-grid" aria-labelledby={`${id}-title`}>
+        {!hideBasics && (
+          <>
         <div className="vf-field">
           <label htmlFor={idFor("make")}>Märke <span aria-hidden="true">*</span></label>
           <input {...fieldProps("make")} className={fieldClass("make")} name="make" list="vehicle-make-options" autoComplete="off" maxLength={60} required value={values.make} onChange={(event) => update("make", event.target.value)} placeholder="Till exempel Volvo" />
@@ -228,6 +272,8 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
           </select>
           {errors.gearbox && <p className="vf-error" id={errorFor("gearbox")}>{errors.gearbox}</p>}
         </div>
+          </>
+        )}
 
         <div className="vf-field">
           <label htmlFor={idFor("drivetrain")}>Drivning <span>(valfritt)</span></label>
@@ -248,11 +294,11 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
         </div>
 
         <fieldset className="vf-field vf-field--timing" aria-describedby={errors.purchase_timing ? timingErrorId : undefined}>
-          <legend>Är du på väg att köpa den här bilen? <span aria-hidden="true">*</span></legend>
+          <legend>Är du på väg att köpa den här bilen? <span>(valfritt)</span></legend>
           <div className="vf-radio-options">
             {Object.entries(vehiclePurchaseLabels).map(([value, label]) => (
               <label className="vf-radio" key={value}>
-                <input type="radio" name={`${id}-purchase-timing`} required={value === "within_month"} value={value} checked={values.purchase_timing === value} onChange={() => update("purchase_timing", value as VehicleFormValues["purchase_timing"])} />
+                <input type="radio" name={`${id}-purchase-timing`} value={value} checked={values.purchase_timing === value} onChange={() => update("purchase_timing", value as VehicleFormValues["purchase_timing"])} />
                 <span className="vf-radio__mark" aria-hidden="true"><Check size={12} strokeWidth={3} /></span>
                 <span>{label}</span>
               </label>
