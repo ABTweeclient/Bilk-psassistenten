@@ -39,10 +39,11 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
   const timingErrorId = `${id}-purchase-timing-error`;
   const [plate, setPlate] = useState(registrationNumber ?? "");
   const [lookup, setLookup] = useState<{ state: "idle" | "loading" | "found" | "none" | "error"; message: string }>({ state: "idle", message: "" });
-  /* Bilen som registret svarade med. Så länge den finns döljs de fält som
-     redan är ifyllda, så bara drivning och miltal står kvar. */
+  /* Bilen som registret svarade med, så att raden under skylten kan visa den. */
   const [matched, setMatched] = useState<VehicleSuggestion | null>(null);
-  const [showBasics, setShowBasics] = useState(true);
+  /* Standard är det korta formuläret: skylt, drivning och miltal. De fält som
+     registret kan fylla i går att öppna manuellt med knappen under skylten. */
+  const [showBasics, setShowBasics] = useState(false);
 
   /* Skylten som skrevs i hero-fältet fylls i och slås upp direkt, så att man
      slipper skriva och hämta den igen. Tom skylt lämnar formuläret som det är.
@@ -53,7 +54,7 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
     setPlate(registrationNumber);
     setLookup({ state: "idle", message: "" });
     setMatched(null);
-    setShowBasics(true);
+    setShowBasics(false);
     if (autoLookupDone.current === registrationNumber) return;
     autoLookupDone.current = registrationNumber;
     void lookupPlate(registrationNumber);
@@ -117,11 +118,9 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
     }
   }
 
-  /* Dölj bara de ifyllda fälten när registret faktiskt gav alla uppgifter som
-     formuläret kräver – annars går felet inte att rätta. */
-  const hideBasics = Boolean(
-    matched && !showBasics && matched.make && matched.model && matched.year && matched.engine,
-  );
+  /* Det korta läget är standard; fälten visas när man väljer att fylla i bilen
+     själv, eller automatiskt om ett obligatoriskt fält saknas vid inskickning. */
+  const hideBasics = !showBasics;
 
   function update<K extends keyof VehicleFormValues>(field: K, value: VehicleFormValues[K]) {
     setValues((current) => ({ ...current, [field]: value }));
@@ -136,6 +135,15 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
       const nextErrors = vehicleFormErrors(result.error);
       setErrors(nextErrors);
       setSubmitError("Kontrollera uppgifterna som är markerade nedan.");
+      const basicFields = ["make", "model", "year", "engine", "gearbox"] as const;
+      const basicError = basicFields.find((field) => nextErrors[field]);
+      /* Ett fel i ett dolt fält går inte att rätta: visa fälten och fokusera det
+         första som behöver fyllas i. */
+      if (basicError) {
+        setShowBasics(true);
+        requestAnimationFrame(() => document.getElementById(idFor(basicError))?.focus());
+        return;
+      }
       const firstInvalid = (Object.keys(nextErrors) as Array<keyof VehicleFormValues>).find((field) => nextErrors[field]);
       if (firstInvalid === "purchase_timing") {
         document.querySelector<HTMLInputElement>(`input[name="${id}-purchase-timing"]`)?.focus();
@@ -191,9 +199,8 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
               value={plate}
               onChange={(event) => {
                 setPlate(event.target.value);
-                /* Ny skylt = ny bil: visa fälten igen och glöm förra träffen. */
+                /* Ny skylt = ny bil: glöm förra träffen, men behåll det korta läget. */
                 setMatched(null);
-                setShowBasics(true);
                 if (lookup.state !== "loading") setLookup({ state: "idle", message: "" });
               }}
               onKeyDown={(event) => {
@@ -212,6 +219,12 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
               {lookup.state === "loading" ? "Söker…" : "Hämta förslag"}
             </button>
           </div>
+          {!showBasics && !matched && (
+            <button type="button" className="vf-manual" onClick={() => setShowBasics(true)}>
+              Skriv in modellen manuellt
+              <ArrowRight size={13} aria-hidden="true" />
+            </button>
+          )}
           {matched && (
             <p className="vf-match">
               <Check size={13} strokeWidth={3} aria-hidden="true" />
@@ -231,7 +244,7 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
             </p>
           )}
           <p className="vf-hint" aria-live="polite">
-            {lookup.message || "Fyll i skylten och hämta – vi fyller i märke, modell, år, motor, bränsle och växellåda. Drivning och miltal fyller du i själv om du vet."}
+            {lookup.message || "Fyll i skylten och hämta – då fyller vi i märke, modell, år, motor, bränsle och växellåda. Drivning och miltal fyller du i själv om du vet."}
           </p>
         </div>
       )}
@@ -319,7 +332,7 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
           {isSubmitting && <span className="vf-spinner" aria-hidden="true" />}
         </button>
       </div>
-      <button className="vf-example" type="button" onClick={() => { setValues(exampleVehicleForm); setErrors({}); setSubmitError(""); onExample?.(); }}>
+                  <button className="vf-example" type="button" onClick={() => { setValues(exampleVehicleForm); setErrors({}); setSubmitError(""); setShowBasics(true); onExample?.(); }}>
         Fyll i fiktivt exempel <ArrowRight size={13} aria-hidden="true" />
       </button>
     </form>
