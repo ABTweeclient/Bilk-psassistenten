@@ -58,7 +58,7 @@
 import { createHash, createHmac, randomUUID } from "node:crypto";
 import { ConvexError, v } from "convex/values";
 import { internal } from "./_generated/api";
-import { action, type ActionCtx } from "./_generated/server";
+import { internalAction, type ActionCtx } from "./_generated/server";
 import {
   buildReportSearchPrompt,
   buildReportSystemPrompt,
@@ -1020,7 +1020,9 @@ async function markFailed(ctx: ActionCtx, reportId: string, reason: string, fail
  * Actionen
  * ------------------------------------------------------------------ */
 
-export const generateReport = action({
+/* Bara anropbar inifrån Convex (från en betald order). Klienten kan aldrig
+   starta en generering – den kostar pengar och kräver bekräftad betalning. */
+export const generateReport = internalAction({
   args: { input: v.any(), clientKey: v.optional(v.string()) },
   handler: async (ctx, args): Promise<{ reportId: string; cached: boolean }> => {
     const parsed = reportRequestSchema.safeParse(args.input);

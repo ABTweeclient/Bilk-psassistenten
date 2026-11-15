@@ -27,9 +27,24 @@ type VehicleFormProps = {
   onLookup?: (registrationNumber: string) => Promise<VehicleLookupResponse | null>;
   /** Skylt som redan skrivits på sidan, till exempel i hero-fältet. */
   registrationNumber?: string;
+  /** Knappens text, till exempel "Köp rapport – 79 kr". */
+  submitLabel?: string;
+  /** Kräver att kunden godkänner att leveransen startar direkt. */
+  requireConsent?: boolean;
+  /** Ifyllda uppgifter att återställa, till exempel efter en avbruten betalning. */
+  initialValues?: VehicleFormValues;
 };
 
-export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLookup, registrationNumber }: VehicleFormProps) {
+export function VehicleForm({
+  onSubmit,
+  isSubmitting = false,
+  onExample,
+  onLookup,
+  registrationNumber,
+  submitLabel = "Analysera bilen",
+  requireConsent = false,
+  initialValues,
+}: VehicleFormProps) {
   const [values, setValues] = useState<VehicleFormValues>(emptyVehicleForm);
   const [errors, setErrors] = useState<Partial<Record<keyof VehicleFormValues, string>>>({});
   const [submitError, setSubmitError] = useState("");
@@ -43,11 +58,19 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
   const [matched, setMatched] = useState<VehicleSuggestion | null>(null);
   /* Standard är det korta formuläret: skylt, drivning och miltal. De fält som
      registret kan fylla i går att öppna manuellt med knappen under skylten. */
-  const [showBasics, setShowBasics] = useState(false);
+  const [showBasics, setShowBasics] = useState(() => Boolean(initialValues));
+  const [consent, setConsent] = useState(false);
 
   /* Skylten som skrevs i hero-fältet fylls i och slås upp direkt, så att man
      slipper skriva och hämta den igen. Tom skylt lämnar formuläret som det är.
      Ref-guarden hindrar att React StrictMode kör uppslaget två gånger. */
+  /* Uppgifter som skickades iväg till betalning och kom tillbaka avbrutna. */
+  useEffect(() => {
+    if (initialValues) setValues(initialValues);
+    // Bara vid montering: fälten ska inte skrivas över när kunden redigerar.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const autoLookupDone = useRef<string | null>(null);
   useEffect(() => {
     if (!registrationNumber) return;
@@ -321,13 +344,25 @@ export function VehicleForm({ onSubmit, isSubmitting = false, onExample, onLooku
         </fieldset>
       </div>
 
+      {requireConsent && (
+        <label className="vf-consent">
+          <input
+            type="checkbox"
+            checked={consent}
+            onChange={(event) => setConsent(event.target.checked)}
+            required
+          />
+          <span>Jag godkänner att leveransen startar direkt och att jag därmed förlorar ångerrätten.</span>
+        </label>
+      )}
+
       <div className="vf-submit-row">
         <div className="vf-submit-copy">
           {submitError && <p className="vf-form-error" role="alert">{submitError}</p>}
           {!submitError && <p>Uppgifterna används för att ta fram en rapport som bygger på publicerade källor.</p>}
         </div>
-        <button className="vf-submit" type="submit" disabled={isSubmitting}>
-          <span>{isSubmitting ? "Skickar uppgifter…" : "Analysera bilen"}</span>
+        <button className="vf-submit" type="submit" disabled={isSubmitting || (requireConsent && !consent)}>
+          <span>{isSubmitting ? "Skickar uppgifter…" : submitLabel}</span>
           {!isSubmitting && <ArrowRight size={17} aria-hidden="true" />}
           {isSubmitting && <span className="vf-spinner" aria-hidden="true" />}
         </button>

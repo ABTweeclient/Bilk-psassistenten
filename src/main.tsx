@@ -16,6 +16,7 @@ const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 // Internal design-system overview: hidden from navigation, noindex, useful for review.
 const Design = lazy(() => import("./pages/Design.tsx"));
 const ReportPage = lazy(() => import("./pages/Report.tsx"));
+const OrderPage = lazy(() => import("./pages/Order.tsx"));
 // Internal review page: reports, sources, cost and review_status. Admin only.
 const AdminPage = lazy(() => import("./pages/Admin.tsx"));
 
@@ -132,6 +133,7 @@ createRoot(document.getElementById("root")!).render(
               />
               <Route path="/rapport" element={<ReportPage />} />
               <Route path="/rapport/:reportId" element={<ReportPage />} />
+              <Route path="/order/:token" element={<OrderPage />} />
               <Route
                 path="/admin"
                 element={

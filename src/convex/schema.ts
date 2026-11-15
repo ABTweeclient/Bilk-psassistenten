@@ -99,6 +99,28 @@ const schema = defineSchema(
     // Betalda uppslag per dygn, så att den publika knappen inte kan tömma
     // uppslagskrediterna.
     lookupUsage: defineTable({ day: v.string(), count: v.number() }).index("by_day", ["day"]),
+
+    // En order per köp. Rapporten genereras först när Stripe bekräftat
+    // betalningen, och nås av kunden via `token` – aldrig via order-id.
+    orders: defineTable({
+      token: v.string(),
+      carInput: v.any(),
+      status: v.string(), // pending | paid | generating | done | failed
+      stripeSessionId: v.optional(v.string()),
+      createdAt: v.number(),
+      retryCount: v.number(),
+      reportId: v.optional(v.string()),
+    })
+      .index("by_token", ["token"])
+      .index("by_session", ["stripeSessionId"])
+      .index("by_status", ["status"]),
+
+    // Processade Stripe-event. Stripe skickar samma event flera gånger, och
+    // varje event får bara starta en generering.
+    stripeEvents: defineTable({ eventId: v.string(), type: v.string(), createdAt: v.number() }).index(
+      "by_event_id",
+      ["eventId"],
+    ),
   },
   {
     schemaValidation: false,

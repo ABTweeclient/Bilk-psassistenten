@@ -1,0 +1,142 @@
+.order-page {
+  min-height: 100vh;
+  background: #fffdf9;
+  color: #141b2b;
+}
+
+.order-header {
+  display: flex;
+  align-items: center;
+  height: 76px;
+  padding: 0 24px;
+}
+
+.order-logo {
+  height: 30px;
+  width: auto;
+  display: block;
+}
+
+.order-main {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 24px 24px 80px;
+}
+
+.order-panel {
+  border: 1px solid #ece5dc;
+  border-radius: 14px;
+  background: #fff;
+  padding: 28px 28px 30px;
+  box-shadow: 0 20px 50px -40px rgba(20, 27, 43, 0.4);
+}
+
+.order-mono {
+  margin: 0;
+  color: #9a420d;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 1.6px;
+}
+
+.order-panel h1 {
+  margin: 8px 0 0;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  line-height: 1.25;
+}
+
+.order-body {
+  margin-top: 12px;
+  color: #5b6474;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.order-body p {
+  margin: 0 0 12px;
+}
+
+.order-body a {
+  color: #9a420d;
+  font-weight: 600;
+}
+
+.order-vehicle {
+  color: #141b2b;
+  font-weight: 600;
+}
+
+.order-progress {
+  color: #9a420d;
+  font-weight: 600;
+}
+
+.order-error {
+  color: #a02020;
+  font-weight: 600;
+}
+
+.order-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 10px;
+  background: #141b2b;
+  padding: 11px 18px;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.order-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.order-save {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid #ece5dc;
+  background: rgba(255, 250, 242, 0.96);
+  backdrop-filter: blur(6px);
+}
+
+.order-save__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 12px 24px;
+}
+
+.order-save__inner p {
+  margin: 0;
+  color: #141b2b;
+  font-size: 14px;
+}
+
+.order-save__copy {
+  border: 1px solid #d9cec0;
+  border-radius: 9px;
+  background: #fff;
+  padding: 8px 14px;
+  color: #141b2b;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.order-save__copy:hover {
+  border-color: #bfae9a;
+}

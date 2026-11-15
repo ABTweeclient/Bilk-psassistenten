@@ -1,13 +1,15 @@
-import { useAction } from "convex/react";
+import { useAction, useMutation, useQuery } from "convex/react";
 import qlarLogo from "@/assets/qlar-logo.png";
 import { useState } from "react";
 import { ArrowDown, ArrowRight, Check, ChevronRight, Gauge, ShieldCheck } from "lucide-react";
-import { useNavigate } from "react-router";
+import { useSearchParams } from "react-router";
 import { HeroSection } from "@/components/HeroSection";
 import { VehicleForm } from "@/components/VehicleForm";
 import { api } from "@/convex/_generated/api";
-import { reportErrorMessage } from "@/lib/reportErrors";
-import { type VehicleSubmission } from "@/lib/vehicleForm";
+import { readOrderDraft, saveOrderDraft } from "@/lib/orderDraft";
+import { formatPriceOre } from "@/lib/price";
+import { type VehicleFormValues, type VehicleSubmission } from "@/lib/vehicleForm";
+import { TestModeBanner } from "@/components/TestModeBanner";
 import "./Landing.css";
 
 const reportAreas = [
@@ -59,28 +61,38 @@ function ReportPreview() {
 }
 
 export default function Landing() {
-  const generateReport = useAction(api.reportPipeline.generateReport);
   const suggestVehicle = useAction(api.vehicleLookup.suggestByRegistration);
-  const navigate = useNavigate();
+  const createOrder = useMutation(api.orders.createOrder);
+  const createCheckout = useAction(api.orders.createCheckout);
+  const config = useQuery(api.orders.publicConfig);
+  const [searchParams] = useSearchParams();
+  const cancelled = searchParams.get("avbruten") === "1";
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   /** Skylten från hero-fältet, så att formuläret kan fylla i den. */
   const [heroPlate, setHeroPlate] = useState("");
+  /** Uppgifterna som fanns när betalningen avbröts. */
+  const [draft] = useState<VehicleFormValues | null>(() => (cancelled ? readOrderDraft() : null));
+
+  const price = config && config.priceOre > 0 ? formatPriceOre(config.priceOre) : "";
+  const submitLabel = price ? `Köp rapport – ${price} kr` : "Köp rapport";
 
   /**
-   * Skickar uppgifterna till backend, som validerar dem, rate limitar och startar
-   * research. Så snart posten finns går vi vidare till /rapport/:id, där
-   * laddningsvyn drivs av serverns verkliga status.
+   * Skapar en order och skickar kunden till Stripe Checkout. Ingen rapport
+   * skapas här – servern startar den först när betalningen är bekräftad, och
+   * kunden följer den på /order/<token>.
    */
   async function handleSubmit(submission: VehicleSubmission) {
     setIsSubmitting(true);
     setErrorMessage("");
     try {
-      const result = await generateReport({ input: submission });
-      navigate(`/rapport/${result.reportId}`);
-    } catch (error) {
+      saveOrderDraft(submission);
+      const { orderId } = await createOrder({ carInput: submission });
+      const { url } = await createCheckout({ orderId });
+      window.location.assign(url);
+    } catch {
       setIsSubmitting(false);
-      setErrorMessage(reportErrorMessage(error));
+      setErrorMessage("Kunde inte starta betalningen just nu. Försök igen om en stund.");
     }
   }
 
@@ -110,7 +122,21 @@ export default function Landing() {
         {/* Formuläret är sidans sista steg: först hur det fungerar, sedan hur
             rapporten ser ut, och först därefter fyller man i bilen. */}
         <section className="search-card search-card--standalone bento-reveal" id="fordonsokning" aria-label="Uppgifter om bilen">
-          <VehicleForm onSubmit={handleSubmit} isSubmitting={isSubmitting} onLookup={handleLookup} registrationNumber={heroPlate} />
+          <TestModeBanner />
+          {cancelled && (
+            <p className="vf-cancel-note" role="status">
+              Betalningen avbröts och inget drogs. Uppgifterna finns kvar nedan.
+            </p>
+          )}
+          <VehicleForm
+            onSubmit={handleSubmit}
+            isSubmitting={isSubmitting}
+            onLookup={handleLookup}
+            registrationNumber={heroPlate}
+            submitLabel={submitLabel}
+            requireConsent
+            initialValues={draft ?? undefined}
+          />
           {errorMessage && (
             <p className="vf-form-error" role="alert">{errorMessage}</p>
           )}

@@ -1,4 +1,4 @@
-import { useAction, useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import qlarLogo from "@/assets/qlar-logo.png";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router";
@@ -186,11 +186,16 @@ function StatePanel({ title, children, action }: { title: string; children: Reac
   );
 }
 
-/** Den riktiga rapporten, driven av serverns status. */
-function GeneratedReport({ reportId }: { reportId: string }) {
+/**
+ * Den riktiga rapporten, driven av serverns status.
+ *
+ * Används av /rapport/:reportId och av /order/:token. `retryToken` skickas bara
+ * med från en betald order: ett nytt försök sker via ordern, aldrig genom att
+ * starta en generering från klienten.
+ */
+export function GeneratedReport({ reportId, retryToken }: { reportId: string; retryToken?: string }) {
   const record = useQuery(api.vehicleReports.getReport, { reportId });
-  const generateReport = useAction(api.reportPipeline.generateReport);
-  const navigate = useNavigate();
+  const retryOrder = useMutation(api.orders.retryOrder);
   const [now, setNow] = useState(() => Date.now());
   const [retrying, setRetrying] = useState(false);
   const [retryError, setRetryError] = useState("");
@@ -206,20 +211,23 @@ function GeneratedReport({ reportId }: { reportId: string }) {
   const stuck = isPending && lastChangeAt !== null && now - lastChangeAt >= stuckAfterMs;
 
   /**
-   * Kör samma bil en gång till. Köptidpunkten påverkar inte rapportens innehåll
-   * och sparades inte på posten, så den sätts till det neutrala värdet.
+   * Kör samma bil en gång till, via ordern. Ingen ny betalning, och servern
+   * avgör om ett försök återstår – statusen uppdateras av prenumerationen.
    */
   async function retry() {
-    if (!parsed || retrying) return;
+    if (!parsed || retrying || !retryToken) return;
     setRetrying(true);
     setRetryError("");
     try {
-      const result = await generateReport({ input: { ...parsed.vehicle, purchase_timing: "curious" } });
-      if (result.reportId === reportId) setRetrying(false);
-      else navigate(`/rapport/${result.reportId}`);
+      await retryOrder({ token: retryToken });
+      setRetrying(false);
     } catch (error) {
       setRetrying(false);
-      setRetryError(reportErrorMessage(error));
+      setRetryError(
+        error instanceof Error && error.message.includes("RETRY_LIMIT_REACHED")
+          ? "Inga fler försök återstår för den här ordern."
+          : "Det gick inte att starta ett nytt försök just nu. Försök igen om en stund.",
+      );
     }
   }
 
@@ -268,7 +276,7 @@ function GeneratedReport({ reportId }: { reportId: string }) {
           <StatePanel
             title="Rapporten kunde inte sammanställas"
             action={
-              parsed.retryable ? (
+              parsed.retryable && retryToken ? (
                 <>
                   <RetryButton onRetry={retry} busy={retrying} />
                   <Link className="ds-btn ds-btn--secondary" to="/">Ny sökning</Link>
@@ -310,10 +318,14 @@ function GeneratedReport({ reportId }: { reportId: string }) {
           <StatePanel
             title="Rapporten tar längre tid än väntat"
             action={
-              <>
-                <RetryButton onRetry={retry} busy={retrying} />
+              retryToken ? (
+                <>
+                  <RetryButton onRetry={retry} busy={retrying} />
+                  <Link className="ds-btn ds-btn--secondary" to="/">Ny sökning</Link>
+                </>
+              ) : (
                 <Link className="ds-btn ds-btn--secondary" to="/">Ny sökning</Link>
-              </>
+              )
             }
           >
             Körningen har pågått i över 150 sekunder utan att statusen ändrats. Sidan uppdateras fortfarande, och om

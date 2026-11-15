@@ -66,6 +66,13 @@
 .vf-lookup__button { flex: 0 0 auto; min-height: 40px; border: 1px solid var(--line, rgb(17 24 39 / 10%)); border-radius: 10px; background: white; padding: 0 14px; font-size: 12px; font-weight: 600; color: inherit; cursor: pointer; transition: border-color 160ms ease, box-shadow 160ms ease; }
 .vf-lookup__button:hover:not(:disabled) { border-color: #c9d0d8; box-shadow: 0 6px 16px rgb(46 35 22 / 8%); }
 .vf-lookup__button:disabled { color: #8b939d; cursor: default; }
+/* Raden som visas när kunden kommer tillbaka från en avbruten betalning. */
+.vf-cancel-note { margin: 0 0 14px; border: 1px solid #e6d9c6; border-radius: 8px; background: #fffaf2; padding: 9px 12px; color: #6b5636; font-size: 12.5px; line-height: 1.45; }
+
+/* Godkännandet av direkt leverans, strax före köpknappen. */
+.vf-consent { display: flex; align-items: flex-start; gap: 9px; margin: 20px 0 0; color: #4b5563; font-size: 12px; line-height: 1.45; cursor: pointer; }
+.vf-consent input { flex: 0 0 auto; width: 15px; height: 15px; margin: 1px 0 0; accent-color: #c4530f; cursor: pointer; }
+
 /* Knappen som öppnar de fält registret annars fyller i. */
 .vf-manual { justify-self: start; display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; padding: 2px 0; color: #9a420d; font: inherit; font-size: 12px; font-weight: 600; text-decoration: underline; cursor: pointer; }
 .vf-manual:hover { color: #7d350a; }
