@@ -20,7 +20,9 @@ function client(): Stripe {
 /**
  * Skapar en Checkout-session för ett engångsköp. `payment_method_types`
  * utelämnas med flit – Stripe väljer då de betalsätt som är aktiverade på
- * kontot.
+ * kontot. `allow_promotion_codes` låter kunden ange en rabattkod i kassan; en
+ * kod på 100 % gör att Stripe sätter `payment_status` till
+ * "no_payment_required" i stället för "paid".
  */
 export const createSession = internalAction({
   args: {
@@ -44,6 +46,7 @@ export const createSession = internalAction({
           },
         },
       ],
+      allow_promotion_codes: true,
       metadata: { orderId: args.orderId },
       client_reference_id: args.orderId,
       success_url: `${args.siteUrl}/order/${args.token}`,

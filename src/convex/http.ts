@@ -32,13 +32,18 @@ http.route({
       return new Response("invalid signature", { status: 400 });
     }
 
-    if (
-      event.type !== "checkout.session.completed" &&
-      event.type !== "checkout.session.async_payment_succeeded"
-    ) {
-      return new Response("ignored event", { status: 200 });
+    const completed = event.type === "checkout.session.completed";
+    const asyncPaid = event.type === "checkout.session.async_payment_succeeded";
+    if (!completed && !asyncPaid) return new Response("ignored event", { status: 200 });
+
+    /* En 100 % rabattkod ger inget belopp att dra och Stripe sätter då
+       "no_payment_required" i stället för "paid". Det räknas bara på det
+       avslutade köpeventet – inte på async_payment_succeeded, som handlar om
+       pengar som faktiskt dras. */
+    const freeWithPromotion = completed && event.paymentStatus === "no_payment_required";
+    if (event.paymentStatus !== "paid" && !freeWithPromotion) {
+      return new Response("not paid", { status: 200 });
     }
-    if (event.paymentStatus !== "paid") return new Response("not paid", { status: 200 });
     if (!event.sessionId) return new Response("missing session", { status: 200 });
 
     try {
