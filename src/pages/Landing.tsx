@@ -9,6 +9,7 @@ import { api } from "@/convex/_generated/api";
 import { readOrderDraft, saveOrderDraft } from "@/lib/orderDraft";
 import { formatPriceOre } from "@/lib/price";
 import { type VehicleFormValues, type VehicleSubmission } from "@/lib/vehicleForm";
+import type { VehicleSubmitMeta } from "@/components/VehicleForm";
 import { TestModeBanner } from "@/components/TestModeBanner";
 import "./Landing.css";
 
@@ -82,12 +83,15 @@ export default function Landing() {
    * skapas här – servern startar den först när betalningen är bekräftad, och
    * kunden följer den på /order/<token>.
    */
-  async function handleSubmit(submission: VehicleSubmission) {
+  async function handleSubmit(submission: VehicleSubmission, meta: VehicleSubmitMeta) {
     setIsSubmitting(true);
     setErrorMessage("");
     try {
       saveOrderDraft(submission);
-      const { orderId } = await createOrder({ carInput: submission });
+      const { orderId } = await createOrder({
+        carInput: submission,
+        consentAcceptedAt: meta.consentAcceptedAt ?? undefined,
+      });
       const { url } = await createCheckout({ orderId });
       window.location.assign(url);
     } catch {

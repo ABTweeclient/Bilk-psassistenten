@@ -19,8 +19,13 @@ import {
 } from "@/lib/vehicleLookup";
 import "./vehicle-form.css";
 
+/** Det som skickas med utöver bilen: när ångerrätten godkändes. */
+export type VehicleSubmitMeta = {
+  consentAcceptedAt: number | null;
+};
+
 type VehicleFormProps = {
-  onSubmit: (submission: VehicleSubmission) => Promise<void> | void;
+  onSubmit: (submission: VehicleSubmission, meta: VehicleSubmitMeta) => Promise<void> | void;
   isSubmitting?: boolean;
   onExample?: () => void;
   /** Hämtar bilens uppgifter från registret. Utan den visas inte fältet. */
@@ -60,6 +65,8 @@ export function VehicleForm({
      registret kan fylla i går att öppna manuellt med knappen under skylten. */
   const [showBasics, setShowBasics] = useState(() => Boolean(initialValues));
   const [consent, setConsent] = useState(false);
+  /** Tiden då rutan kryssades i, inte då knappen trycktes. */
+  const [consentAcceptedAt, setConsentAcceptedAt] = useState<number | null>(null);
 
   /* Skylten som skrevs i hero-fältet fylls i och slås upp direkt, så att man
      slipper skriva och hämta den igen. Tom skylt lämnar formuläret som det är.
@@ -179,7 +186,9 @@ export function VehicleForm({
     setErrors({});
     setSubmitError("");
     try {
-      await onSubmit(result.data);
+      await onSubmit(result.data, {
+        consentAcceptedAt: requireConsent ? consentAcceptedAt : null,
+      });
     } catch {
       setSubmitError("Det gick inte att skicka uppgifterna just nu. Försök igen.");
     }
@@ -349,7 +358,10 @@ export function VehicleForm({
           <input
             type="checkbox"
             checked={consent}
-            onChange={(event) => setConsent(event.target.checked)}
+            onChange={(event) => {
+              setConsent(event.target.checked);
+              setConsentAcceptedAt(event.target.checked ? Date.now() : null);
+            }}
             required
           />
           <span>Jag godkänner att leveransen startar direkt och att jag därmed förlorar ångerrätten.</span>

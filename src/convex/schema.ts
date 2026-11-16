@@ -110,6 +110,9 @@ const schema = defineSchema(
       createdAt: v.number(),
       retryCount: v.number(),
       reportId: v.optional(v.string()),
+      // När kunden kryssade i att leveransen startar direkt och ångerrätten
+      // därmed förbrukas. Sparas som bevis, sätts av klienten vid köpet.
+      consentAcceptedAt: v.optional(v.number()),
     })
       .index("by_token", ["token"])
       .index("by_session", ["stripeSessionId"])

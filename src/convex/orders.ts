@@ -90,18 +90,30 @@ export const publicConfig = query({
  * webhooken bekräftat betalningen.
  */
 export const createOrder = mutation({
-  args: { carInput: v.any() },
+  args: { carInput: v.any(), consentAcceptedAt: v.optional(v.number()) },
   handler: async (ctx, args) => {
     const parsed = reportRequestSchema.safeParse(args.carInput);
     if (!parsed.success) throw new Error("INVALID_INPUT");
+
+    /* Tidsstämpeln kommer från klienten. Ett orimligt värde (i framtiden eller
+       bakåt i tiden) sparas inte, så att beviset alltid är trovärdigt. */
+    const now = Date.now();
+    const consentAcceptedAt =
+      typeof args.consentAcceptedAt === "number" &&
+      Number.isFinite(args.consentAcceptedAt) &&
+      args.consentAcceptedAt > now - 24 * 60 * 60 * 1000 &&
+      args.consentAcceptedAt <= now + 60 * 1000
+        ? args.consentAcceptedAt
+        : undefined;
 
     const token = createToken();
     const orderId = await ctx.db.insert("orders", {
       token,
       carInput: parsed.data,
       status: orderStatus.pending,
-      createdAt: Date.now(),
+      createdAt: now,
       retryCount: 0,
+      consentAcceptedAt,
     });
     return { orderId, token };
   },
@@ -152,6 +164,7 @@ export const getOrder = query({
     return {
       token: order.token,
       status: order.status,
+      consentAcceptedAt: order.consentAcceptedAt ?? null,
       vehicle: order.carInput,
       retryCount: order.retryCount,
       reportId: order.reportId ?? null,
