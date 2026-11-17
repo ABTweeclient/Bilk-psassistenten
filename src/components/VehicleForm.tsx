@@ -218,27 +218,32 @@ export function VehicleForm({
         <div className="vf-lookup">
           <label htmlFor={`${id}-plate`}>Registreringsnummer</label>
           <div className="vf-lookup__row">
-            <input
-              id={`${id}-plate`}
-              className="vf-input"
-              name="registration"
-              autoComplete="off"
-              maxLength={8}
-              placeholder="Till exempel ABC123"
-              value={plate}
-              onChange={(event) => {
-                setPlate(event.target.value);
-                /* Ny skylt = ny bil: glöm förra träffen, men behåll det korta läget. */
-                setMatched(null);
-                if (lookup.state !== "loading") setLookup({ state: "idle", message: "" });
-              }}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  event.preventDefault();
-                  void handleLookup();
-                }
-              }}
-            />
+            {/* Skylten ritas som en riktig svensk skylt: blå EU-remsa med S och
+                svart ram runt ett monospace-fält. */}
+            <div className="vf-plate">
+              <span className="vf-plate__eu" aria-hidden="true">S</span>
+                <input
+                  id={`${id}-plate`}
+                  className="vf-plate__input"
+                  name="registration"
+                  autoComplete="off"
+                  maxLength={8}
+                  placeholder="ABC 123"
+                  value={plate}
+                  onChange={(event) => {
+                    setPlate(event.target.value);
+                    /* Ny skylt = ny bil: glöm förra träffen, men behåll det korta läget. */
+                    setMatched(null);
+                    if (lookup.state !== "loading") setLookup({ state: "idle", message: "" });
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      void handleLookup();
+                    }
+                  }}
+                />
+            </div>
             <button
               type="button"
               className="vf-lookup__button"

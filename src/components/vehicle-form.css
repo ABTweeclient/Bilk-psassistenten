@@ -60,7 +60,15 @@
 .vf-lookup > label { color: var(--muted, #6b7079); font-size: 11px; font-weight: 600; }
 .vf-lookup > label span { font-weight: 400; }
 .vf-lookup__row { display: flex; gap: 8px; }
-.vf-lookup__row .vf-input { flex: 1 1 auto; text-transform: uppercase; }
+/* Regnummerfältet ser ut som en svensk skylt: vit bricka med blå EU-remsa och
+   S, svart ram och monospace-bokstäver. Samma uttryck som hero-fältet. */
+.vf-plate { display: flex; flex: 1 1 auto; min-width: 0; height: 46px; overflow: hidden; border: 1.5px solid #111827; border-radius: 8px; background: #fff; transition: box-shadow 180ms ease; }
+.vf-plate:hover { box-shadow: 0 1px 3px rgb(17 24 39 / 10%); }
+.vf-plate:focus-within { outline: 3px solid rgb(154 66 13 / 18%); outline-offset: 1px; }
+.vf-plate__eu { display: flex; width: 26px; flex: 0 0 26px; flex-direction: column; align-items: center; justify-content: flex-end; background: #2f4fa8; padding-bottom: 5px; color: #fff; font: 700 10px/1 Inter, sans-serif; }
+.vf-plate__eu::before { margin-top: 6px; margin-bottom: auto; color: #f7d24a; font-size: 8px; content: "★"; }
+.vf-plate__input { flex: 1 1 auto; min-width: 0; border: 0; outline: none; background: transparent; padding: 0 14px; color: #111827; font-family: var(--mono, ui-monospace, "SF Mono", Menlo, monospace); font-size: 19px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; }
+.vf-plate__input::placeholder { color: #a7adb7; font-weight: 700; letter-spacing: 2px; opacity: 1; }
 .vf-lookup__button { flex: 0 0 auto; min-height: 40px; border: 1px solid var(--line, rgb(17 24 39 / 10%)); border-radius: 10px; background: white; padding: 0 14px; font-size: 12px; font-weight: 600; color: inherit; cursor: pointer; transition: border-color 160ms ease, box-shadow 160ms ease; }
 .vf-lookup__button:hover:not(:disabled) { border-color: #c9d0d8; box-shadow: 0 6px 16px rgb(46 35 22 / 8%); }
 .vf-lookup__button:disabled { color: #8b939d; cursor: default; }
@@ -81,7 +89,7 @@
 .vf-match__name { font-weight: 600; }
 .vf-match__part { color: #4b5563; }
 .vf-match__change { margin-left: auto; border: 0; background: none; padding: 0; color: #9a420d; font: inherit; font-size: 11px; font-weight: 600; text-decoration: underline; cursor: pointer; }
-@media (max-width: 520px) { .vf-lookup__row { flex-direction: column; } }
+@media (max-width: 520px) { .vf-lookup__row { flex-direction: column; } .vf-plate__input { font-size: 17px; letter-spacing: 2px; } }
 
 /* Sökresultatet visas som ett förslag med källa, aldrig ifyllt automatiskt. */
 .vf-lookup__result { display: grid; gap: 8px; border: 1px solid var(--line, rgb(17 24 39 / 10%)); border-radius: 10px; padding: 10px 12px; background: #fbfaf8; }
