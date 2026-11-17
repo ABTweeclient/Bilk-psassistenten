@@ -116,15 +116,10 @@ export default function Landing() {
     <main className="bilinsyn-root" id="top">
       <HeroSection onAnalyse={setHeroPlate} />
       <div className="page-wrap">
-        <section className="how-section" id="sa-fungerar-det" aria-labelledby="how-title">
-          <div className="how-heading"><p className="eyebrow"><span className="eyebrow-dot" /> EN ENKLARE VÄG TILL BÄTTRE FRÅGOR</p><h2 id="how-title">Från fundering<br />till <span>förberedelse.</span></h2><p>Tre steg för att komma till visningen med bättre koll.</p></div>
-          <div className="steps-list"><article className="step-row"><span className="step-number mono">01</span><div><p className="mono">BESKRIV BILEN</p><h3>Börja med det du vet.</h3></div><p>Ange modell, årsmodell, motor, växellåda och annan information du känner till.</p><ArrowRight className="step-arrow" size={18} aria-hidden="true" /></article><article className="step-row"><span className="step-number mono">02</span><div><p className="mono">VI SÖKER OCH SAMMANSTÄLLER</p><h3>Få relevanta områden.</h3></div><p>Uppgifterna används för att identifiera varianten och sammanställa publicerade källor om den.</p><ArrowRight className="step-arrow" size={18} aria-hidden="true" /></article><article className="step-row"><span className="step-number mono">03</span><div><p className="mono">FÅ BÄTTRE KOLL</p><h3>Ta med stödet till visningen.</h3></div><p>Få en tydlig rapport att använda inför visning, provkörning och samtalet med säljaren.</p><ArrowRight className="step-arrow" size={18} aria-hidden="true" /></article></div>
-        </section>
-
         <ReportPreview />
 
-        {/* Formuläret är sidans sista steg: först hur det fungerar, sedan hur
-            rapporten ser ut, och först därefter fyller man i bilen. */}
+        {/* Först hur rapporten ser ut, sedan fyller man i bilen, och därefter
+            stegen som förklarar hur det går till. */}
         <section className="search-card search-card--standalone bento-reveal" id="fordonsokning" aria-label="Uppgifter om bilen">
           <TestModeBanner />
           {cancelled && (
@@ -144,6 +139,11 @@ export default function Landing() {
           {errorMessage && (
             <p className="vf-form-error" role="alert">{errorMessage}</p>
           )}
+        </section>
+
+        <section className="how-section" id="sa-fungerar-det" aria-labelledby="how-title">
+          <div className="how-heading"><p className="eyebrow"><span className="eyebrow-dot" /> EN ENKLARE VÄG TILL BÄTTRE FRÅGOR</p><h2 id="how-title">Från fundering<br />till <span>förberedelse.</span></h2><p>Tre steg för att komma till visningen med bättre koll.</p></div>
+          <div className="steps-list"><article className="step-row"><span className="step-number mono">01</span><div><p className="mono">BESKRIV BILEN</p><h3>Börja med det du vet.</h3></div><p>Ange modell, årsmodell, motor, växellåda och annan information du känner till.</p><ArrowRight className="step-arrow" size={18} aria-hidden="true" /></article><article className="step-row"><span className="step-number mono">02</span><div><p className="mono">VI SÖKER OCH SAMMANSTÄLLER</p><h3>Få relevanta områden.</h3></div><p>Uppgifterna används för att identifiera varianten och sammanställa publicerade källor om den.</p><ArrowRight className="step-arrow" size={18} aria-hidden="true" /></article><article className="step-row"><span className="step-number mono">03</span><div><p className="mono">FÅ BÄTTRE KOLL</p><h3>Ta med stödet till visningen.</h3></div><p>Få en tydlig rapport att använda inför visning, provkörning och samtalet med säljaren.</p><ArrowRight className="step-arrow" size={18} aria-hidden="true" /></article></div>
         </section>
 
         <section className="faq-section" id="fragor" aria-labelledby="faq-title">
