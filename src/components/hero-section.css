@@ -172,6 +172,12 @@
   text-transform: uppercase;
 }
 .bq-hero .bq-num::placeholder { color: #a7adb7; opacity: 1; }
+/* Startsidans gemensamma fokusring gäller inmatningsfält (3 px orange outline
+   med offset). Inne i skylten klipptes den av den rundade ramen och blev kvar
+   som oranga streck vid den blå remsan. Fokus visas i stället som en mjuk
+   ring runt hela skylten. */
+.bq-hero .bq-num:focus-visible { outline: none; }
+.bq-hero .bq-plate:focus-within { box-shadow: 0 0 0 3px rgb(232 130 12 / 18%); }
 .bq-hero .bq-cur { width: 2px; height: 22px; margin-left: -10px; background: var(--orange); }
 /* Den oranga markören är ritad för platshållarläget. Så snart fältet har
    innehåll eller fokus tar webbläsarens egen markör över. */
