@@ -72,18 +72,6 @@ export const emptyVehicleForm: VehicleFormValues = {
   purchase_timing: "",
 };
 
-/** Explicit demo values are fictional and do not describe a real vehicle. */
-export const exampleVehicleForm: VehicleFormValues = {
-  make: "Exempelbil",
-  model: "Modell X",
-  year: "2020",
-  engine: "Motor A / bränsletyp",
-  gearbox: "Vet ej",
-  drivetrain: "Vet ej",
-  mileage: "8 500",
-  purchase_timing: "curious",
-};
-
 export function vehicleFormErrors(error: z.ZodError): Partial<Record<keyof VehicleFormValues, string>> {
   const errors: Partial<Record<keyof VehicleFormValues, string>> = {};
   for (const issue of error.issues) {
