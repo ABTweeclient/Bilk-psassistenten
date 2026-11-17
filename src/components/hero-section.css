@@ -484,6 +484,12 @@
    knapp och fyra-områdesraden blir fullbredd. */
 @media (max-width: 700px) {
   .bq-hero .bq-wrap { padding: 0 20px; }
+  /* Rapportkortets huvud: badgen får egen rad under rubriken så att bilmodellen
+     inte kläms ihop till en smal kolumn. */
+  .bq-doc .head { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .bq-doc .head > div { width: 100%; }
+  .bq-doc .ex { align-self: flex-start; }
+  .bq-doc .meta { flex-wrap: wrap; row-gap: 6px; }
   .bq-hero .bq-strip { grid-template-columns: minmax(0, 1fr); width: calc(100% - 40px); }
   .bq-hero .bq-strip > div { padding: 22px 0; }
   .bq-hero .bq-strip > div + div { border-left: 0; padding-left: 0; }
