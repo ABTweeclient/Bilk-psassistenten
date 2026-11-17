@@ -79,9 +79,11 @@
 /* Sektion 1 – hero */
 .bq-hero .bq-hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 45fr) minmax(0, 55fr);
+  /* 50/50 ger rubriken plats för två rader på bred skärm; 45/55 tvingade
+     "Innan du köper det." att radbrytas. */
+  grid-template-columns: minmax(0, 50fr) minmax(0, 50fr);
   align-items: center;
-  gap: 64px;
+  gap: 56px;
   padding: 72px 0 88px;
 }
 /* Vänsterkolumnen: chip, rubrik, ingress, sökrad och liten rad med 30 px luft. */
@@ -115,9 +117,9 @@
   margin-top: 0;
   color: var(--ink);
   font-family: var(--display);
-  font-size: clamp(44px, 5.6vw, 72px);
+  font-size: clamp(42px, 4.3vw, 62px);
   font-weight: 700;
-  letter-spacing: -2.4px;
+  letter-spacing: -2.2px;
   line-height: 0.98;
 }
 .bq-hero h1 .bq-l2 { color: var(--muted-heading); font-weight: 700; }
@@ -131,7 +133,7 @@
 }
 /* Andra radens punkt står efter ett "t" som har mindre luft i sig än "r" i
    "köper". Marginalen kompenserar så att glappet blir detsamma på båda raderna. */
-.bq-hero h1 .bq-l2 .bq-dot { margin-left: 0.2em; }
+.bq-hero h1 .bq-l2 .bq-dot { margin-left: 0.08em; }
 .bq-hero .bq-sub { max-width: 480px; color: var(--text-2); font-size: 18px; line-height: 1.55; }
 
 /* Sökraden: vit ram runt skylt och knapp. */

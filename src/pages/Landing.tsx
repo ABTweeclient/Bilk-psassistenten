@@ -1,7 +1,7 @@
 import { useAction, useMutation, useQuery } from "convex/react";
 import bilqlarLogo from "@/assets/bilqlar-logo.png";
 import { useState } from "react";
-import { ArrowDown, ArrowRight, Check, ChevronRight, Gauge, ShieldCheck } from "lucide-react";
+import { ArrowDown, ArrowRight, ChevronRight, Gauge, ShieldCheck } from "lucide-react";
 import { useSearchParams } from "react-router";
 import { HeroSection } from "@/components/HeroSection";
 import { VehicleForm } from "@/components/VehicleForm";
@@ -32,8 +32,8 @@ function ReportPreview() {
         <a className="text-link" href="#fordonsokning">Prova med din bil <ArrowDown size={16} aria-hidden="true" /></a>
       </div>
       <div className="report-stage">
-        <div className="report-back-card report-back-card--left" aria-hidden="true"><span className="report-mini-label">ILLUSTRATION</span><span className="mini-caption">Illustrativa kontrollområden</span></div>
-        <div className="report-back-card report-back-card--right" aria-hidden="true"><span className="report-mini-label">INFÖR VISNING</span><span className="mini-check"><Check size={13} /> Kontrollpunkter</span><span className="mini-check"><Check size={13} /> Säljarfrågor</span><span className="mini-check"><Check size={13} /> Dokumentlista</span></div>
+        <div className="report-back-card report-back-card--left" aria-hidden="true" />
+        <div className="report-back-card report-back-card--right" aria-hidden="true" />
         <div className="report-main-card">
           <div className="report-card-head">
             <div className="report-card-top"><span className="report-card-mark"><Gauge size={17} aria-hidden="true" /></span><span className="mono">RAPPORTSTRUKTUR · DEMO</span><span className="demo-chip">ILLUSTRATION</span></div>
