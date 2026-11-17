@@ -27,8 +27,8 @@ function Shell({ title, children }: { title: string; children: React.ReactNode }
   return (
     <div className="order-page">
       <header className="order-header">
-        <Link to="/" aria-label="Bilköpsassistenten, startsida">
-          <img className="order-logo" src={qlarLogo} alt="Bilköpsassistenten" />
+        <Link to="/" aria-label="Bilqlar, startsida">
+          <img className="order-logo" src={qlarLogo} alt="Bilqlar" />
         </Link>
       </header>
       <main className="order-main">
