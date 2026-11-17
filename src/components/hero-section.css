@@ -292,6 +292,13 @@
   }
 }
 
+/* Strax under den bredd där logga, menylänkar och knapp slutar rymmas på en
+   rad: knappen hamnade då ensam kvar längst till vänster med tom yta till
+   höger. Den får i stället ta hela raden, som på telefon. */
+@media (max-width: 731px) {
+  .bq-hero .bq-cta { width: 100%; justify-content: center; }
+}
+
 /* Telefonbredd: menyn får egna rader i stället för att klämmas ihop.
    Logga överst, menylänkarna på en rad som radbryts, och "Kom igång" som en
    fullbreddsknapp under. */
