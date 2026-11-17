@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import bilqlarLogo from "@/assets/bilqlar-logo.png";
 import "./hero-section.css";
 
 /**
@@ -30,7 +29,7 @@ export function HeroSection({ onAnalyse }: HeroSectionProps) {
       <div className="bq-wrap">
         <nav className="bq-nav" aria-label="Huvudmeny">
           <a className="bq-brand" href="#top" aria-label="Bilqlar, startsida">
-            <img className="brand-logo" src={bilqlarLogo} alt="Bilqlar" />
+            <span className="brand-word">BilQlar<i className="brand-dot" aria-hidden="true" /></span>
           </a>
           <div className="bq-links">
             <a className="bq-on" href="#sa-fungerar-det">Så fungerar det</a>

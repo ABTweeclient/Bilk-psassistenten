@@ -485,7 +485,19 @@
 .bilinsyn-root .footer-inner { display: grid; width: 100%; max-width: 1144px; margin: 0 auto; grid-template-columns: minmax(0, 1fr) auto; gap: 32px 40px; }
 .bilinsyn-root .footer-brand { max-width: 420px; }
 .bilinsyn-root .landing-brand { display: inline-flex; align-items: center; text-decoration: none; }
-.bilinsyn-root .brand-logo { display: block; height: 34px; width: auto; }
+/* Samma ordmärke som i headern, men vitt i sidfoten. */
+.bilinsyn-root .landing-brand .brand-word {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  color: #fff;
+  font-family: var(--display);
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+.bilinsyn-root .landing-brand .brand-dot { width: 7px; height: 7px; flex: 0 0 7px; border-radius: 1px; background: var(--orange); }
 .bilinsyn-root .footer-brand > p { margin: 16px 0 0; color: #a9adb8; font-size: 15px; line-height: 1.55; }
 .bilinsyn-root .footer-contact { display: grid; justify-items: start; align-content: start; gap: 6px; }
 .bilinsyn-root .footer-contact strong { color: #a9adb8; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 1.5px; }

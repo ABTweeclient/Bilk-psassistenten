@@ -47,7 +47,20 @@
   border-bottom: 1px solid var(--border);
 }
 .bq-hero .bq-brand { display: inline-flex; align-items: center; text-decoration: none; }
-.bq-hero .bq-brand .brand-logo { display: block; height: 34px; width: auto; }
+/* Ordmärket är text, inte en bild: Archivo 800 med en liten fyrkantig orange
+   punkt i baslinjen. Samma markup används i sidfoten. */
+.bq-hero .bq-brand .brand-word {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  color: var(--navy);
+  font-family: var(--display);
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+.bq-hero .bq-brand .brand-dot { width: 7px; height: 7px; flex: 0 0 7px; border-radius: 1px; background: var(--orange); }
 .bq-hero .bq-links { display: flex; align-items: center; gap: 36px; }
 .bq-hero .bq-links a {
   color: var(--text-2);

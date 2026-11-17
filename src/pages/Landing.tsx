@@ -1,5 +1,4 @@
 import { useAction, useMutation, useQuery } from "convex/react";
-import bilqlarLogo from "@/assets/bilqlar-logo.png";
 import { useState } from "react";
 import { ArrowDown, ArrowRight, ChevronRight, Gauge, ShieldCheck } from "lucide-react";
 import { useSearchParams } from "react-router";
@@ -182,7 +181,7 @@ export default function Landing() {
       <footer className="landing-footer">
         <div className="footer-inner">
           <div className="footer-brand">
-            <a className="landing-brand" href="#top" aria-label="Bilqlar, startsida"><img className="brand-logo" src={bilqlarLogo} alt="Bilqlar" /></a>
+            <a className="landing-brand" href="#top" aria-label="Bilqlar, startsida"><span className="brand-word">BilQlar<i className="brand-dot" aria-hidden="true" /></span></a>
             <p>Mer information inför beslutet. Färre överraskningar efter köpet.</p>
           </div>
           <div className="footer-contact"><strong>KONTAKT</strong><a href="mailto:qlar.uf@gmail.com">qlar.uf@gmail.com</a><span>Kontaktadress för tjänsten</span></div>
