@@ -81,15 +81,6 @@
   transition: background-color 160ms ease;
 }
 .bq-hero .bq-cta:hover { background: #d9760a; }
-.bq-hero .bq-cta span {
-  display: grid;
-  width: 22px;
-  height: 22px;
-  place-items: center;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, .22);
-  font-size: 12px;
-}
 
 .bq-hero .bq-hero-grid { display: grid; grid-template-columns: 1fr 690px; gap: 40px; margin-top: 62px; align-items: start; }
 .bq-hero .bq-eyebrow {

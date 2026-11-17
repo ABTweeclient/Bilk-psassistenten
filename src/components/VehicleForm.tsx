@@ -2,7 +2,6 @@ import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { ArrowRight, Check, CircleHelp } from "lucide-react";
 import {
   emptyVehicleForm,
-  exampleVehicleForm,
   makeSuggestions,
   modelSuggestions,
   vehicleFormErrors,
@@ -27,7 +26,6 @@ export type VehicleSubmitMeta = {
 type VehicleFormProps = {
   onSubmit: (submission: VehicleSubmission, meta: VehicleSubmitMeta) => Promise<void> | void;
   isSubmitting?: boolean;
-  onExample?: () => void;
   /** Hämtar bilens uppgifter från registret. Utan den visas inte fältet. */
   onLookup?: (registrationNumber: string) => Promise<VehicleLookupResponse | null>;
   /** Skylt som redan skrivits på sidan, till exempel i hero-fältet. */
@@ -43,7 +41,6 @@ type VehicleFormProps = {
 export function VehicleForm({
   onSubmit,
   isSubmitting = false,
-  onExample,
   onLookup,
   registrationNumber,
   submitLabel = "Analysera bilen",
@@ -379,9 +376,6 @@ export function VehicleForm({
           {isSubmitting && <span className="vf-spinner" aria-hidden="true" />}
         </button>
       </div>
-                  <button className="vf-example" type="button" onClick={() => { setValues(exampleVehicleForm); setErrors({}); setSubmitError(""); setShowBasics(true); onExample?.(); }}>
-        Fyll i fiktivt exempel <ArrowRight size={13} aria-hidden="true" />
-      </button>
     </form>
   );
 }

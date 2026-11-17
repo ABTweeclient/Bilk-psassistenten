@@ -39,12 +39,10 @@
 .vf-submit { display: inline-flex; min-width: 168px; min-height: 48px; align-items: center; justify-content: space-between; gap: 15px; border: 0; border-radius: 9px; background: #e65c00; padding: 0 14px; color: #111827; font-size: 12px; font-weight: 650; cursor: pointer; transition: background-color 180ms ease, box-shadow 180ms ease; }
 .vf-submit:hover:not(:disabled) { background: #f1741e; box-shadow: 0 7px 18px rgb(230 92 0 / 22%); }
 .vf-submit:active:not(:disabled) { background: #cf5300; }
-.vf-submit:focus-visible, .vf-example:focus-visible { outline: 3px solid #9a420d; outline-offset: 3px; }
+.vf-submit:focus-visible { outline: 3px solid #9a420d; outline-offset: 3px; }
 .vf-submit:disabled { cursor: progress; opacity: .72; }
 .vf-spinner { width: 15px; height: 15px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: vf-spin 800ms linear infinite; }
 @keyframes vf-spin { to { transform: rotate(360deg); } }
-.vf-example { display: inline-flex; justify-self: start; align-items: center; gap: 6px; border: 0; background: transparent; padding: 0; color: #8f3d0c; font-size: 11px; font-weight: 600; cursor: pointer; }
-.vf-example:hover { text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 560px) {
   .vf-grid { grid-template-columns: minmax(0, 1fr); gap: 13px; }
   .vf-field--timing { grid-column: auto; }

@@ -39,7 +39,7 @@ export function HeroSection({ onAnalyse }: HeroSectionProps) {
           </div>
           <div className="bq-navr">
             <a className="bq-login" href="/auth">Logga in</a>
-            <a className="bq-cta" href="#fordonsokning">Kom igång <span>↗</span></a>
+            <a className="bq-cta" href="#fordonsokning">Kom igång</a>
           </div>
         </nav>
 
