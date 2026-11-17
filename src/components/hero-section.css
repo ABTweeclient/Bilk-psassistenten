@@ -67,7 +67,6 @@
 }
 .bq-hero .bq-links a.bq-on { background: var(--ink); color: #fff; }
 .bq-hero .bq-navr { display: flex; align-items: center; gap: 20px; font-size: 14px; font-weight: 500; }
-.bq-hero .bq-navr .bq-login { color: var(--muted); text-decoration: none; }
 .bq-hero .bq-cta {
   display: flex;
   align-items: center;
@@ -294,16 +293,16 @@
 }
 
 /* Telefonbredd: menyn får egna rader i stället för att klämmas ihop.
-   Logga och "Logga in" överst, menylänkarna på en rad som radbryts, och
-   "Kom igång" som en fullbreddsknapp under. */
+   Logga överst, menylänkarna på en rad som radbryts, och "Kom igång" som en
+   fullbreddsknapp under. */
 @media (max-width: 599px) {
   .bq-hero .bq-nav {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr;
     grid-template-areas:
-      "brand login"
-      "links links"
-      "cta cta";
+      "brand"
+      "links"
+      "cta";
     gap: 12px;
     height: auto;
     min-height: 0;
@@ -319,14 +318,6 @@
   .bq-hero .bq-links a { padding: 10px 14px; font-size: 13px; }
   /* .bq-navr är bara en grupp på desktop; här får barnen plats direkt i rutnätet. */
   .bq-hero .bq-navr { display: contents; }
-  .bq-hero .bq-login {
-    display: inline-flex;
-    min-height: 34px;
-    align-items: center;
-    align-self: center;
-    justify-self: end;
-    font-size: 13px;
-  }
   .bq-hero .bq-cta { grid-area: cta; justify-content: center; }
   /* Skyltfältet får krympa i stället för att trycka ut knappen utanför skärmen. */
   .bq-hero .bq-plate { min-width: 0; }

@@ -38,7 +38,6 @@ export function HeroSection({ onAnalyse }: HeroSectionProps) {
             <a href="#fragor">Vanliga frågor</a>
           </div>
           <div className="bq-navr">
-            <a className="bq-login" href="/auth">Logga in</a>
             <a className="bq-cta" href="#fordonsokning">Kom igång</a>
           </div>
         </nav>
