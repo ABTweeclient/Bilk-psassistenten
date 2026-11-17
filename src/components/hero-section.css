@@ -296,6 +296,9 @@
    rad: knappen hamnade då ensam kvar längst till vänster med tom yta till
    höger. Den får i stället ta hela raden, som på telefon. */
 @media (max-width: 731px) {
+  /* .bq-navr är en flex-grupp som annars krymper till knappens bredd, så hela
+     gruppen måste få raden innan knappen kan fylla den. */
+  .bq-hero .bq-navr { width: 100%; justify-content: center; }
   .bq-hero .bq-cta { width: 100%; justify-content: center; }
 }
 
