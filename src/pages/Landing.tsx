@@ -1,5 +1,5 @@
 import { useAction, useMutation, useQuery } from "convex/react";
-import qlarLogo from "@/assets/qlar-logo.png";
+import bilqlarLogo from "@/assets/bilqlar-logo.png";
 import { useState } from "react";
 import { ArrowDown, ArrowRight, Check, ChevronRight, Gauge, ShieldCheck } from "lucide-react";
 import { useSearchParams } from "react-router";
@@ -21,17 +21,6 @@ const reportAreas = [
   { name: "ÖVRIGT", count: "4 kontrollområden" },
 ];
 
-function SampleGraph() {
-  return (
-    <svg className="sample-graph" viewBox="0 0 320 76" role="img" aria-label="Illustrativ grafisk rapportvisualisering">
-      <path className="graph-grid" d="M1 18.5h318M1 38.5h318M1 58.5h318" />
-      <path className="graph-area" d="M2 54 C30 54 35 27 65 31 S102 61 128 48 S169 20 194 30 S228 57 252 42 S287 24 318 17 V76 H2Z" />
-      <path className="graph-line" d="M2 54 C30 54 35 27 65 31 S102 61 128 48 S169 20 194 30 S228 57 252 42 S287 24 318 17" />
-      <circle cx="65" cy="31" r="4" /><circle cx="194" cy="30" r="4" /><circle cx="252" cy="42" r="4" />
-    </svg>
-  );
-}
-
 function ReportPreview() {
   const [activeArea, setActiveArea] = useState("MOTOR");
   return (
@@ -43,16 +32,19 @@ function ReportPreview() {
         <a className="text-link" href="#fordonsokning">Prova med din bil <ArrowDown size={16} aria-hidden="true" /></a>
       </div>
       <div className="report-stage">
-        <div className="report-back-card report-back-card--left" aria-hidden="true"><span className="report-mini-label">ILLUSTRATION</span><div className="mini-bars"><i /><i /><i /><i /></div><span className="mini-caption">Illustrativa kontrollområden</span></div>
+        <div className="report-back-card report-back-card--left" aria-hidden="true"><span className="report-mini-label">ILLUSTRATION</span><span className="mini-caption">Illustrativa kontrollområden</span></div>
         <div className="report-back-card report-back-card--right" aria-hidden="true"><span className="report-mini-label">INFÖR VISNING</span><span className="mini-check"><Check size={13} /> Kontrollpunkter</span><span className="mini-check"><Check size={13} /> Säljarfrågor</span><span className="mini-check"><Check size={13} /> Dokumentlista</span></div>
         <div className="report-main-card">
-          <div className="report-card-top"><span className="report-card-mark"><Gauge size={17} aria-hidden="true" /></span><span className="mono">RAPPORTSTRUKTUR · DEMO</span><span className="demo-chip">ILLUSTRATION</span></div>
-          <h3>Så är rapporten uppbyggd</h3>
-          <p className="report-spec">Sammanfattning <span>·</span> kända problem <span>·</span> checklista <span>·</span> källor</p>
-          <SampleGraph />
+          <div className="report-card-head">
+            <div className="report-card-top"><span className="report-card-mark"><Gauge size={17} aria-hidden="true" /></span><span className="mono">RAPPORTSTRUKTUR · DEMO</span><span className="demo-chip">ILLUSTRATION</span></div>
+            <h3>Så är rapporten uppbyggd</h3>
+            <p className="report-spec">Sammanfattning <span>·</span> kända problem <span>·</span> checklista <span>·</span> källor</p>
+          </div>
           <div className="area-tabs" aria-label="Exempel på rapportområden">
             {reportAreas.map((area) => <button key={area.name} type="button" aria-label={`${area.name}, ${area.count}`} aria-pressed={activeArea === area.name} onClick={() => setActiveArea(area.name)}><span>{area.name}</span><span className="area-count" aria-hidden="true">{area.count.split(" ")[0].padStart(2, "0")}</span><ChevronRight size={14} aria-hidden="true" /></button>)}
           </div>
+          <div className="area-meter" aria-hidden="true"><i /></div>
+          <p className="area-meter-label">UNDERLAGETS TÄCKNING · ILLUSTRATIV</p>
           <p className="area-selection" aria-live="polite"><span className="area-indicator" /> {activeArea} <span>· illustrativ struktur</span></p>
         </div>
         <span className="stage-note"><ShieldCheck size={15} aria-hidden="true" /> Illustration av rapportens delar – inte en fordonsanalys</span>
@@ -147,7 +139,15 @@ export default function Landing() {
         </section>
 
         <section className="faq-section" id="fragor" aria-labelledby="faq-title">
-          <div className="faq-heading"><p className="eyebrow"><span className="eyebrow-dot" /> VANLIGA FRÅGOR</p><span className="sr-only">Vanliga frågor</span><h2 id="faq-title">Bra att veta<br /><span>innan du börjar.</span></h2></div>
+          <div className="faq-heading">
+            <p className="eyebrow"><span className="eyebrow-dot" /> VANLIGA FRÅGOR</p><span className="sr-only">Vanliga frågor</span>
+            <h2 id="faq-title">Bra att veta<br /><span>innan du börjar.</span></h2>
+            <div className="faq-contact">
+              <p className="faq-contact__label">HITTAR DU INTE SVARET?</p>
+              <p className="faq-contact__title">Skriv till oss, vi svarar personligen.</p>
+              <a href="mailto:qlar.uf@gmail.com">qlar.uf@gmail.com</a>
+            </div>
+          </div>
           <div className="faq-list">
             <details><summary>Är rapporten baserad på bilen jag anger?</summary><p>Ja, på varianten. Uppgifterna du anger – märke, modell, årsmodell, motor, växellåda och drivning – styr vilken variant som undersöks. Rapporten beskriver modellvarianten och säger aldrig något om skicket på det enskilda exemplaret du tittar på.</p></details>
             <details><summary>Varifrån kommer uppgifterna?</summary><p>Rapporten sammanställs från publicerade källor som hittas vid sökningen, och varje punkt bygger på minst en källa. Källhänvisningarna är interna och visas inte i rapporten.</p></details>
@@ -177,13 +177,18 @@ export default function Landing() {
           </div>
         </section>
 
-        <footer className="landing-footer">
-          <a className="landing-brand" href="#top" aria-label="Qlar, startsida"><img className="brand-logo" src={qlarLogo} alt="Qlar" /></a>
-          <p>Mer information inför beslutet. Färre överraskningar efter köpet.</p>
-          <div className="footer-contact"><strong>Kontakt</strong><a href="mailto:qlar.uf@gmail.com">qlar.uf@gmail.com</a><span>Kontaktadress för tjänsten</span></div>
-          <span className="footer-disclaimer"><ShieldCheck size={15} aria-hidden="true" /> Rapporten är vägledning från publicerade källor – inte en garanti eller kontroll av bilen.</span>
-        </footer>
       </div>
+
+      <footer className="landing-footer">
+        <div className="footer-inner">
+          <div className="footer-brand">
+            <a className="landing-brand" href="#top" aria-label="Bilqlar, startsida"><img className="brand-logo" src={bilqlarLogo} alt="Bilqlar" /></a>
+            <p>Mer information inför beslutet. Färre överraskningar efter köpet.</p>
+          </div>
+          <div className="footer-contact"><strong>KONTAKT</strong><a href="mailto:qlar.uf@gmail.com">qlar.uf@gmail.com</a><span>Kontaktadress för tjänsten</span></div>
+          <span className="footer-disclaimer"><ShieldCheck size={15} aria-hidden="true" /> Rapporten är vägledning från publicerade källor – inte en garanti eller kontroll av bilen.</span>
+        </div>
+      </footer>
     </main>
   );
 }

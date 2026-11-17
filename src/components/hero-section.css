@@ -1,41 +1,31 @@
-/* Navigation och hero enligt den fastställda designen.
+/* Navigation, hero, rapportkortet och fyra-områdesraden.
    Alla regler är scopade till .bq-hero så att resten av startsidan är orörd. */
 
-/* Inter Display används i rubrikerna. Inter (brödtext) laddas redan i index.html. */
-@font-face {
-  font-family: "Inter Display";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("https://rsms.me/inter/font-files/InterDisplay-Medium.woff2?v=4.1") format("woff2");
-}
-@font-face {
-  font-family: "Inter Display";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("https://rsms.me/inter/font-files/InterDisplay-SemiBold.woff2?v=4.1") format("woff2");
-}
-
 .bq-hero {
-  --bg: #fffdf9;
-  --ink: #141b2b;
-  --muted: #5b6474;
-  --line: #ece5dc;
-  --orange: #e8820c;
-  --rust: #b24a12;
-  --peach: #f2a36e;
-  --cream: #fff1e4;
-  --slate: #525f78;
-  --slate-2: #465269;
-  --chip: #f5f1ea;
-  --mono: ui-monospace, "SF Mono", "DejaVu Sans Mono", Menlo, monospace;
+  --white: #ffffff;
+  --ink: #0e0f12;
+  --navy: #13233f;
+  --navy-line: #2e4470;
+  --navy-border: #3a4e75;
+  --text-2: #3d4559;
+  --text-3: #4a5163;
+  --muted-heading: #7c879c;
+  --on-navy-2: #c9d2e3;
+  --on-navy-3: #8fa3c7;
+  --border: #e6e8ee;
+  --border-card: #dce1ea;
+  --surface-gray: #f4f6fa;
+  --orange: #e8790f;
+  --orange-tint: #fcefe2;
+  --orange-border: #f4dcc4;
+  --orange-text: #a84f08;
+  --plate-blue: #1f4fb4;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --display: "Archivo", Inter, sans-serif;
   position: relative;
-  max-width: 1560px;
-  min-height: 880px;
-  margin: 0 auto;
   overflow: hidden;
-  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
   color: var(--ink);
   font-family: Inter, sans-serif;
   /* Referensen har sidans standardarv (normal). Startsidans rot sätter 1.6,
@@ -44,267 +34,450 @@
 }
 .bq-hero * { box-sizing: border-box; margin: 0; padding: 0; }
 
-.bq-hero .bq-wrap { position: relative; padding: 0 56px; }
+.bq-hero .bq-wrap { position: relative; width: 100%; max-width: 1240px; margin: 0 auto; padding: 0 48px; }
 
-.bq-hero .bq-nav { height: 88px; display: flex; align-items: center; justify-content: space-between; }
-.bq-hero .bq-brand { display: inline-flex; align-items: center; text-decoration: none; }
-.bq-hero .bq-links {
+/* Sektion 0 – header */
+.bq-hero .bq-nav {
   display: flex;
-  gap: 4px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, .75);
-  padding: 5px;
-  backdrop-filter: blur(8px);
+  min-height: 88px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--border);
 }
+.bq-hero .bq-brand { display: inline-flex; align-items: center; text-decoration: none; }
+.bq-hero .bq-brand .brand-logo { display: block; height: 34px; width: auto; }
+.bq-hero .bq-links { display: flex; align-items: center; gap: 36px; }
 .bq-hero .bq-links a {
-  border-radius: 999px;
-  padding: 9px 18px;
-  color: var(--muted);
+  color: var(--text-2);
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
+  transition: color 160ms ease;
 }
-.bq-hero .bq-links a.bq-on { background: var(--ink); color: #fff; }
-.bq-hero .bq-navr { display: flex; align-items: center; gap: 20px; font-size: 14px; font-weight: 500; }
+.bq-hero .bq-links a:hover { color: var(--ink); }
+.bq-hero .bq-links a.bq-on { color: var(--text-2); }
+.bq-hero .bq-navr { display: flex; align-items: center; gap: 20px; }
 .bq-hero .bq-cta {
-  display: flex;
+  display: inline-flex;
+  min-height: 44px;
   align-items: center;
+  justify-content: center;
   gap: 10px;
-  border-radius: 999px;
-  background: var(--orange);
-  padding: 12px 17px;
+  border-radius: 8px;
+  background: var(--navy);
+  padding: 0 18px;
   color: #fff;
+  font-size: 14px;
   font-weight: 600;
   text-decoration: none;
   transition: background-color 160ms ease;
 }
-.bq-hero .bq-cta:hover { background: #d9760a; }
+.bq-hero .bq-cta:hover { background: #1b2e50; }
 
-.bq-hero .bq-hero-grid { display: grid; grid-template-columns: 1fr 690px; gap: 40px; margin-top: 62px; align-items: start; }
-.bq-hero .bq-eyebrow {
-  display: flex;
+/* Sektion 1 – hero */
+.bq-hero .bq-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 45fr) minmax(0, 55fr);
   align-items: center;
-  gap: 12px;
-  color: var(--slate);
+  gap: 64px;
+  padding: 72px 0 88px;
+}
+/* Vänsterkolumnen: chip, rubrik, ingress, sökrad och liten rad med 30 px luft. */
+.bq-hero .bq-hero-grid > div:first-child { display: grid; gap: 30px; align-content: start; }
+
+.bq-hero .bq-eyebrow {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid var(--border-card);
+  border-radius: 999px;
+  background: var(--white);
+  padding: 7px 12px;
+  color: var(--text-2);
   font-family: var(--mono);
-  font-size: 11.5px;
-  letter-spacing: 1.8px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  line-height: 1;
 }
-.bq-hero .bq-eyebrow span { display: inline-block; width: 28px; height: 1px; background: var(--rust); }
+.bq-hero .bq-eyebrow span {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  flex: 0 0 6px;
+  border-radius: 50%;
+  background: var(--navy);
+}
 .bq-hero h1 {
-  /* Referensens `.bq-hero *`-reset (0,1,0) vinner över dess `h1`-regel
-     (0,0,1), så rubriken renderas utan övermarginal. Samma resultat här. */
   margin-top: 0;
-  font-family: "Inter Display";
-  font-size: 88px;
-  font-weight: 600;
-  letter-spacing: -4px;
-  line-height: .96;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: clamp(44px, 5.6vw, 72px);
+  font-weight: 700;
+  letter-spacing: -2.4px;
+  line-height: 0.98;
 }
-.bq-hero h1 .bq-l2 { color: #b9b2a8; font-weight: 500; }
+.bq-hero h1 .bq-l2 { color: var(--muted-heading); font-weight: 700; }
 .bq-hero h1 .bq-dot {
   display: inline-block;
-  width: .15em;
-  height: .15em;
-  margin-left: .04em;
-  border-radius: 3px;
+  width: 0.13em;
+  height: 0.13em;
+  margin-left: 0.05em;
+  border-radius: 1px;
   background: var(--orange);
 }
 /* Andra radens punkt står efter ett "t" som har mindre luft i sig än "r" i
    "köper". Marginalen kompenserar så att glappet blir detsamma på båda raderna. */
-.bq-hero h1 .bq-l2 .bq-dot { margin-left: .19em; }
-.bq-hero .bq-sub { margin-top: 28px; max-width: 520px; color: var(--muted); font-size: 18px; line-height: 1.6; }
+.bq-hero h1 .bq-l2 .bq-dot { margin-left: 0.2em; }
+.bq-hero .bq-sub { max-width: 480px; color: var(--text-2); font-size: 18px; line-height: 1.55; }
 
+/* Sökraden: vit ram runt skylt och knapp. */
 .bq-hero .bq-search {
   display: flex;
+  width: 100%;
+  max-width: 580px;
   align-items: center;
-  width: 560px;
-  margin-top: 36px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: #fff;
-  padding: 7px;
-  box-shadow: 0 1px 0 rgba(20, 27, 43, .03), 0 18px 40px -22px rgba(20, 27, 43, .35);
+  gap: 8px;
+  border: 1px solid var(--border-card);
+  border-radius: 12px;
+  background: var(--white);
+  padding: 8px;
+  box-shadow: 0 10px 30px -18px rgb(19 35 63 / 35%);
 }
 .bq-hero .bq-plate {
   display: flex;
-  flex: 1;
+  height: 56px;
+  flex: 1 1 auto;
+  min-width: 0;
   align-items: center;
-  height: 46px;
-  margin-right: 8px;
   overflow: hidden;
-  border: 1.5px solid var(--ink);
-  border-radius: 8px;
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  background: var(--white);
+  transition: box-shadow 160ms ease;
 }
 .bq-hero .bq-plate .bq-eu {
   display: flex;
-  width: 24px;
+  width: 30px;
   height: 100%;
-  flex-direction: column;
+  flex: 0 0 30px;
   align-items: center;
-  justify-content: flex-end;
-  background: #2f4fa8;
-  padding-bottom: 4px;
+  justify-content: center;
+  background: var(--plate-blue);
   color: #fff;
-  font-size: 10px;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
   font-weight: 700;
-}
-.bq-hero .bq-plate .bq-eu::before {
-  margin-top: 5px;
-  margin-bottom: auto;
-  color: #f7d24a;
-  font-size: 8px;
-  content: "★";
+  line-height: 1;
 }
 .bq-hero .bq-num {
-  width: 133px;
+  width: 100%;
+  min-width: 0;
   height: 100%;
   border: 0;
   background: transparent;
   padding: 0 14px;
   color: var(--ink);
-  font-family: var(--mono);
-  font-size: 20px;
+  font-family: var(--display);
+  font-size: 26px;
   font-weight: 700;
-  letter-spacing: 3px;
+  letter-spacing: 4px;
   text-transform: uppercase;
 }
-.bq-hero .bq-num::placeholder { color: #a7adb7; opacity: 1; }
-/* Startsidans gemensamma fokusring gäller inmatningsfält (3 px orange outline
-   med offset). Inne i skylten klipptes den av den rundade ramen och blev kvar
-   som oranga streck vid den blå remsan. Fokus visas i stället som en mjuk
-   ring runt hela skylten. */
+.bq-hero .bq-num::placeholder { color: #b6bbc5; opacity: 1; }
+/* Fokus visas som en mjuk ring runt hela skylten: den globala fokusringen
+   klipptes av skyltens rundade ram och blev streck vid den blå remsan. */
 .bq-hero .bq-num:focus-visible { outline: none; }
-.bq-hero .bq-plate:focus-within { box-shadow: 0 0 0 3px rgb(232 130 12 / 18%); }
-.bq-hero .bq-cur { width: 2px; height: 22px; margin-left: -10px; background: var(--orange); }
-/* Den oranga markören är ritad för platshållarläget. Så snart fältet har
-   innehåll eller fokus tar webbläsarens egen markör över. */
-.bq-hero .bq-plate:focus-within .bq-cur,
-.bq-hero .bq-num:not(:placeholder-shown) ~ .bq-cur { display: none; }
+.bq-hero .bq-plate:focus-within { box-shadow: 0 0 0 3px rgb(19 35 63 / 12%); }
+.bq-hero .bq-cur { display: none; }
+
 .bq-hero .bq-go {
-  display: flex;
+  display: inline-flex;
+  height: 56px;
+  flex: 0 0 auto;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   border: 0;
-  border-radius: 11px;
-  background: var(--ink);
-  padding: 15px 20px;
-  color: #fff;
-  font-size: 15px;
+  border-radius: 6px;
+  background: var(--orange);
+  padding: 0 22px;
+  color: var(--ink);
+  font-family: Inter, sans-serif;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 160ms ease;
 }
-.bq-hero .bq-go:hover { background: #0b111e; }
-.bq-hero .bq-go b { color: var(--peach); }
-.bq-hero .bq-hint { display: flex; gap: 18px; margin-top: 14px; color: #8b929e; font-size: 13px; }
+.bq-hero .bq-go:hover { background: #d96e0a; }
+.bq-hero .bq-go-icon { display: block; flex: 0 0 auto; }
+
+.bq-hero .bq-hint { display: flex; flex-wrap: wrap; gap: 8px 20px; color: var(--text-3); font-size: 13px; }
 .bq-hero .bq-hint span { display: flex; align-items: center; gap: 7px; }
 .bq-hero .bq-hint span::before {
   width: 5px;
   height: 5px;
-  border-radius: 1px;
-  background: var(--orange);
+  flex: 0 0 5px;
+  border-radius: 50%;
+  background: var(--navy);
   content: "";
 }
 
-/* Produktpanelen: ett rapportdokument i stället för det tidigare kortet. */
-.bq-hero .bq-panelwrap { position: relative; padding-top: 6px; }
+/* Rapportkortet i högerkolumnen. */
+.bq-hero .bq-panelwrap { position: relative; min-width: 0; }
 .bq-doc {
-  --ink: #141B2B;
-  --muted: #5B6474;
-  --line: #ECE7E0;
-  --rust: #B24A12;
-  --peach: #F2A36E;
-  --slate: #525F78;
-  /* Wrappern placerar dokumentet på samma plats som förra panelen; referensens
-     30 px skulle skjuta ned det. */
-  margin-top: 0;
-  background: #fff;
-  border: 1px solid #E4DED5;
-  border-radius: 10px;
-  box-shadow: 0 1px 2px rgba(20, 27, 43, .05), 0 14px 30px -22px rgba(20, 27, 43, .3);
+  --ink: #0e0f12;
+  --navy: #13233f;
+  --navy-border: #3a4e75;
+  --on-navy-2: #c9d2e3;
+  --text-2: #3d4559;
+  --text-3: #4a5163;
+  --border-card: #dce1ea;
+  --orange: #e8790f;
+  --plate-blue: #1f4fb4;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --display: "Archivo", Inter, sans-serif;
+  overflow: hidden;
+  border: 1px solid var(--border-card);
+  border-radius: 16px;
+  background: var(--white);
+  box-shadow: 0 1px 2px rgb(14 15 18 / 4%), 0 30px 60px -28px rgb(19 35 63 / 35%);
   color: var(--ink);
 }
 .bq-doc * { box-sizing: border-box; margin: 0; padding: 0; }
-.bq-doc .head { padding: 20px 24px 18px; display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--line); }
-.bq-doc .head h3 { font-size: 19px; font-weight: 600; letter-spacing: -.3px; }
-.bq-doc .meta { margin-top: 5px; font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 10px; }
-.bq-doc .pl { display: inline-flex; font-family: ui-monospace, Menlo, monospace; font-weight: 700; font-size: 11.5px; letter-spacing: 1.4px; border: 1.2px solid var(--ink); border-radius: 3px; overflow: hidden; }
-.bq-doc .pl:before { content: ""; width: 8px; background: #2F4FA8; }
-.bq-doc .pl span { padding: 2px 6px; white-space: nowrap; }
-.bq-doc .ex { font-size: 12px; color: var(--muted); border: 1px solid var(--line); padding: 4px 9px; border-radius: 5px; background: #FFF1E4; }
-.bq-doc .sum { padding: 16px 24px; font-size: 14px; line-height: 1.55; color: var(--muted); border-bottom: 1px solid var(--line); }
-.bq-doc .sum b { color: var(--ink); font-weight: 600; }
-.bq-doc .item { display: grid; grid-template-columns: 1fr auto; gap: 6px 20px; padding: 15px 24px 15px 21px; border-bottom: 1px solid var(--line); border-left: 3px solid transparent; }
-.bq-doc .item.h { border-left-color: var(--rust); }
-.bq-doc .item.m { border-left-color: var(--peach); }
-.bq-doc .item.l { border-left-color: #D5D9E0; }
-.bq-doc .item .t { font-size: 15px; font-weight: 600; }
-.bq-doc .item .d { grid-column: 1; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
-.bq-doc .item .q { grid-column: 1; font-size: 13px; margin-top: 2px; }
-.bq-doc .item .q span { color: var(--rust); font-weight: 600; }
-.bq-doc .st { grid-row: 1; grid-column: 2; font-size: 12.5px; font-weight: 600; margin-top: 1px; }
-.bq-doc .item.h .st { color: var(--rust); }
-.bq-doc .item.m .st { color: #B86708; }
-.bq-doc .item.l .st { color: var(--slate); }
-.bq-doc .bl { filter: blur(4.5px); opacity: .85; user-select: none; pointer-events: none; font-style: normal; }
-.bq-doc .foot { padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; background: #FAF8F5; border-radius: 0 0 10px 10px; }
-/* Knappen ersätter referensens span så att raden går att nå med tangentbordet;
-   utseendet är detsamma. */
-.bq-doc .lk { display: flex; align-items: center; gap: 8px; border: 0; background: none; padding: 0; color: var(--ink); font-family: inherit; font-size: inherit; font-weight: 500; text-align: left; cursor: pointer; }
-.bq-doc .lk svg { color: var(--rust); }
-
-.bq-hero .bq-strip {
-  position: absolute;
-  right: 56px;
-  bottom: 0;
-  left: 56px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  height: 96px;
-  border-top: 1px solid var(--line);
+.bq-doc .head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--navy);
+  padding: 22px 26px;
 }
-.bq-hero .bq-strip > div { display: flex; gap: 16px; padding: 22px 24px 0 0; }
-.bq-hero .bq-strip > div + div { border-left: 1px solid var(--line); padding-left: 24px; }
-.bq-hero .bq-strip .bq-k { padding-top: 3px; color: var(--rust); font-family: var(--mono); font-size: 11px; }
-.bq-hero .bq-strip b { display: block; font-size: 15px; font-weight: 600; }
-.bq-hero .bq-strip small { color: var(--muted); font-size: 13px; }
+.bq-doc .head h3 {
+  color: #fff;
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  line-height: 1.2;
+}
+.bq-doc .meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  color: #e4e9f2;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.3;
+}
+.bq-doc .pl {
+  display: inline-flex;
+  height: 28px;
+  flex: 0 0 auto;
+  align-items: stretch;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #fff;
+  color: #0e0f12;
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.bq-doc .pl:before { width: 12px; flex: 0 0 12px; background: var(--plate-blue); content: ""; }
+.bq-doc .pl span { display: flex; align-items: center; padding: 0 8px; white-space: nowrap; }
+.bq-doc .ex {
+  display: inline-flex;
+  min-height: 26px;
+  flex: 0 0 auto;
+  align-items: center;
+  border: 1px solid var(--navy-border);
+  border-radius: 999px;
+  padding: 0 10px;
+  color: var(--on-navy-2);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.bq-doc .sum {
+  padding: 20px 26px;
+  border-bottom: 1px solid #eceef3;
+  color: var(--text-3);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.bq-doc .sum b { color: var(--ink); font-weight: 600; }
+.bq-doc .item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px 20px;
+  padding: 20px 26px;
+  border-bottom: 1px solid #eceef3;
+}
+.bq-doc .item .t {
+  display: flex;
+  align-items: center;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  line-height: 1.25;
+}
+.bq-doc .item .t::before {
+  width: 8px;
+  height: 8px;
+  margin-right: 10px;
+  flex: 0 0 8px;
+  border-radius: 50%;
+  background: var(--navy);
+  content: "";
+}
+.bq-doc .item.h .t::before { background: var(--orange); }
+.bq-doc .item .d { grid-column: 1; color: var(--text-3); font-size: 13.5px; line-height: 1.55; }
+.bq-doc .item .q {
+  grid-column: 1;
+  margin-top: 8px;
+  border-radius: 8px;
+  background: #f4f6fa;
+  padding: 10px 12px;
+  color: var(--text-2);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.bq-doc .item .q span {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--navy);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+.bq-doc .st {
+  display: inline-flex;
+  grid-row: 1;
+  grid-column: 2;
+  align-self: start;
+  align-items: center;
+  border: 1px solid var(--border-card);
+  border-radius: 999px;
+  padding: 4px 10px;
+  color: var(--text-2);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.bq-doc .item.h .st { border-color: var(--orange); color: var(--ink); }
+.bq-doc .bl {
+  filter: blur(5px);
+  opacity: 0.85;
+  user-select: none;
+  pointer-events: none;
+  font-style: normal;
+}
+.bq-doc .foot { position: relative; background: #fff; padding: 18px 26px 22px; }
+/* Toning över de sista raderna, från genomskinligt till vitt. */
+.bq-doc .foot::before {
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  left: 0;
+  height: 64px;
+  background: linear-gradient(to bottom, rgb(255 255 255 / 0%), #fff);
+  content: "";
+  pointer-events: none;
+}
+/* Knappen behåller sin funktion (fokus på skylten) men ser ut som en länk. */
+.bq-doc .lk {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 0;
+  background: none;
+  padding: 4px 0;
+  color: var(--navy);
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.bq-doc .lk:hover { color: #0e0f12; }
+.bq-doc .lk svg { flex: 0 0 auto; }
 
-/* Under 1024 px: panelen under texten, mindre rubrik och den nedre raden som
-   ett 2x2-rutnät. Desktoputseendet är oförändrat. */
+/* Sektion 2 – fyra områden */
+.bq-hero .bq-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: min(100% - 96px, 1144px);
+  margin: 0 auto;
+  border-top: 1px solid var(--border);
+}
+.bq-hero .bq-strip > div { display: flex; gap: 16px; padding: 30px 26px 32px 0; }
+.bq-hero .bq-strip > div + div { border-left: 1px solid var(--border); padding-left: 26px; }
+.bq-hero .bq-strip > div:last-child { padding-right: 0; }
+.bq-hero .bq-strip .bq-k {
+  padding-top: 2px;
+  color: var(--navy);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+}
+.bq-hero .bq-strip b {
+  display: block;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  line-height: 1.3;
+}
+.bq-hero .bq-strip small { display: block; margin-top: 2px; color: var(--text-3); font-size: 15px; line-height: 1.45; }
+
+/* Under 1024 px: panelen under texten och den nedre raden som 2x2-rutnät. */
 @media (max-width: 1023px) {
-  .bq-hero .bq-wrap { padding: 0 24px; }
-  .bq-hero .bq-nav { height: auto; min-height: 88px; flex-wrap: wrap; gap: 12px; padding: 16px 0; }
+  .bq-hero .bq-wrap { padding: 0 32px; }
+  .bq-hero .bq-nav { flex-wrap: wrap; gap: 12px; }
   /* minmax(0, 1fr) krävs: enbart 1fr storleksätts efter innehållets minsta
      bredd och gjorde då hela sektionen bredare än skärmen. */
-  .bq-hero .bq-hero-grid { grid-template-columns: minmax(0, 1fr); }
-  .bq-hero h1 { font-size: 52px; }
-  .bq-hero .bq-search { width: 100%; max-width: 560px; }
-  .bq-hero .bq-strip {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    left: auto;
-    grid-template-columns: repeat(2, 1fr);
-    height: auto;
-    margin: 32px 24px 0;
-  }
+  .bq-hero .bq-hero-grid { grid-template-columns: minmax(0, 1fr); gap: 48px; padding: 48px 0 56px; }
+  .bq-hero .bq-search { max-width: 580px; }
+  .bq-hero .bq-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); width: calc(100% - 64px); }
+  .bq-hero .bq-strip > div:nth-child(3) { border-left: 0; padding-left: 0; }
+  .bq-hero .bq-strip > div:nth-child(n + 3) { border-top: 1px solid var(--border); }
 }
 
 /* Strax under den bredd där logga, menylänkar och knapp slutar rymmas på en
-   rad: knappen hamnade då ensam kvar längst till vänster med tom yta till
-   höger. Den får i stället ta hela raden, som på telefon. */
+   rad: knappen får hela raden, som på telefon. */
 @media (max-width: 731px) {
-  /* .bq-navr är en flex-grupp som annars krymper till knappens bredd, så hela
-     gruppen måste få raden innan knappen kan fylla den. */
   .bq-hero .bq-navr { width: 100%; justify-content: center; }
   .bq-hero .bq-cta { width: 100%; justify-content: center; }
 }
 
-/* Telefonbredd: menyn får egna rader i stället för att klämmas ihop.
-   Logga överst, menylänkarna på en rad som radbryts, och "Kom igång" som en
-   fullbreddsknapp under. */
+/* Telefonbredd: menyn får egna rader, hero-kolumnerna staplas och skylt,
+   knapp och fyra-områdesraden blir fullbredd. */
+@media (max-width: 700px) {
+  .bq-hero .bq-wrap { padding: 0 20px; }
+  .bq-hero .bq-strip { grid-template-columns: minmax(0, 1fr); width: calc(100% - 40px); }
+  .bq-hero .bq-strip > div { padding: 22px 0; }
+  .bq-hero .bq-strip > div + div { border-left: 0; padding-left: 0; }
+  .bq-hero .bq-strip > div:nth-child(n + 2) { border-top: 1px solid var(--border); }
+  .bq-hero .bq-strip > div:nth-child(2) { border-top: 1px solid var(--border); }
+  .bq-hero .bq-strip b { font-size: 17px; }
+  .bq-hero .bq-strip small { font-size: 14px; }
+}
+
 @media (max-width: 599px) {
   .bq-hero .bq-nav {
     display: grid;
@@ -313,26 +486,34 @@
       "brand"
       "links"
       "cta";
-    gap: 12px;
-    height: auto;
+    gap: 14px;
     min-height: 0;
-    padding: 16px 0 18px;
+    padding: 18px 0;
   }
   .bq-hero .bq-brand { grid-area: brand; }
   .bq-hero .bq-links {
     grid-area: links;
     flex-wrap: wrap;
-    justify-content: center;
-    border-radius: 18px;
+    justify-content: flex-start;
+    gap: 8px 20px;
   }
-  .bq-hero .bq-links a { padding: 10px 14px; font-size: 13px; }
+  .bq-hero .bq-links a { font-size: 13px; }
   /* .bq-navr är bara en grupp på desktop; här får barnen plats direkt i rutnätet. */
   .bq-hero .bq-navr { display: contents; }
   .bq-hero .bq-cta { grid-area: cta; justify-content: center; }
-  /* Skyltfältet får krympa i stället för att trycka ut knappen utanför skärmen. */
-  .bq-hero .bq-plate { min-width: 0; }
-  .bq-hero .bq-num { width: 100%; min-width: 0; padding: 0 10px; font-size: 18px; letter-spacing: 2px; }
-  .bq-hero .bq-cur { display: none; }
-  .bq-hero .bq-go { flex: 0 0 auto; gap: 6px; padding: 13px 14px; font-size: 14px; }
-
+  .bq-hero .bq-hero-grid { gap: 36px; padding: 36px 0 44px; }
+  .bq-hero .bq-hero-grid > div:first-child { gap: 24px; }
+  .bq-hero h1 { letter-spacing: -1.6px; }
+  .bq-hero .bq-sub { font-size: 16px; }
+  /* Skylten och knappen staplas och blir båda fullbredd. */
+  .bq-hero .bq-search { flex-wrap: wrap; }
+  .bq-hero .bq-plate { flex: 1 1 100%; }
+  .bq-hero .bq-num { font-size: 22px; letter-spacing: 3px; }
+  .bq-hero .bq-go { flex: 1 1 100%; }
+  .bq-doc .head { padding: 18px 18px 16px; }
+  .bq-doc .sum { padding: 16px 18px; }
+  .bq-doc .item { padding: 16px 18px; }
+  .bq-doc .item .t { font-size: 16px; }
+  .bq-doc .foot { padding: 14px 18px 18px; }
+  .bq-doc .lk { font-size: 13px; }
 }

@@ -44,7 +44,7 @@ export function HeroSection({ onAnalyse }: HeroSectionProps) {
 
         <div className="bq-hero-grid">
           <div>
-            <div className="bq-eyebrow"><span />ETT TYDLIGARE BILKÖP</div>
+            <div className="bq-eyebrow"><span />BILKÖPSRAPPORT · BEGAGNAT</div>
             <h1>Vet vad du köper<i className="bq-dot" /><br /><span className="bq-l2">Innan du köper det<i className="bq-dot" /></span></h1>
             <p className="bq-sub">Få koll på kända problem, viktiga kontrollpunkter och rätt frågor att ställa – anpassat efter bilen du funderar på.</p>
             <div className="bq-search">
@@ -63,7 +63,10 @@ export function HeroSection({ onAnalyse }: HeroSectionProps) {
                 />
                 <span className="bq-cur" aria-hidden="true" />
               </label>
-              <button type="button" className="bq-go" onClick={goToForm}>Analysera <b>→</b></button>
+              <button type="button" className="bq-go" onClick={goToForm}>
+                Analysera
+                <svg className="bq-go-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
+              </button>
             </div>
             <div className="bq-hint"><span>Ange regnummer eller bilmodell</span><span>Mer information inför beslutet</span></div>
           </div>
@@ -97,7 +100,8 @@ export function HeroSection({ onAnalyse }: HeroSectionProps) {
               <div className="foot">
                 <button type="button" className="lk" onClick={() => plateInput.current?.focus()}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="11" width="16" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
-                  Ange regnummer för att se din rapport
+                  Hela rapporten låses upp efter köp
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
                 </button>
               </div>
             </div>

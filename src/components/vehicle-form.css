@@ -1,102 +1,288 @@
-.vehicle-form { display: grid; gap: 18px; }
-.vf-intro { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-.vf-eyebrow { display: flex; align-items: center; gap: 12px; margin: 0; color: #4b5563; font: 600 10px/1.5 "JetBrains Mono", ui-monospace, monospace; letter-spacing: .065em; }
-.vf-eyebrow span { color: #6b7280; font-weight: 500; }
-.vf-intro h2 { margin: 5px 0 0; color: #111827; font-size: clamp(22px, 2.5vw, 29px); font-weight: 550; letter-spacing: -.05em; line-height: 1.2; }
-.vf-lede { margin: 8px 0 0; color: #4b5563; font-size: 12px; line-height: 1.55; }
-.vf-intro-icon { display: grid; width: 42px; height: 42px; flex: 0 0 42px; place-items: center; border-radius: 14px; background: #fff1e7; color: #9a420d; }
-.vf-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 14px; }
-.vf-field { display: grid; min-width: 0; align-content: start; gap: 6px; margin: 0; border: 0; padding: 0; }
-.vf-field > label, .vf-field legend { padding: 0; color: #283244; font-size: 12px; font-weight: 600; }
-.vf-field > label > span, .vf-field legend > span { color: #9a420d; }
-.vf-field > label > span:not([aria-hidden]) { color: #687282; font-size: 10px; font-weight: 400; }
-.vf-input { width: 100%; min-width: 0; height: 46px; border: 1px solid #d5d9de; border-radius: 9px; background: #fff; padding: 0 12px; color: #111827; font: inherit; font-size: 13px; transition: border-color 180ms ease, box-shadow 180ms ease; }
-.vf-input::placeholder { color: #687282; opacity: 1; }
-.vf-input:hover { border-color: #9ca3af; }
-.vf-input:focus-visible { border-color: #9a420d; outline: 3px solid rgb(154 66 13 / 18%); outline-offset: 1px; }
+/* Formuläret på startsidan (sektion 3B). Endast utseende – fält, id, namn,
+   validering och köpknappens handler är oförändrade. */
+
+.vehicle-form {
+  --ink: #0e0f12;
+  --navy: #13233f;
+  --navy-border: #3a4e75;
+  --text-2: #3d4559;
+  --text-3: #4a5163;
+  --border: #e6e8ee;
+  --border-card: #dce1ea;
+  --surface-gray: #f4f6fa;
+  --orange: #e8790f;
+  --orange-text: #a84f08;
+  --plate-blue: #1f4fb4;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --display: "Archivo", Inter, sans-serif;
+  display: grid;
+  gap: 28px;
+  font-family: Inter, sans-serif;
+  color: var(--ink);
+}
+
+/* Rubrikrad */
+.vf-intro { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+.vf-eyebrow { display: flex; align-items: center; gap: 9px; margin: 0; color: var(--text-2); font: 500 12px/1.4 var(--mono); letter-spacing: 1.5px; }
+.vf-eyebrow::before { width: 6px; height: 6px; flex: 0 0 6px; border-radius: 50%; background: var(--navy); content: ""; }
+.vf-eyebrow span { margin-left: 4px; color: var(--navy); font-weight: 500; }
+.vf-intro h2 {
+  margin: 14px 0 0;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -1.5px;
+  line-height: 1.05;
+}
+.vf-lede { margin: 10px 0 0; color: var(--text-2); font-family: Inter, sans-serif; font-size: 15px; line-height: 1.55; }
+.vf-intro-icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  place-items: center;
+  border: 1px solid var(--border-card);
+  border-radius: 10px;
+  background: var(--surface-gray);
+  color: var(--navy);
+}
+
+/* Fälten */
+.vf-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 18px; }
+.vf-field { display: grid; min-width: 0; align-content: start; gap: 7px; margin: 0; border: 0; padding: 0; }
+.vf-field > label, .vf-field legend { padding: 0; color: var(--ink); font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; }
+.vf-field > label > span, .vf-field legend > span { color: var(--navy); font-weight: 600; }
+.vf-field > label > span:not([aria-hidden]), .vf-field legend > span:not([aria-hidden]) { color: var(--text-3); font-size: 13px; font-weight: 400; }
+.vf-input {
+  width: 100%;
+  min-width: 0;
+  height: 52px;
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+  background: #fff;
+  padding: 0 14px;
+  color: var(--ink);
+  font: inherit;
+  font-family: Inter, sans-serif;
+  font-size: 15px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+.vf-input::placeholder { color: #8b92a1; opacity: 1; }
+.vf-input:hover { border-color: #b9c1cf; }
+.vf-input:focus-visible { border-color: var(--navy); outline: none; box-shadow: 0 0 0 3px rgb(19 35 63 / 12%); }
 .vf-input.is-invalid { border-color: #b42318; }
-.vf-input.is-invalid:focus-visible { outline-color: rgb(180 35 24 / 18%); }
-.vf-field select.vf-input { appearance: auto; }
-.vf-hint, .vf-error { margin: 0; font-size: 10px; line-height: 1.45; }
-.vf-hint { color: #4b5563; }
-.vf-error, .vf-form-error { color: #8f2119; font-weight: 550; }
+.vf-input.is-invalid:focus-visible { box-shadow: 0 0 0 3px rgb(180 35 24 / 12%); }
+/* Egen chevron i navy i stället för webbläsarens grå pil. */
+.vf-field select.vf-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2313233f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-position: right 14px center;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  padding-right: 42px;
+  cursor: pointer;
+}
+.vf-hint, .vf-error { margin: 0; font-family: Inter, sans-serif; font-size: 13px; line-height: 1.45; }
+.vf-hint { color: var(--text-3); }
+.vf-error, .vf-form-error { color: #a11f14; font-weight: 500; }
 .vf-input-suffix { position: relative; }
 .vf-input-suffix .vf-input { padding-right: 48px; }
-.vf-input-suffix > span { position: absolute; top: 50%; right: 13px; color: #4b5563; font-size: 11px; transform: translateY(-50%); pointer-events: none; }
-.vf-field--timing { grid-column: 1 / -1; gap: 9px; }
-.vf-radio-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-.vf-radio { position: relative; display: flex; min-height: 43px; align-items: center; gap: 8px; border: 1px solid #d5d9de; border-radius: 9px; background: #fff; padding: 8px 10px; color: #283244; font-size: 11px; line-height: 1.35; cursor: pointer; transition: border-color 180ms ease, background-color 180ms ease; }
-.vf-radio:has(input:checked) { border-color: #9a420d; background: #fff7f0; }
-.vf-radio:focus-within { outline: 3px solid rgb(154 66 13 / 18%); outline-offset: 2px; }
-.vf-radio input { position: absolute; width: 1px; height: 1px; opacity: 0; }
-.vf-radio__mark { display: grid; width: 18px; height: 18px; flex: 0 0 18px; place-items: center; border: 1px solid #9299a2; border-radius: 50%; color: transparent; }
-.vf-radio input:checked + .vf-radio__mark { border-color: #9a420d; background: #9a420d; color: #fff; }
-.vf-radio input:focus-visible + .vf-radio__mark { outline: 3px solid rgb(154 66 13 / 22%); outline-offset: 2px; }
-.vf-submit-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid #e5e7eb; padding-top: 15px; }
-.vf-submit-copy { max-width: 420px; color: #4b5563; font-size: 10px; line-height: 1.5; }
+.vf-input-suffix > span { position: absolute; top: 50%; right: 14px; color: var(--text-3); font-family: var(--mono); font-size: 12px; transform: translateY(-50%); pointer-events: none; }
+
+/* Frågan om köptajming */
+.vf-field--timing { grid-column: 1 / -1; gap: 10px; }
+.vf-radio-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.vf-radio {
+  position: relative;
+  display: flex;
+  min-height: 52px;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--border-card);
+  border-radius: 10px;
+  background: #fff;
+  padding: 10px 12px;
+  color: var(--text-2);
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  line-height: 1.35;
+  cursor: pointer;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+.vf-radio:hover { border-color: #b9c1cf; }
+.vf-radio:has(input:checked) { border-color: var(--navy); background: var(--surface-gray); color: var(--ink); }
+.vf-radio:focus-within { box-shadow: 0 0 0 3px rgb(19 35 63 / 12%); }
+.vf-radio input { position: absolute; width: 1px; height: 1px; opacity: 0; accent-color: var(--navy); }
+.vf-radio__mark { display: grid; width: 18px; height: 18px; flex: 0 0 18px; place-items: center; border: 1px solid #a3abb8; border-radius: 50%; color: transparent; }
+.vf-radio input:checked + .vf-radio__mark { border-color: var(--navy); background: var(--navy); color: #fff; }
+.vf-radio input:focus-visible + .vf-radio__mark { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+/* Nedre rad: information och köpknapp */
+.vf-submit-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid var(--border); padding-top: 24px; }
+.vf-submit-copy { max-width: 460px; color: var(--text-3); font-family: Inter, sans-serif; font-size: 13px; line-height: 1.5; }
 .vf-submit-copy p { margin: 0; }
-.vf-form-error { font-size: 11px; }
-.vf-submit { display: inline-flex; min-width: 168px; min-height: 48px; align-items: center; justify-content: space-between; gap: 15px; border: 0; border-radius: 9px; background: #e65c00; padding: 0 14px; color: #111827; font-size: 12px; font-weight: 650; cursor: pointer; transition: background-color 180ms ease, box-shadow 180ms ease; }
-.vf-submit:hover:not(:disabled) { background: #f1741e; box-shadow: 0 7px 18px rgb(230 92 0 / 22%); }
-.vf-submit:active:not(:disabled) { background: #cf5300; }
-.vf-submit:focus-visible { outline: 3px solid #9a420d; outline-offset: 3px; }
-.vf-submit:disabled { cursor: progress; opacity: .72; }
+.vf-form-error { font-size: 13px; }
+.vf-submit {
+  display: inline-flex;
+  min-width: 190px;
+  height: 56px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--orange);
+  padding: 0 18px;
+  color: var(--ink);
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+.vf-submit:hover:not(:disabled) { background: #d96e0a; }
+.vf-submit:focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; }
+.vf-submit:disabled { cursor: progress; opacity: .6; }
 .vf-spinner { width: 15px; height: 15px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: vf-spin 800ms linear infinite; }
 @keyframes vf-spin { to { transform: rotate(360deg); } }
-@media (max-width: 560px) {
-  .vf-grid { grid-template-columns: minmax(0, 1fr); gap: 13px; }
+
+/* Regnummerfältet: en svensk skylt. */
+.vf-lookup { display: grid; gap: 9px; }
+.vf-lookup > label { color: var(--ink); font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; }
+.vf-lookup > label span { color: var(--text-3); font-weight: 400; }
+.vf-lookup__row { display: flex; gap: 10px; }
+.vf-plate {
+  display: flex;
+  height: 56px;
+  flex: 1 1 auto;
+  min-width: 0;
+  align-items: center;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: #fff;
+  transition: box-shadow 160ms ease;
+}
+.vf-plate:hover { box-shadow: 0 1px 3px rgb(14 15 18 / 12%); }
+.vf-plate:focus-within { box-shadow: 0 0 0 3px rgb(19 35 63 / 12%); }
+.vf-plate__eu {
+  display: flex;
+  width: 30px;
+  flex: 0 0 30px;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  background: var(--plate-blue);
+  color: #fff;
+  font: 700 14px/1 Inter, sans-serif;
+}
+.vf-plate__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  padding: 0 14px;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+.vf-plate__input::placeholder { color: #b6bbc5; font-weight: 700; letter-spacing: 3px; opacity: 1; }
+/* Startsidans fokusring för inmatningsfält klipptes av skyltens rundade ram och
+   blev streck. Skylten visar i stället fokus med ringen ovan. */
+.vehicle-form .vf-plate__input:focus-visible { outline: none; }
+.vf-lookup__button {
+  display: inline-flex;
+  height: 56px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--navy);
+  border-radius: 8px;
+  background: #fff;
+  padding: 0 20px;
+  color: var(--navy);
+  font-family: Inter, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+.vf-lookup__button:hover:not(:disabled) { background: var(--surface-gray); }
+.vf-lookup__button:disabled { color: var(--text-3); border-color: var(--border-card); cursor: default; }
+
+/* Godkännandet av direkt leverans, strax före köpknappen. */
+.vf-consent { display: flex; align-items: flex-start; gap: 10px; margin: 0; color: var(--text-2); font-family: Inter, sans-serif; font-size: 14px; line-height: 1.5; cursor: pointer; }
+.vf-consent input { flex: 0 0 auto; width: 20px; height: 20px; margin: 0; accent-color: var(--navy); cursor: pointer; }
+
+/* Knappen som öppnar de fält registret annars fyller i. */
+.vf-manual {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  border-bottom: 1px solid var(--navy);
+  background: none;
+  padding: 0 0 2px;
+  color: var(--navy);
+  font-family: Inter, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.vf-manual:hover { color: var(--ink); border-color: var(--ink); }
+
+/* Raden som visar vilken bil skylten gav, sedan de ifyllda fälten dolts. */
+.vf-match {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+  margin: 0;
+  border: 1px solid var(--border-card);
+  border-radius: 10px;
+  background: var(--surface-gray);
+  padding: 10px 14px;
+  color: var(--ink);
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.vf-match svg { color: var(--navy); }
+.vf-match__name { font-weight: 600; }
+.vf-match__part { color: var(--text-3); }
+.vf-match__change { margin-left: auto; border: 0; border-bottom: 1px solid var(--navy); background: none; padding: 0 0 1px; color: var(--navy); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+
+/* Sökresultatet visas som ett förslag med källa, aldrig ifyllt automatiskt. */
+.vf-lookup__result { display: grid; gap: 10px; border: 1px solid var(--border-card); border-radius: 10px; padding: 14px 16px; background: var(--surface-gray); }
+.vf-lookup__result p { margin: 0; font-family: Inter, sans-serif; font-size: 13px; line-height: 1.45; color: var(--text-2); }
+.vf-lookup__result strong { color: inherit; font-weight: 600; }
+.vf-lookup__actions { display: flex; gap: 8px; }
+.vf-lookup__button--quiet { background: transparent; border-color: transparent; color: var(--text-3); }
+
+/* Mobilt: skylt och hämtaknapp staplas, radiokorten likaså. */
+@media (max-width: 700px) {
+  .vehicle-form { gap: 24px; }
+  .vf-intro h2 { font-size: 28px; letter-spacing: -1px; }
+  .vf-lede { font-size: 14px; }
+}
+@media (max-width: 640px) {
+  .vf-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
   .vf-field--timing { grid-column: auto; }
   .vf-radio-options { grid-template-columns: minmax(0, 1fr); }
-  .vf-radio { min-height: 42px; }
-  .vf-submit-row { align-items: stretch; flex-direction: column; }
+  .vf-lookup__row { flex-direction: column; }
+  .vf-plate, .vf-lookup__button { width: 100%; }
+  .vf-plate__input { font-size: 22px; letter-spacing: 3px; }
+  .vf-submit-row { align-items: stretch; flex-direction: column; gap: 16px; }
   .vf-submit { width: 100%; }
+  .vf-submit-copy { max-width: none; }
 }
+
 @media (prefers-reduced-motion: reduce) {
   .vehicle-form *, .vehicle-form *::before, .vehicle-form *::after { transition: none !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
-
-/* Regnummerfältet: ett frivilligt steg före de övriga fälten. */
-.vf-lookup { display: grid; gap: 7px; margin-top: 18px; }
-.vf-lookup > label { color: var(--muted, #6b7079); font-size: 11px; font-weight: 600; }
-.vf-lookup > label span { font-weight: 400; }
-.vf-lookup__row { display: flex; gap: 8px; }
-/* Regnummerfältet ser ut som en svensk skylt: vit bricka med blå EU-remsa och
-   S, svart ram och monospace-bokstäver. Samma uttryck som hero-fältet. */
-.vf-plate { display: flex; flex: 1 1 auto; min-width: 0; height: 46px; overflow: hidden; border: 1.5px solid #111827; border-radius: 8px; background: #fff; transition: box-shadow 180ms ease; }
-.vf-plate:hover { box-shadow: 0 1px 3px rgb(17 24 39 / 10%); }
-.vf-plate:focus-within { outline: 3px solid rgb(154 66 13 / 18%); outline-offset: 1px; }
-.vf-plate__eu { display: flex; width: 26px; flex: 0 0 26px; flex-direction: column; align-items: center; justify-content: flex-end; background: #2f4fa8; padding-bottom: 5px; color: #fff; font: 700 10px/1 Inter, sans-serif; }
-.vf-plate__eu::before { margin-top: 6px; margin-bottom: auto; color: #f7d24a; font-size: 8px; content: "★"; }
-.vf-plate__input { flex: 1 1 auto; min-width: 0; border: 0; outline: none; background: transparent; padding: 0 14px; color: #111827; font-family: var(--mono, ui-monospace, "SF Mono", Menlo, monospace); font-size: 19px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; }
-.vf-plate__input::placeholder { color: #a7adb7; font-weight: 700; letter-spacing: 2px; opacity: 1; }
-/* Startsidans fokusring för inmatningsfält klipps av skyltens rundade ram och
-   blev oranga streck. Skylten visar i stället fokus med ringen ovan. */
-.vehicle-form .vf-plate__input:focus-visible { outline: none; }
-.vf-lookup__button { flex: 0 0 auto; min-height: 40px; border: 1px solid var(--line, rgb(17 24 39 / 10%)); border-radius: 10px; background: white; padding: 0 14px; font-size: 12px; font-weight: 600; color: inherit; cursor: pointer; transition: border-color 160ms ease, box-shadow 160ms ease; }
-.vf-lookup__button:hover:not(:disabled) { border-color: #c9d0d8; box-shadow: 0 6px 16px rgb(46 35 22 / 8%); }
-.vf-lookup__button:disabled { color: #8b939d; cursor: default; }
-/* Raden som visas när kunden kommer tillbaka från en avbruten betalning. */
-.vf-cancel-note { margin: 0 0 14px; border: 1px solid #e6d9c6; border-radius: 8px; background: #fffaf2; padding: 9px 12px; color: #6b5636; font-size: 12.5px; line-height: 1.45; }
-
-/* Godkännandet av direkt leverans, strax före köpknappen. */
-.vf-consent { display: flex; align-items: flex-start; gap: 9px; margin: 20px 0 0; color: #4b5563; font-size: 12px; line-height: 1.45; cursor: pointer; }
-.vf-consent input { flex: 0 0 auto; width: 15px; height: 15px; margin: 1px 0 0; accent-color: #c4530f; cursor: pointer; }
-
-/* Knappen som öppnar de fält registret annars fyller i. */
-.vf-manual { justify-self: start; display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; padding: 2px 0; color: #9a420d; font: inherit; font-size: 12px; font-weight: 600; text-decoration: underline; cursor: pointer; }
-.vf-manual:hover { color: #7d350a; }
-
-/* Raden som visar vilken bil skylten gav, sedan de ifyllda fälten dolts. */
-.vf-match { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 0; border: 1px solid var(--line, rgb(17 24 39 / 10%)); border-radius: 10px; background: #fbfaf8; padding: 8px 11px; color: #283244; font-size: 12px; line-height: 1.4; }
-.vf-match svg { color: #2f6f4f; }
-.vf-match__name { font-weight: 600; }
-.vf-match__part { color: #4b5563; }
-.vf-match__change { margin-left: auto; border: 0; background: none; padding: 0; color: #9a420d; font: inherit; font-size: 11px; font-weight: 600; text-decoration: underline; cursor: pointer; }
-@media (max-width: 520px) { .vf-lookup__row { flex-direction: column; } .vf-plate__input { font-size: 17px; letter-spacing: 2px; } }
-
-/* Sökresultatet visas som ett förslag med källa, aldrig ifyllt automatiskt. */
-.vf-lookup__result { display: grid; gap: 8px; border: 1px solid var(--line, rgb(17 24 39 / 10%)); border-radius: 10px; padding: 10px 12px; background: #fbfaf8; }
-.vf-lookup__result p { margin: 0; font-size: 12px; line-height: 1.45; color: var(--muted, #6b7079); }
-.vf-lookup__result strong { color: inherit; font-weight: 700; }
-.vf-lookup__actions { display: flex; gap: 8px; }
-.vf-lookup__button--quiet { background: transparent; border-color: transparent; color: var(--muted, #6b7079); }
