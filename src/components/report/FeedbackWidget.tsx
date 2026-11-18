@@ -46,7 +46,7 @@ export function FeedbackWidget({ reportId }: { reportId?: string }) {
 
   return (
     <section id="feedback" className="rpt-feedback fw-feedback" aria-labelledby="fw-feedback-title">
-      <p className="ds-mono fw-feedback__eyebrow">TYCK TILL OM RAPPORTEN</p>
+      <p className="fw-feedback__eyebrow">Tyck till om rapporten</p>
       <h2 id="fw-feedback-title" className="fw-feedback__title">Stämmer inte något, eller saknades något?</h2>
       <p className="ds-note fw-feedback__intro">
         {reportId

@@ -15,10 +15,12 @@
 }
 .fw-feedback__eyebrow {
   margin: 0;
-  color: var(--brand-ink);
-  font-size: 10px;
+  color: #13233f;
+  font-family: "Archivo", Inter, sans-serif;
+  font-size: 17px;
   font-weight: 600;
-  letter-spacing: .06em;
+  letter-spacing: -.1px;
+  line-height: 1.4;
 }
 .fw-feedback__title {
   margin: 0;

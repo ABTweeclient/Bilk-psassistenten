@@ -16,11 +16,12 @@
 }
 .hs-hero__top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
 .hs-hero__eyebrow {
-  color: var(--brand-ink);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: .09em;
-  text-transform: uppercase;
+  color: #13233f;
+  font-family: "Archivo", Inter, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -.1px;
+  line-height: 1.4;
 }
 .hs-hero__variant { color: var(--ink-muted); font-size: 10px; letter-spacing: .04em; }
 

@@ -43,7 +43,7 @@ export function HeroSection({ onAnalyse }: HeroSectionProps) {
 
         <div className="bq-hero-grid">
           <div>
-            <div className="bq-eyebrow"><span />BILKÖPSRAPPORT</div>
+            <div className="bq-eyebrow">Bilrapport</div>
             <h1>Vet vad du köper<i className="bq-dot" /><br /><span className="bq-l2">Innan du köper det<i className="bq-dot" /></span></h1>
             <p className="bq-sub">Ett registreringsnummer in. Kända svagheter, kontrollpunkter och rätt frågor till säljaren ut.</p>
             <div className="bq-search">

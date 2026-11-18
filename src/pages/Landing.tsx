@@ -25,7 +25,7 @@ function ReportPreview() {
   return (
     <section className="report-showcase" id="exempelrapport" aria-labelledby="report-title">
       <div className="showcase-copy">
-        <p className="eyebrow"><span className="eyebrow-dot" /> SÅ SER RAPPORTEN UT</p>
+        <p className="eyebrow">Så ser rapporten ut</p>
         <h2 id="report-title">Allt viktigt.<br /><span>Överblickbart.</span></h2>
         <p>En tydlig struktur med områden att undersöka, frågor att ställa och sådant att verifiera. Bilden här är en illustrativ förhandsvisning.</p>
         <a className="text-link" href="#fordonsokning">Prova med din bil <ArrowDown size={16} aria-hidden="true" /></a>
@@ -133,13 +133,13 @@ export default function Landing() {
         </section>
 
         <section className="how-section" id="sa-fungerar-det" aria-labelledby="how-title">
-          <div className="how-heading"><p className="eyebrow"><span className="eyebrow-dot" /> EN ENKLARE VÄG TILL BÄTTRE FRÅGOR</p><h2 id="how-title">Från fundering<br />till <span>förberedelse.</span></h2><p>Tre steg för att komma till visningen med bättre koll.</p></div>
+          <div className="how-heading"><p className="eyebrow">En enklare väg till bättre frågor</p><h2 id="how-title">Från fundering<br />till <span>förberedelse.</span></h2><p>Tre steg för att komma till visningen med bättre koll.</p></div>
           <div className="steps-list"><article className="step-row"><span className="step-number mono">01</span><div><p className="mono">BESKRIV BILEN</p><h3>Börja med det du vet.</h3></div><p>Ange modell, årsmodell, motor, växellåda och annan information du känner till.</p><ArrowRight className="step-arrow" size={18} aria-hidden="true" /></article><article className="step-row"><span className="step-number mono">02</span><div><p className="mono">VI SÖKER OCH SAMMANSTÄLLER</p><h3>Få relevanta områden.</h3></div><p>Uppgifterna används för att identifiera varianten och sammanställa publicerade källor om den.</p><ArrowRight className="step-arrow" size={18} aria-hidden="true" /></article><article className="step-row"><span className="step-number mono">03</span><div><p className="mono">FÅ BÄTTRE KOLL</p><h3>Ta med stödet till visningen.</h3></div><p>Få en tydlig rapport att använda inför visning, provkörning och samtalet med säljaren.</p><ArrowRight className="step-arrow" size={18} aria-hidden="true" /></article></div>
         </section>
 
         <section className="faq-section" id="fragor" aria-labelledby="faq-title">
           <div className="faq-heading">
-            <p className="eyebrow"><span className="eyebrow-dot" /> VANLIGA FRÅGOR</p><span className="sr-only">Vanliga frågor</span>
+            <p className="eyebrow">Vanliga frågor</p><span className="sr-only">Vanliga frågor</span>
             <h2 id="faq-title">Bra att veta<br /><span>innan du börjar.</span></h2>
             <div className="faq-contact">
               <p className="faq-contact__label">HITTAR DU INTE SVARET?</p>
@@ -158,7 +158,7 @@ export default function Landing() {
 
         <section className="trust-section" id="om-rapporten" aria-labelledby="trust-title">
           <div className="trust-heading">
-            <p className="eyebrow"><span className="eyebrow-dot" /> TYDLIGT UNDERLAG, ÄRLIGA GRÄNSER</p>
+            <p className="eyebrow">Tydligt underlag, ärliga gränser</p>
             <h2 id="trust-title">Vad rapporten är<br /><span>och inte är.</span></h2>
             <p>Se vad som bygger på publicerade källor och vad du själv behöver kontrollera.</p>
           </div>

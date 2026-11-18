@@ -207,7 +207,7 @@ export function VehicleForm({
     <form className="vehicle-form" onSubmit={handleSubmit} noValidate aria-busy={isSubmitting}>
       <div className="vf-intro">
         <div>
-          <p className="vf-eyebrow">BÖRJA HÄR <span>01 / 03</span></p>
+          <p className="vf-eyebrow">Börja här <span className="vf-eyebrow__step">Steg 1 av 3</span></p>
           <h2 id={`${id}-title`}>Vilken bil funderar du på?</h2>
           <p className="vf-lede">Fyll i det du vet. Märke och modell är fritext – förslagen är bara hjälp på vägen.</p>
         </div>

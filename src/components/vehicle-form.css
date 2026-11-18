@@ -23,9 +23,10 @@
 
 /* Rubrikrad */
 .vf-intro { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
-.vf-eyebrow { display: flex; align-items: center; gap: 9px; margin: 0; color: var(--text-2); font: 500 12px/1.4 var(--mono); letter-spacing: 1.5px; }
-.vf-eyebrow::before { width: 6px; height: 6px; flex: 0 0 6px; border-radius: 50%; background: var(--navy); content: ""; }
-.vf-eyebrow span { margin-left: 4px; color: var(--navy); font-weight: 500; }
+/* Etiketten ovanför rubriken: ren text i meningsform, med stegetiketten som
+   en liten ljus platta efter texten. */
+.vf-eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin: 0; color: var(--navy); font-family: var(--display); font-size: 17px; font-weight: 600; letter-spacing: -0.1px; line-height: 1.4; }
+.vf-eyebrow .vf-eyebrow__step { display: inline-flex; align-items: center; border-radius: 6px; background: var(--surface-gray); padding: 3px 9px; color: var(--text-2); font-family: Inter, sans-serif; font-size: 13px; font-weight: 500; letter-spacing: normal; line-height: 1.2; }
 .vf-intro h2 {
   margin: 14px 0 0;
   color: var(--ink);

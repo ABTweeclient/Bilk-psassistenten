@@ -102,29 +102,15 @@
 /* Vänsterkolumnen: chip, rubrik, ingress, sökrad och liten rad med 30 px luft. */
 .bq-hero .bq-hero-grid > div:first-child { display: grid; gap: 30px; align-content: start; }
 
+/* Etiketten ovanför rubriken är ren text: ingen prick, ingen kapsel och inga
+   versaler. Archivo 600 i meningsform. */
 .bq-hero .bq-eyebrow {
-  display: inline-flex;
-  width: fit-content;
-  align-items: center;
-  gap: 9px;
-  border: 1px solid var(--border-card);
-  border-radius: 999px;
-  background: var(--white);
-  padding: 7px 12px;
-  color: var(--text-2);
-  font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 1.5px;
-  line-height: 1;
-}
-.bq-hero .bq-eyebrow span {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  flex: 0 0 6px;
-  border-radius: 50%;
-  background: var(--navy);
+  color: var(--navy);
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  line-height: 1.4;
 }
 .bq-hero h1 {
   margin-top: 0;
@@ -142,7 +128,9 @@
   height: 0.13em;
   margin-left: 0.05em;
   border-radius: 1px;
-  background: var(--orange);
+  /* Punkten tar samma färg som raden den avslutar: mörk efter första raden,
+     dämpad efter den grå andra raden. */
+  background: currentColor;
 }
 /* Andra radens punkt står efter ett "t" som har mindre luft i sig än "r" i
    "köper". Marginalen kompenserar så att glappet blir detsamma på båda raderna. */

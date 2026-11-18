@@ -41,7 +41,7 @@ export function ReportHeader({
       <CoverageNotice coverage={report.research_summary.coverage} />
 
       <div className="hs-hero__top">
-        <span className="hs-hero__eyebrow ds-mono">Bilköpsrapport</span>
+        <span className="hs-hero__eyebrow">Bilköpsrapport</span>
         {sample && <span className="hs-example ds-mono">EXEMPEL</span>}
         <span className="hs-hero__variant ds-mono">{variantStatusLabels[report.variant_status]}</span>
       </div>
